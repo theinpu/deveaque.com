@@ -1,5 +1,6 @@
 <?php
 
+require_once 'libs/MongoAssist.php';
 require_once 'libs/Slim/Slim.php';
 require_once 'libs/TwigAutoloader.php';
 
