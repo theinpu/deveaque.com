@@ -27,6 +27,7 @@ class Application {
 
     private function createRoutes() {
         $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
+        $this->addGetCommand('/image/small/:year/:month/:day/:image', 'MainPage', 'showSmallImage');
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
 
         $this->addGetCommand('/upload', 'UploadPage', 'index');
