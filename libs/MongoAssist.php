@@ -14,6 +14,11 @@ class MongoAssist {
     private static $db = null;
     private static $collections = array();
 
+    /**
+     * @param $collection
+     *
+     * @return MongoCollection
+     */
     public static function GetCollection($collection) {
         self::checkMongoConnection();
         self::loadCollection($collection);

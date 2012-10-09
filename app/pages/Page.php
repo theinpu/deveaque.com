@@ -7,7 +7,7 @@ abstract class Page {
      */
     private $slim;
 
-    public final function __construct($slim) {
+    public function __construct($slim) {
         $this->slim = $slim;
     }
 

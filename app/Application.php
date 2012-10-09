@@ -28,7 +28,7 @@ class Application {
     private function createRoutes() {
         $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
         $this->addGetCommand('/upload', 'UploadPage', 'index');
-        $this->addPostCommand('/upload', 'UploadPage', 'uploadImage');
+        $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -38,7 +38,7 @@ class Application {
 
     private function addPostCommand($path, $class, $method) {
         $command = new Command($this->getSlim(), array($class, $method));
-        $this->slim->get($path, $command->getCallback());
+        $this->slim->post($path, $command->getCallback());
     }
 
     private function initializeSlim() {
@@ -53,7 +53,7 @@ class Application {
         $this->slim->view()->appendData(array('siteTitle' => self::siteTitle));
     }
 
-    public function getSlim() {
+    private function getSlim() {
         return $this->slim;
     }
 }
