@@ -26,19 +26,19 @@ class Application {
     }
 
     private function createRoutes() {
+        $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
+        $this->addGetCommand('/upload', 'UploadPage', 'index');
+        $this->addPostCommand('/upload', 'UploadPage', 'uploadImage');
+    }
 
-        $mainPageCommand = new Command($this->getSlim(), array('MainPage', 'index'));
-        $this->slim->get('/(page:pageId)', array($mainPageCommand, 'execute'));
+    private function addGetCommand($path, $class, $method) {
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->get($path, $command->getCallback());
+    }
 
-        /*$this->slim->get('/(page:pageId)', function ($pageId = 1) use ($slim) {
-            $slim->view()->appendData(
-                array('hello' => 'pron, pron, pron!!! '.'page - '.$pageId));
-            $slim->view()->display('main.html');
-        });
-
-        $this->slim->get('/image/:imageId', function($imageId) use ($slim) {
-
-        });*/
+    private function addPostCommand($path, $class, $method) {
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->get($path, $command->getCallback());
     }
 
     private function initializeSlim() {

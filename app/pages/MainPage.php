@@ -1,20 +1,9 @@
 <?php
 
-class MainPage {
-
-    /**
-     * @var Slim
-     */
-    private $slim;
-
-    public function __construct($slim) {
-        $this->slim = $slim;
-    }
+class MainPage extends Page {
 
     public function index() {
-        $this->slim->view()->appendData(
-            array('hello' => 'pron, pron, pron!!! '));
-        $this->slim->view()->display('main.html');
+        $this->getSlim()->view()->display('main.html');
     }
 
 }
