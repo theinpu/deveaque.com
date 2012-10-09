@@ -4,25 +4,6 @@ $incPath = get_include_path();
 $rootPath = realpath(dirname(__FILE__).'/../');
 set_include_path($incPath.':'.$rootPath);
 
-require_once 'libs/Slim/Slim.php';
-require_once 'libs/TwigAutoloader.php';
+require_once 'app/Application.php';
 
-Twig_Extensions_Autoloader::register();
-
-require_once 'libs/TwigView.php';
-
-$slim = new Slim(array(
-                      'view'           => new TwigView(),
-                      'debug'          => true,
-                      'log.enable'     => false,
-                      'log.path'       => '../logs',
-                      'log.level'      => 4,
-                      'templates.path' => '../templates'
-                 ));
-
-$slim->get('/', function () use ($slim) {
-    $slim->view()->appendData(array('title' => 'deveaque.com', 'hello' => 'pron, pron, pron!!!'));
-    $slim->view()->display('main.html');
-});
-
-$slim->run();
+$app = new Application();
