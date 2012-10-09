@@ -10,6 +10,8 @@ require_once 'libs/TwigView.php';
 
 class Application {
 
+    const siteTitle = 'deveaque.com - картинки с пылкими телочками';
+
     /**
      * @var Slim
      */
@@ -22,10 +24,11 @@ class Application {
     }
 
     private function createRoutes() {
-        $slim = $this->slim;
+        $slim = $this->getSlim();
+        $slim->view()->appendData(array('siteTitle' => self::siteTitle));
         $this->slim->get('/', function () use ($slim) {
             $slim->view()->appendData(
-                array('title' => 'deveaque.com - картинки с пылкими телочками', 'hello' => 'pron, pron, pron!!!'));
+                array('hello' => 'pron, pron, pron!!!'));
             $slim->view()->display('main.html');
         });
     }
@@ -39,5 +42,9 @@ class Application {
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
+    }
+
+    public function getSlim() {
+        return $this->slim;
     }
 }
