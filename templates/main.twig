@@ -16,15 +16,19 @@
     </script>
 </head>
 <body>
-<a href="/upload">запостить</a>
-
 <div id="page">
+    <div id="siteTitle">
+        {{ siteTitle }}
+    </div>
     <div id="content">
         {% for item in posts %}
-            <div class="item">
-                <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
-                <br/>
-                <span class="date">{{ item.date }}</span>
+            <div class="item-container">
+                <div class="item">
+                    <div class="title">Title</div>
+                    <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
+
+                    <div class="date">{{ item.date }}</div>
+                </div>
             </div>
         {% endfor %}
     </div>
