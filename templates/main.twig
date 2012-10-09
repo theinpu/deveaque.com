@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{siteTitle}}</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <title>{{ siteTitle }}</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.lightbox-0.5.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/jquery.lightbox-0.5.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
     <script>
         $(document).ready(function () {
             $.each($('div.item a'), function (id, item) {
@@ -16,14 +18,16 @@
 <body>
 <a href="/upload">запостить</a>
 
-<div id="content">
-    {% for item in posts %}
-    <div class="item">
-        <a href="{{item.image}}"><img src="{{item.tmb}}"/></a>
-        <br/>
-        <span class="date">{{item.date}}</span>
+<div id="page">
+    <div id="content">
+        {% for item in posts %}
+            <div class="item">
+                <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
+                <br/>
+                <span class="date">{{ item.date }}</span>
+            </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </div>
 </body>
 </html>

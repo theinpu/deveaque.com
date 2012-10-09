@@ -10,7 +10,7 @@ class UploadPage extends Page {
     }
 
     public function index() {
-        $this->getSlim()->view()->display('upload.html');
+        $this->getSlim()->view()->display('upload.twig');
     }
 
     public function uploadImages() {

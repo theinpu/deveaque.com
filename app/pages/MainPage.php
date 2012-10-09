@@ -23,7 +23,7 @@ class MainPage extends Page {
 
         $this->getSlim()->view()->appendData(array('posts' => $posts));
 
-        $this->getSlim()->view()->display('main.html');
+        $this->getSlim()->view()->display('main.twig');
     }
 
     public function showFullImage() {
