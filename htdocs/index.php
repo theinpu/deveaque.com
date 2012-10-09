@@ -17,11 +17,12 @@ $slim = new Slim(array(
                       'log.enable'     => false,
                       'log.path'       => '../logs',
                       'log.level'      => 4,
-                      'templates.path' => '../data/templates'
+                      'templates.path' => '../templates'
                  ));
 
 $slim->get('/', function () use ($slim) {
-    echo 'PRON!!!';
+    $slim->view()->appendData(array('title' => 'deveaque.com', 'hello' => 'pron, pron, pron!!!'));
+    $slim->view()->display('main.html');
 });
 
 $slim->run();
