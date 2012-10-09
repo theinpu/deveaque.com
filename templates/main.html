@@ -5,5 +5,14 @@
 </head>
 <body>
 <a href="/upload">запостить</a>
+
+<div id="content">
+    {% for item in posts %}
+    <div class="item">
+        <img src="{{item.image}}"/><br/>
+        <span class="date">{{item.date}}</span>
+    </div>
+    {% endfor %}
+</div>
 </body>
 </html>

@@ -29,11 +29,12 @@ class UploadPage extends Page {
             throw new RuntimeException('А картинку прикрепить?');
         }
 
-        $imageDir = $this->uploadPath.date('Y').'/'.date('m').'/'.date('d').'/';
+        $datePath = date('Y').'/'.date('m').'/'.date('d').'/';
+        $imageDir = $this->uploadPath.$datePath;
         @mkdir($imageDir, 0777, true);
-        $fileName = $imageDir.md5($file).'.jpg';
-        move_uploaded_file($file, $fileName);
-        $fileName = realpath($fileName);
+        $fileName = md5($file).'.jpg';
+        move_uploaded_file($file, $imageDir.$fileName);
+        $fileName = $datePath.$fileName;
 
         return $fileName;
     }

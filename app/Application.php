@@ -27,6 +27,8 @@ class Application {
 
     private function createRoutes() {
         $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
+        $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
+
         $this->addGetCommand('/upload', 'UploadPage', 'index');
         $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
     }
@@ -45,7 +47,7 @@ class Application {
         $this->slim = new Slim(array(
                                     'view'           => new TwigView(),
                                     'debug'          => true,
-                                    'log.enable'     => false,
+                                    'log.enable'     => true,
                                     'log.path'       => '../logs',
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
