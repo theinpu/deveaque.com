@@ -8,6 +8,8 @@ Twig_Extensions_Autoloader::register();
 
 require_once 'libs/TwigView.php';
 
+require_once 'app/Command.php';
+
 class Application {
 
     const siteTitle = 'deveaque.com - картинки с пылкими телочками';
@@ -24,13 +26,19 @@ class Application {
     }
 
     private function createRoutes() {
-        $slim = $this->getSlim();
-        $slim->view()->appendData(array('siteTitle' => self::siteTitle));
-        $this->slim->get('/', function () use ($slim) {
+
+        $mainPageCommand = new Command($this->getSlim(), array('MainPage', 'index'));
+        $this->slim->get('/(page:pageId)', array($mainPageCommand, 'execute'));
+
+        /*$this->slim->get('/(page:pageId)', function ($pageId = 1) use ($slim) {
             $slim->view()->appendData(
-                array('hello' => 'pron, pron, pron!!!'));
+                array('hello' => 'pron, pron, pron!!! '.'page - '.$pageId));
             $slim->view()->display('main.html');
         });
+
+        $this->slim->get('/image/:imageId', function($imageId) use ($slim) {
+
+        });*/
     }
 
     private function initializeSlim() {
@@ -42,6 +50,7 @@ class Application {
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
+        $this->slim->view()->appendData(array('siteTitle' => self::siteTitle));
     }
 
     public function getSlim() {
