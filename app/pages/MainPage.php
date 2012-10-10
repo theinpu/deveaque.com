@@ -12,7 +12,11 @@ class MainPage extends Page {
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
         $pages = ceil(Post::getCount() / self::PostPerPage);
         $this->showUploadLink();
-        $this->getSlim()->view()->appendData(array('posts' => $posts, 'page' => $page, 'pages' => $pages));
+        $this->getSlim()->view()->appendData(array(
+                                                  'posts'     => $posts,
+                                                  'page'      => $page,
+                                                  'pages'     => $pages,
+                                                  'siteTitle' => Application::Title));
         $this->getSlim()->view()->display('main.twig');
     }
 

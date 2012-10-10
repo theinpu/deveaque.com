@@ -50,8 +50,8 @@ class TwigView extends Slim_View {
      * http://www.twig-project.org/book/03-Twig-for-Developers
      */
     public static $twigOptions = array(
-        /*'cache' => "../cache/twig",*/
-        'debug'       => true,
+        'cache'       => "../cache/twig",
+        'debug'       => false,
         'auto_reload' => true
     );
 

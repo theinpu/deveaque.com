@@ -12,7 +12,7 @@ require_once 'app/Command.php';
 
 class Application {
 
-    const siteTitle = 'deveaque.com - картинки с пылкими телочками!!1';
+    const Title = 'deveaque.com - прекрасное рядом';
 
     /**
      * @var Slim
@@ -47,13 +47,12 @@ class Application {
     private function initializeSlim() {
         $this->slim = new Slim(array(
                                     'view'           => new TwigView(),
-                                    'debug'          => true,
+                                    'debug'          => false,
                                     'log.enable'     => true,
                                     'log.path'       => '../logs',
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
-        $this->slim->view()->appendData(array('siteTitle' => self::siteTitle));
     }
 
     private function getSlim() {
