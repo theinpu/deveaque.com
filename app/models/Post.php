@@ -46,4 +46,8 @@ class Post {
         return '/image/small/'.$this->data['file'];
     }
 
+    public static function getCount() {
+        return MongoAssist::GetCollection('posts')->count();
+    }
+
 }

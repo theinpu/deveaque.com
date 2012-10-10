@@ -27,6 +27,18 @@
     </div>
     <div id="content">
         {% block content %}
+            {% if pages > 1 %}
+                <div class="pages">
+                    <span>Страницы: </span>
+                    <a href="/">1</a>
+                    {% for i in 2..pages %}
+                        <a href="/page{{ i }}">{{ i }}</a>
+                    {% endfor %}
+                    {% if pages > 10 %}
+                        <a href="/page{{ pages }}">&gt;&gt;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
             {% for item in posts %}
                 <div class="item-container">
                     <div class="item">
@@ -37,6 +49,18 @@
                     </div>
                 </div>
             {% endfor %}
+            {% if pages > 1 %}
+                <div class="pages">
+                    <span>Страницы: </span>
+                    <a href="/">1</a>
+                    {% for i in 2..pages %}
+                        <a href="/page{{ i }}">{{ i }}</a>
+                    {% endfor %}
+                    {% if pages > 10 %}
+                        <a href="/page{{ pages }}">&gt;&gt;</a>
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endblock %}
     </div>
     <div id="footer">
