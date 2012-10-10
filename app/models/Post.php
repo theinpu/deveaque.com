@@ -6,7 +6,8 @@ class Post {
 
     public static function createPost($title, $file) {
         $date = date('U');
-        MongoAssist::GetCollection('posts')->insert(array('date' => $date, 'file' => $file, 'title' => $title));
+        MongoAssist::GetCollection('posts')
+            ->insert(array('date' => $date, 'file' => $file, 'title' => $title));
     }
 
     public static function getPosts($offset, $limit) {

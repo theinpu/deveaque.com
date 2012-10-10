@@ -13,19 +13,19 @@ class MainPage extends Page {
         $pages = ceil(Post::getCount() / self::PostPerPage);
         $this->showUploadLink();
         $this->getSlim()->view()->appendData(array(
-                                                  'posts'     => $posts,
-                                                  'page'      => $page,
-                                                  'pages'     => $pages,
-                                                  'siteTitle' => Application::Title));
+            'posts'     => $posts,
+            'page'      => $page,
+            'pages'     => $pages,
+            'siteTitle' => Application::Title));
         $this->getSlim()->view()->display('main.twig');
     }
 
     private function showUploadLink() {
         $showUpload = in_array($_SERVER['REMOTE_ADDR'],
-                               array('92.62.59.95',
-                                     '79.142.82.62',
-                                     '89.110.48.143',
-                                     '109.124.94.122'));
+            array('92.62.59.95',
+                '79.142.82.62',
+                '89.110.48.143',
+                '109.124.94.122'));
         $this->getSlim()->view()->appendData(array('showUpload' => $showUpload));
     }
 
@@ -71,8 +71,7 @@ class MainPage extends Page {
             if($sizes[1] > 650) {
                 $height = 650;
                 $width = ($height / $sizes[1]) * $sizes[0];
-            }
-            else {
+            } else {
                 $width = $sizes[0];
                 $height = $sizes[1];
             }

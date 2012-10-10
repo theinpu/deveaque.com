@@ -46,13 +46,13 @@ class Application {
 
     private function initializeSlim() {
         $this->slim = new Slim(array(
-                                    'view'           => new TwigView(),
-                                    'debug'          => false,
-                                    'log.enable'     => true,
-                                    'log.path'       => '../logs',
-                                    'log.level'      => 4,
-                                    'templates.path' => '../templates'
-                               ));
+            'view'           => new TwigView(),
+            'debug'          => false,
+            'log.enable'     => true,
+            'log.path'       => '../logs',
+            'log.level'      => 4,
+            'templates.path' => '../templates'
+        ));
     }
 
     private function getSlim() {
