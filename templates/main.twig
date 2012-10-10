@@ -21,16 +21,18 @@
         {{ siteTitle }}
     </div>
     <div id="content">
-        {% for item in posts %}
-            <div class="item-container">
-                <div class="item">
-                    <div class="title">{{ item.title }}</div>
-                    <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
+        {% block content %}
+            {% for item in posts %}
+                <div class="item-container">
+                    <div class="item">
+                        <div class="title">{{ item.title }}</div>
+                        <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
 
-                    <div class="date">{{ item.date }}</div>
+                        <div class="date">{{ item.date }}</div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endblock %}
     </div>
 </div>
 </body>

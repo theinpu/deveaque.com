@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ siteTitle }}</title>
-</head>
-<body>
-<div>
-    <form id="uploadImages" action="/upload" method="POST" enctype="multipart/form-data">
-        <div class="fileUpload">
-            <span class="title">файлик с тёткой. то, что у меня стоит лимит в 1Гб не значит, что надо тестить с такими файликами</span>
-            <input type="file" name="image"/>
-        </div>
-        <input type="submit" value="запостить"/>
-    </form>
-</div>
-</body>
-</html>
+{% extends "main.twig" %}
+{% block content %}
+    <div class="form-container">
+        <form id="uploadImages" action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="submit" value=" запостить " class="submit"/>
+
+            <div>
+                <label for="title">Название женщины</label>
+                <input type="text" name="title" id="title"/>
+            </div>
+            <div>
+                <label for="file">Фотка</label>
+                <input type="file" name="image" id="file"/>
+            </div>
+            <div class="clear"></div>
+        </form>
+    </div>
+    <a href="#">ещё</a>
+{% endblock %}

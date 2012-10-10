@@ -3,11 +3,20 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: Arial;
 }
 
 body {
     background-color: #000;
     color: #fff;
+}
+
+a {
+    color: #fff;
+}
+
+a:hover {
+    color: #f40;
 }
 
 #page {
@@ -51,4 +60,21 @@ div.item {
 
 div.item div {
     text-align: left;
+}
+
+.form-container form {
+    width: 500px;
+}
+
+.form-container form div {
+    margin: 10px 0;
+}
+
+input.submit {
+    float: right;
+}
+
+.clear {
+    clear: both;
+    float: none;
 }
