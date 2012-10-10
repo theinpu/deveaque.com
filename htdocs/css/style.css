@@ -39,6 +39,13 @@ a:hover {
     top: 35px;
 }
 
+.navigation {
+    position: absolute;
+    top: 110px;
+    left: 50%;
+    margin-left: -400px;
+}
+
 #content {
     position: relative;
     width: 960px;
@@ -46,6 +53,10 @@ a:hover {
     margin-left: -482px;
     text-align: center;
     margin-top: 180px;
+}
+
+#footer {
+    height: 40px;
 }
 
 div.item-container {

@@ -6,8 +6,18 @@ class MainPage extends Page {
 
     public function index() {
         $posts = $this->loadPosts(0, 10);
+        $this->showUploadLink();
         $this->getSlim()->view()->appendData(array('posts' => $posts));
         $this->getSlim()->view()->display('main.twig');
+    }
+
+    private function showUploadLink() {
+        $showUpload = in_array($_SERVER['REMOTE_ADDR'],
+                               array('92.62.59.95',
+                                     '79.142.82.62',
+                                     '89.110.48.143',
+                                     '109.124.94.122'));
+        $this->getSlim()->view()->appendData(array('showUpload' => $showUpload));
     }
 
     private function loadPosts($offset, $limit) {

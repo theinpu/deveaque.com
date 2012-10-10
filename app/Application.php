@@ -12,7 +12,7 @@ require_once 'app/Command.php';
 
 class Application {
 
-    const siteTitle = 'deveaque.com - картинки с пылкими телочками';
+    const siteTitle = 'deveaque.com - картинки с пылкими телочками!!1';
 
     /**
      * @var Slim

@@ -20,6 +20,11 @@
     <div id="siteTitle">
         {{ siteTitle }}
     </div>
+    <div class="navigation">
+        {% if showUpload %}
+            <a href="/upload">запостить</a>
+        {% endif %}
+    </div>
     <div id="content">
         {% block content %}
             {% for item in posts %}
@@ -33,6 +38,9 @@
                 </div>
             {% endfor %}
         {% endblock %}
+    </div>
+    <div id="footer">
+
     </div>
 </div>
 </body>
