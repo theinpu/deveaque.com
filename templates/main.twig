@@ -24,7 +24,7 @@
         {% for item in posts %}
             <div class="item-container">
                 <div class="item">
-                    <div class="title">Title</div>
+                    <div class="title">{{ item.title }}</div>
                     <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
 
                     <div class="date">{{ item.date }}</div>

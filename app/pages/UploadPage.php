@@ -1,5 +1,7 @@
 <?php
 
+require_once 'app/models/Post.php';
+
 class UploadPage extends Page {
 
     private $uploadPath;
@@ -15,11 +17,9 @@ class UploadPage extends Page {
 
     public function uploadImages() {
         $files = $_FILES;
-        foreach($files['image']['tmp_name'] as $file) {
-            $date = date('U');
-            $fileName = $this->uploadFile($file);
-            MongoAssist::GetCollection('posts')->insert(array('date' => $date, 'file' => $fileName));
-        }
+        $title = $this->getSlim()->request()->post('title');
+        $fileName = $this->uploadFile($files['tmp_name']);
+        Post::createPost($title, $fileName);
 
         $this->getSlim()->redirect('/');
     }
