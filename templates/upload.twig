@@ -1,19 +1,37 @@
 {% extends "main.twig" %}
 {% block content %}
-    <div class="form-container">
-        <form id="uploadImages" action="/upload" method="POST" enctype="multipart/form-data">
-            <input type="submit" value=" запостить " class="submit"/>
+    <script>
+        $(document).ready(function () {
+            $('a.add-post').click(function () {
+                addForm();
+                return false;
+            });
+            $('a.send-post').click(function () {
+                $('#postImages').submit();
+                return false;
+            });
+        });
 
-            <div>
-                <label for="title">Название женщины</label>
-                <input type="text" name="title" id="title"/>
+        function addForm() {
+            var sourceForm = $('.form-fields:first');
+            var form = sourceForm.clone();
+            sourceForm.after(form);
+        }
+    </script>
+    <div class="form-container">
+        <form id="postImages" action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-fields">
+                <div>
+                    <label for="title[]">Название женщины</label>
+                    <input type="text" name="title[]" id="title[]"/>
+                </div>
+                <div>
+                    <label for="file[]">Фотка</label>
+                    <input type="file" name="image[]" id="file[]"/>
+                </div>
             </div>
-            <div>
-                <label for="file">Фотка</label>
-                <input type="file" name="image" id="file"/>
-            </div>
-            <div class="clear"></div>
         </form>
     </div>
-    <a href="#">ещё</a>
+    <a href="#" class="add-post">ещё</a> |
+    <a href="#" class="send-post">запостить</a>
 {% endblock %}

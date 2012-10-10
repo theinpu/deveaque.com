@@ -17,10 +17,12 @@ class UploadPage extends Page {
 
     public function uploadImages() {
         $files = $_FILES;
-        $title = $this->getSlim()->request()->post('title');
-        $fileName = $this->uploadFile($files['image']['tmp_name']);
-        Post::createPost($title, $fileName);
-
+        $titles = $this->getSlim()->request()->post('title');
+        foreach($files['image']['tmp_name'] as $id => $file) {
+            $title = $titles[$id];
+            $fileName = $this->uploadFile($file);
+            Post::createPost($title, $fileName);
+        }
         $this->getSlim()->redirect('/');
     }
 

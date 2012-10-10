@@ -62,16 +62,21 @@ div.item div {
     text-align: left;
 }
 
+.form-container {
+    margin: 20px 0;
+}
+
 .form-container form {
+    margin-left: 100px;
     width: 500px;
+    text-align: left;
+    padding-left: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #fff;
 }
 
 .form-container form div {
     margin: 10px 0;
-}
-
-input.submit {
-    float: right;
 }
 
 .clear {
