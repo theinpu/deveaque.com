@@ -53,6 +53,17 @@ class Application {
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
+        $this->slim->view()->appendData(array('siteTitle' => self::Title));
+        $this->showAdminFeatures();
+    }
+
+    private function showAdminFeatures() {
+        $showAdminFeatures = in_array($_SERVER['REMOTE_ADDR'],
+                                      array('92.62.59.95',
+                                            '79.142.82.62',
+                                            '89.110.48.143',
+                                            '109.124.94.122'));
+        $this->getSlim()->view()->appendData(array('showAdminFeatures' => $showAdminFeatures));
     }
 
     private function getSlim() {

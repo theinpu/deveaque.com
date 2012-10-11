@@ -37,59 +37,24 @@
         <a href="/">{{ siteTitle }}</a>
     </div>
     <div class="navigation">
-        {% if showUpload %}
+        {% if showAdminFeatures %}
             <a href="/upload">запостить</a>
         {% endif %}
     </div>
     <div id="content">
         {% block content %}
-            {% if pages > 1 %}
-                <div class="pages">
-                    <span>Страницы:  </span>
-                    {% for i in 1..pages %}
-                        {% if page == i %}
-                            <span>{{ i }}</span>
-                        {% else %}
-                            {% if i == 1 %}
-                                <a href="/">{{ i }}</a>
-                            {% else %}
-                                <a href="/page{{ i }}">{{ i }}</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    {% if pages > 10 %}
-                        <a href="/page{{ pages }}">&gt;&gt;</a>
-                    {% endif %}
-                </div>
-            {% endif %}            {% for item in posts %}
-            <div class="item-container">
-                <div class="item">
-                    <div class="title">{{ item.title }}</div>
-                    <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
+            {% include "pages.twig" %}
+            {% for item in posts %}
+                <div class="item-container">
+                    <div class="item">
+                        <div class="title">{{ item.title }}</div>
+                        <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
 
-                    <div class="date">{{ item.date }}</div>
+                        <div class="date">{{ item.date }}</div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-            {% if pages > 1 %}
-                <div class="pages">
-                    <span>Страницы: </span>
-                    {% for i in 1..pages %}
-                        {% if page == i %}
-                            <span>{{ i }}</span>
-                        {% else %}
-                            {% if i == 1 %}
-                                <a href="/">{{ i }}</a>
-                            {% else %}
-                                <a href="/page{{ i }}">{{ i }}</a>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    {% if pages > 10 %}
-                        <a href="/page{{ pages }}">&gt;&gt;</a>
-                    {% endif %}
-                </div>
-            {% endif %}
+            {% endfor %}
+            {% include "pages.twig" %}
         {% endblock %}
     </div>
     <div id="footer">
