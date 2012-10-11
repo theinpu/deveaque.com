@@ -1,0 +1,59 @@
+<style>
+    #controlPanel {
+        position: absolute;
+        display: inline-block;
+        top: 0;
+        left: 0;
+    }
+
+    #controlPanel a {
+        display: block;
+    }
+
+</style>
+<script>
+    $(document).ready(function () {
+        var controlPanelTemplate = '<div id="controlPanel">'
+                + '<a href="#" class="edit">изменить</a>'
+                + '<a href="#" class="delete">удалить</a>'
+                + '</div>';
+
+        var controlPanel = null;
+        var items = $('div.item-container');
+
+        items.mouseenter(function () {
+            var item = $('div.item', $(this));
+            item.after(controlPanelTemplate);
+            var position = item.position();
+            var left = position.left + 30 + item.width();
+
+            setupControlPanel(position.top, left, item.attr('id'));
+        });
+
+        items.mouseleave(function () {
+            if (controlPanel != null) {
+                controlPanel.remove();
+            }
+        });
+
+        function setupControlPanel(top, left, id) {
+            controlPanel = $('#controlPanel');
+            controlPanel.css('top', top);
+            controlPanel.css('left', left);
+
+            $('a.edit', controlPanel).click(function () {
+                return false;
+            });
+
+            $('a.delete', controlPanel).click(function () {
+                $.ajax({
+                    url:'/post/delete/' + id,
+                    success:function (data) {
+                        console.log(data);
+                    }
+                });
+                return false;
+            });
+        }
+    });
+</script>

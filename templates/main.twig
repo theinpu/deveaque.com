@@ -30,6 +30,9 @@
         })();
 
     </script>
+    {% if showAdminFeatures %}
+        {% include "adminScripts.twig" %}
+    {% endif %}
 </head>
 <body>
 <div id="page">
@@ -46,7 +49,7 @@
             {% include "pages.twig" %}
             {% for item in posts %}
                 <div class="item-container">
-                    <div class="item">
+                    <div class="item" id="{{ item.id }}">
                         <div class="title">{{ item.title }}</div>
                         <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
 
