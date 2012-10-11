@@ -68,12 +68,17 @@ class Post {
         @unlink($smallFile);
     }
 
-    private static function getPost($id) {
+    public static function getPost($id) {
         return new Post(MongoAssist::GetCollection('posts')->findOne(array('_id' => new MongoId($id))));
     }
 
     private function getFile() {
         return $this->data['file'];
+    }
+
+    public function setTitle($title) {
+        $this->data['title'] = $title;
+        MongoAssist::GetCollection('posts')->save($this->data);
     }
 
 }

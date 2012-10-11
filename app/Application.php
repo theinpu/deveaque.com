@@ -35,6 +35,7 @@ class Application {
 
         $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
         $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
+        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditorCode');
     }
 
     private function addGetCommand($path, $class, $method) {

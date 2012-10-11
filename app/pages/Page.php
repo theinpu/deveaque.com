@@ -14,4 +14,27 @@ abstract class Page {
     protected final function getSlim() {
         return $this->slim;
     }
+
+    protected final function displayTemplate($template) {
+        //$template = $this->parseTemplateName($template);
+        $this->getSlim()->view()->display($template);
+    }
+
+    private function parseTemplateName($template) {
+        if($this->slim->request()->isAjax()) {
+            return $this->ajaxTemplate($template);
+        }
+        return $template;
+    }
+
+    private function ajaxTemplate($template) {
+        $templateName = basename($template, '.twig');
+        $template = str_replace($templateName, $templateName.'.ajax', $template);
+
+        return $template;
+    }
+
+    protected final function appendDataToTemplate($data) {
+        $this->slim->view()->appendData($data);
+    }
 }

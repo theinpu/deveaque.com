@@ -10,6 +10,35 @@
         display: block;
     }
 
+    #editorWrapper {
+        position: absolute;
+        background-color: #fff;
+        padding: 10px;
+        border: 1px solid #000;
+        margin-top: -30px;
+        margin-left: -30px;
+        z-index: 85;
+        top: 0;
+        left: 0;
+        display: inline-block;
+        min-height: 16px;
+        min-width: 16px;
+        color: #000;
+    }
+
+    #editorWrapper img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -16px;
+        margin-left: -16px;
+    }
+
+    #editorWrapper a.save {
+        float: right;
+        color: #000;
+    }
+
 </style>
 <script>
     $(document).ready(function () {
@@ -23,25 +52,59 @@
 
         items.mouseenter(function () {
             var item = $('div.item', $(this));
+            if(controlPanel != null) {
+                if(controlPanel.item.attr('id') == item.attr('id')) {
+                    return;
+                }
+                controlPanel.remove();
+                controlPanel = null;
+            }
             item.after(controlPanelTemplate);
             var position = item.position();
             var left = position.left + 30 + item.width();
-
+            controlPanel = $('#controlPanel');
+            controlPanel.item = item;
             setupControlPanel(position.top, left, item.attr('id'));
         });
 
         items.mouseleave(function () {
             if (controlPanel != null) {
-                controlPanel.remove();
+                if(!controlPanel.lock) {
+                    controlPanel.remove();
+                    controlPanel = null;
+                }
             }
         });
 
         function setupControlPanel(top, left, id) {
-            controlPanel = $('#controlPanel');
             controlPanel.css('top', top);
             controlPanel.css('left', left);
+            controlPanel.lock = false;
 
             $('a.edit', controlPanel).click(function () {
+                var editorWrapperTemplate = '<div id="editorWrapper">'
+                        + '<img src="/images/lightbox-ico-loading.gif" />'
+                        + '</div>';
+                controlPanel.append(editorWrapperTemplate);
+                var editorWrapper = $('#editorWrapper');
+                editorWrapper.css('top', 50);
+                $.get('/post/edit/form/' + id, function (data) {
+                    editorWrapper.empty();
+                    editorWrapper.append(data);
+                    controlPanel.lock = true;
+                    $('a.save').click(function(){
+
+                        $.post('/post/edit/'+id, $('#editorForm').serialize(), function(data) {
+                            if(data.saved) {
+                                $('div.title', controlPanel.item).text(data.title);
+                            }
+                            controlPanel.lock = false;
+                            editorWrapper.remove();
+                        }, 'json');
+
+                        return false;
+                    });
+                });
                 return false;
             });
 
