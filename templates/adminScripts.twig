@@ -49,7 +49,7 @@
                 $.ajax({
                     url:'/post/delete/' + id,
                     success:function (data) {
-                        console.log(data);
+                        location.reload();
                     }
                 });
                 return false;
