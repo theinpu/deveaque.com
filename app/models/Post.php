@@ -51,4 +51,29 @@ class Post {
         return MongoAssist::GetCollection('posts')->count();
     }
 
+    public static function deletePost($id) {
+        $post = self::getPost($id);
+        self::deleteFiles($post);
+
+        MongoAssist::GetCollection('posts')->remove(array('_id' => new MongoId($id)));
+    }
+
+    private static function deleteFiles(Post $post) {
+        $originFile = $_SERVER['DOCUMENT_ROOT'].'/../upload/'.$post->getFile();
+        $fullFile = $_SERVER['DOCUMENT_ROOT'].$post->getFullImage();
+        $smallFile = $_SERVER['DOCUMENT_ROOT'].$post->getSmallImage();
+
+        @unlink($originFile);
+        @unlink($fullFile);
+        @unlink($smallFile);
+    }
+
+    private static function getPost($id) {
+        return new Post(MongoAssist::GetCollection('posts')->findOne(array('_id' => new MongoId($id))));
+    }
+
+    private function getFile() {
+        return $this->data['file'];
+    }
+
 }

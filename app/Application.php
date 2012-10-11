@@ -32,6 +32,9 @@ class Application {
 
         $this->addGetCommand('/upload', 'UploadPage', 'index');
         $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
+
+        $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
+        $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -58,12 +61,16 @@ class Application {
     }
 
     private function showAdminFeatures() {
-        $showAdminFeatures = in_array($_SERVER['REMOTE_ADDR'],
-                                      array('92.62.59.95',
-                                            '79.142.82.62',
-                                            '89.110.48.143',
-                                            '109.124.94.122'));
+        $showAdminFeatures = self::isAdmin();
         $this->getSlim()->view()->appendData(array('showAdminFeatures' => $showAdminFeatures));
+    }
+
+    public static function isAdmin() {
+        return in_array($_SERVER['REMOTE_ADDR'],
+                        array('92.62.59.95',
+                              '79.142.82.62',
+                              '89.110.48.143',
+                              '109.124.94.122'));
     }
 
     private function getSlim() {
