@@ -5,22 +5,19 @@ require_once 'app/models/PostFactory.php';
 
 class AdminPage extends Page {
 
-    public function getEditorCode($id) {
+    public function getEditor($id) {
         $post = PostFactory::getPost($id);
         $postData = array(
             'id'    => $post->getId(),
             'title' => $post->getTitle()
         );
 
-        $customFields = array(
-            array(
-                'form' => 'forms/tagEditor.twig'
-            )
-        );
-
         $this->appendDataToTemplate(array('post' => $postData));
-        $this->appendDataToTemplate(array('customFields' => $customFields));
         $this->displayTemplate('forms/editor.twig');
+    }
+
+    public function getTagEditor($id) {
+        $this->displayTemplate('forms/tagEditor.twig');
     }
 
     public function editPost($id) {

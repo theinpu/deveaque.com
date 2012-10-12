@@ -1,6 +1,7 @@
 <?php
 
 require_once 'app/models/PostFactory.php';
+require_once 'app/models/Tags.php';
 
 class MainPage extends Page {
 
@@ -25,7 +26,8 @@ class MainPage extends Page {
                 'title' => $item->getTitle(),
                 'tmb'   => $item->getSmallImage(),
                 'image' => $item->getFullImage(),
-                'date'  => date('Y-m-d H:i:s', $item->getDate())
+                'date'  => date(' H:i:s Y.m.d', $item->getDate()),
+                'tags'  => Tags::getItemList($item->getId()),
             );
             $posts[] = $post;
         }

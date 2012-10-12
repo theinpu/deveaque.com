@@ -36,7 +36,8 @@ class Application {
 
         $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
         $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
-        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditorCode');
+        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditor');
+        $this->addGetCommand('/post/edit/tag/:id', 'AdminPage', 'getTagEditor');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -64,7 +65,7 @@ class Application {
 
     private function showAdminFeatures() {
         $showAdminFeatures = self::isAdmin();
-        $this->getSlim()->view()->appendData(array('showAdminFeatures' => $showAdminFeatures));
+        $this->getSlim()->view()->appendData(array('isAdmin' => $showAdminFeatures));
     }
 
     public static function isAdmin() {

@@ -30,7 +30,7 @@
         })();
 
     </script>
-    {% if showAdminFeatures %}
+    {% if isAdmin %}
         {% include "adminScripts.twig" %}
     {% endif %}
 </head>
@@ -48,20 +48,7 @@
         {% block content %}
             {% include "pages.twig" %}
             {% for item in posts %}
-                <div class="item-container">
-                    <div class="item" id="{{ item.id }}">
-                        <div class="title">
-                            {% if item.title is empty %}
-                                {{ item.title }}
-                            {% else %}
-                                <a href="/post/{{ item.title }}/">{{ item.title }}</a>
-                            {% endif %}
-                        </div>
-                        <a href="{{ item.image }}" class="lightbox"><img src="{{ item.tmb }}"/></a>
-
-                        <div class="date">{{ item.date }}</div>
-                    </div>
-                </div>
+                {% include "item.twig" %}
             {% endfor %}
             {% include "pages.twig" %}
         {% endblock %}

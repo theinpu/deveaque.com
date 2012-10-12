@@ -2,9 +2,4 @@
     <label for="title">название женщины</label>
     <input type="text" id="title" name="title" value="{{ post.title }}"/>
 </form>
-{% if customFields > 0 %}
-    {% for field in customFields %}
-        {% include field.form %}
-    {% endfor %}
-{% endif %}
 <a href="#" class="save">сохранить</a>

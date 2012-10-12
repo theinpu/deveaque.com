@@ -46,6 +46,9 @@
                 + '<a href="#" class="edit">изменить</a>'
                 + '<a href="#" class="delete">удалить</a>'
                 + '</div>';
+        var editorWrapperTemplate = '<div id="editorWrapper">'
+                + '<img src="/images/lightbox-ico-loading.gif" />'
+                + '</div>';
 
         var controlPanel = null;
         var items = $('div.item-container');
@@ -82,9 +85,6 @@
             controlPanel.lock = false;
 
             $('a.edit', controlPanel).click(function () {
-                var editorWrapperTemplate = '<div id="editorWrapper">'
-                        + '<img src="/images/lightbox-ico-loading.gif" />'
-                        + '</div>';
                 controlPanel.append(editorWrapperTemplate);
                 var editorWrapper = $('#editorWrapper');
                 editorWrapper.css('top', 50);
@@ -97,9 +97,9 @@
                         $.post('/post/edit/' + id, $('#editorForm').serialize(), function (data) {
                             if (data.saved) {
                                 if (data.title.length > 0) {
-                                    $('div.title', controlPanel.item).html('<a href="/post/' + data.title + '/">' + data.title + '</a>');
+                                    $('h2', controlPanel.item).html('<a href="/post/' + data.title + '/">' + data.title + '</a>');
                                 } else {
-                                    $('div.title', controlPanel.item).text('');
+                                    $('h2', controlPanel.item).text('');
                                 }
                             }
                             controlPanel.lock = false;
@@ -122,5 +122,6 @@
                 return false;
             });
         }
+
     });
 </script>
