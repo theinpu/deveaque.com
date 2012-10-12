@@ -4,14 +4,28 @@ class Post {
 
     private $data;
 
+    /**
+     * @var MongoCollection
+     */
+    private static $collection = null;
+
     public static function createPost($title, $file) {
         $date = date('U');
-        MongoAssist::GetCollection('posts')
+        self::setCollection();
+        self::$collection
             ->insert(array('date' => $date, 'file' => $file, 'title' => $title));
     }
 
+    private static function setCollection() {
+        if(is_null(self::$collection)) {
+            $collectionName = strpos('dev.', $_SERVER['DOCUMENT_ROOT']) !== false ? 'posts_dev' : 'posts';
+            self::$collection = MongoAssist::GetCollection($collectionName);
+        }
+    }
+
     public static function getPosts($offset, $limit) {
-        $cursor = MongoAssist::GetCollection('posts')->find()
+        self::setCollection();
+        $cursor = self::$collection->find()
             ->sort(array('date' => -1))
             ->skip($offset)->limit($limit);
 
@@ -48,14 +62,17 @@ class Post {
     }
 
     public static function getCount() {
-        return MongoAssist::GetCollection('posts')->count();
+        self::setCollection();
+
+        return self::$collection->count();
     }
 
     public static function deletePost($id) {
+        self::setCollection();
         $post = self::getPost($id);
         self::deleteFiles($post);
 
-        MongoAssist::GetCollection('posts')->remove(array('_id' => new MongoId($id)));
+        self::$collection->remove(array('_id' => new MongoId($id)));
     }
 
     private static function deleteFiles(Post $post) {
@@ -69,7 +86,9 @@ class Post {
     }
 
     public static function getPost($id) {
-        return new Post(MongoAssist::GetCollection('posts')->findOne(array('_id' => new MongoId($id))));
+        self::setCollection();
+
+        return new Post(self::$collection->findOne(array('_id' => new MongoId($id))));
     }
 
     private function getFile() {
@@ -77,8 +96,9 @@ class Post {
     }
 
     public function setTitle($title) {
+        self::setCollection();
         $this->data['title'] = $title;
-        MongoAssist::GetCollection('posts')->save($this->data);
+        self::$collection->save($this->data);
     }
 
 }
