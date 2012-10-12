@@ -11,7 +11,15 @@ class AdminPage extends Page {
             'id'    => $post->getId(),
             'title' => $post->getTitle()
         );
+
+        $customFields = array(
+            array(
+                'form' => 'forms/tagEditor.twig'
+            )
+        );
+
         $this->appendDataToTemplate(array('post' => $postData));
+        $this->appendDataToTemplate(array('customFields' => $customFields));
         $this->displayTemplate('forms/editor.twig');
     }
 
