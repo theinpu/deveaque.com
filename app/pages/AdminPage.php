@@ -1,12 +1,12 @@
 <?php
 
 require_once 'Page.php';
-require_once 'app/models/Post.php';
+require_once 'app/models/PostFactory.php';
 
 class AdminPage extends Page {
 
     public function getEditorCode($id) {
-        $post = Post::getPost($id);
+        $post = PostFactory::getPost($id);
         $postData = array(
             'id'    => $post->getId(),
             'title' => $post->getTitle()
@@ -17,12 +17,13 @@ class AdminPage extends Page {
 
     public function editPost($id) {
         try {
-            $post = Post::getPost($id);
+            $post = PostFactory::getPost($id);
             $post->setTitle($this->getSlim()->request()->post('title'));
+            PostFactory::savePost($post);
             echo json_encode(array('saved' => true, 'title' => $post->getTitle()));
         }
         catch(Exception $ex) {
-            echo json_encode(array('saved' => false));
+            echo json_encode(array('saved' => false, 'error' => $ex->getMessage()));
         }
     }
 
@@ -33,7 +34,7 @@ class AdminPage extends Page {
         $id = func_get_arg(0);
         $id = $id[0];
         try {
-            Post::deletePost($id);
+            PostFactory::deletePost($id);
         }
         catch(Exception $e) {
             echo json_encode(array('error' => $e->getMessage()));

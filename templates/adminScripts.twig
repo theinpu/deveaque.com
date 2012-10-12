@@ -52,8 +52,8 @@
 
         items.mouseenter(function () {
             var item = $('div.item', $(this));
-            if(controlPanel != null) {
-                if(controlPanel.item.attr('id') == item.attr('id')) {
+            if (controlPanel != null) {
+                if (controlPanel.item.attr('id') == item.attr('id')) {
                     return;
                 }
                 controlPanel.remove();
@@ -69,7 +69,7 @@
 
         items.mouseleave(function () {
             if (controlPanel != null) {
-                if(!controlPanel.lock) {
+                if (!controlPanel.lock) {
                     controlPanel.remove();
                     controlPanel = null;
                 }
@@ -92,11 +92,15 @@
                     editorWrapper.empty();
                     editorWrapper.append(data);
                     controlPanel.lock = true;
-                    $('a.save').click(function(){
+                    $('a.save').click(function () {
 
-                        $.post('/post/edit/'+id, $('#editorForm').serialize(), function(data) {
-                            if(data.saved) {
-                                $('div.title', controlPanel.item).text(data.title);
+                        $.post('/post/edit/' + id, $('#editorForm').serialize(), function (data) {
+                            if (data.saved) {
+                                if (data.title.length > 0) {
+                                    $('div.title', controlPanel.item).html('<a href="/post/' + data.title + '/">' + data.title + '</a>');
+                                } else {
+                                    $('div.title', controlPanel.item).text('');
+                                }
                             }
                             controlPanel.lock = false;
                             editorWrapper.remove();

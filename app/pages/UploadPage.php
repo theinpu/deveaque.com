@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/models/Post.php';
+require_once 'app/models/PostFactory.php';
 
 class UploadPage extends Page {
 
@@ -21,7 +21,7 @@ class UploadPage extends Page {
         foreach($files['image']['tmp_name'] as $id => $file) {
             $title = $titles[$id];
             $fileName = $this->uploadFile($file);
-            Post::createPost($title, $fileName);
+            PostFactory::createPost($title, $fileName);
         }
         $this->getSlim()->redirect('/');
     }

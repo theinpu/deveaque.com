@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/models/Post.php';
+require_once 'app/models/PostFactory.php';
 
 class MainPage extends Page {
 
@@ -8,7 +8,7 @@ class MainPage extends Page {
 
     public function index($page = 1) {
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
-        $pages = ceil(Post::getCount() / self::PostPerPage);
+        $pages = ceil(PostFactory::getCount() / self::PostPerPage);
         $this->getSlim()->view()->appendData(array(
                                                   'posts'     => $posts,
                                                   'page'      => $page,
@@ -18,7 +18,7 @@ class MainPage extends Page {
 
     private function loadPosts($offset) {
         $posts = array();
-        $postsList = Post::getPosts($offset, self::PostPerPage);
+        $postsList = PostFactory::getPosts($offset, self::PostPerPage);
         foreach($postsList as $item) {
             $post = array(
                 'id'    => $item->getId(),
@@ -75,7 +75,7 @@ class MainPage extends Page {
 
     public function showByTitle($title, $page = 1) {
         $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
-        $pages = ceil(Post::getCount(array('title' => $title)) / self::PostPerPage);
+        $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
         $this->getSlim()->view()->appendData(array(
                                                   'posts'     => $posts,
                                                   'page'      => $page,
@@ -87,7 +87,7 @@ class MainPage extends Page {
 
     private function loadPostsByTitle($title, $offset) {
         $posts = array();
-        $postsList = Post::getPostsByTitle($title, $offset, self::PostPerPage);
+        $postsList = PostFactory::getPostsByTitle($title, $offset, self::PostPerPage);
         foreach($postsList as $item) {
             $post = array(
                 'id'    => $item->getId(),
