@@ -18,7 +18,7 @@ class Post {
 
     private static function setCollection() {
         if(is_null(self::$collection)) {
-            $collectionName = strpos('dev.', $_SERVER['DOCUMENT_ROOT']) !== false ? 'posts_dev' : 'posts';
+            $collectionName = strpos($_SERVER['HTTP_HOST'], 'dev.') !== false ? 'posts_dev' : 'posts';
             self::$collection = MongoAssist::GetCollection($collectionName);
         }
     }
