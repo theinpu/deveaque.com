@@ -32,6 +32,10 @@ class Application {
 
         $this->addGetCommand('/upload', 'UploadPage', 'index');
         $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
+
+        $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
+        $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
+        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditorCode');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -47,12 +51,27 @@ class Application {
     private function initializeSlim() {
         $this->slim = new Slim(array(
                                     'view'           => new TwigView(),
-                                    'debug'          => false,
+                                    'debug'          => true,
                                     'log.enable'     => true,
-                                    'log.path'       => '../logs',
+                                    'log.path'       => '../slim-log',
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
+        $this->slim->view()->appendData(array('siteTitle' => self::Title));
+        $this->showAdminFeatures();
+    }
+
+    private function showAdminFeatures() {
+        $showAdminFeatures = self::isAdmin();
+        $this->getSlim()->view()->appendData(array('showAdminFeatures' => $showAdminFeatures));
+    }
+
+    public static function isAdmin() {
+        return in_array($_SERVER['REMOTE_ADDR'],
+                        array('92.62.59.95',
+                              '79.142.82.62',
+                              '89.110.48.143',
+                              '109.124.94.122'));
     }
 
     private function getSlim() {

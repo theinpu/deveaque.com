@@ -1,0 +1,16 @@
+{% if pages > 1 %}
+    <div class="pages">
+        <span>Страницы:  </span>
+        {% for i in 1..pages %}
+            {% if page == i %}
+                <span>{{ i }}</span>
+            {% else %}
+                {% if i == 1 %}
+                    <a href="/">{{ i }}</a>
+                {% else %}
+                    <a href="/page{{ i }}">{{ i }}</a>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}

@@ -6,7 +6,8 @@ class Post {
 
     public static function createPost($title, $file) {
         $date = date('U');
-        MongoAssist::GetCollection('posts')->insert(array('date' => $date, 'file' => $file, 'title' => $title));
+        MongoAssist::GetCollection('posts')
+            ->insert(array('date' => $date, 'file' => $file, 'title' => $title));
     }
 
     public static function getPosts($offset, $limit) {
@@ -48,6 +49,36 @@ class Post {
 
     public static function getCount() {
         return MongoAssist::GetCollection('posts')->count();
+    }
+
+    public static function deletePost($id) {
+        $post = self::getPost($id);
+        self::deleteFiles($post);
+
+        MongoAssist::GetCollection('posts')->remove(array('_id' => new MongoId($id)));
+    }
+
+    private static function deleteFiles(Post $post) {
+        $originFile = $_SERVER['DOCUMENT_ROOT'].'/../upload/'.$post->getFile();
+        $fullFile = $_SERVER['DOCUMENT_ROOT'].$post->getFullImage();
+        $smallFile = $_SERVER['DOCUMENT_ROOT'].$post->getSmallImage();
+
+        @unlink($originFile);
+        @unlink($fullFile);
+        @unlink($smallFile);
+    }
+
+    public static function getPost($id) {
+        return new Post(MongoAssist::GetCollection('posts')->findOne(array('_id' => new MongoId($id))));
+    }
+
+    private function getFile() {
+        return $this->data['file'];
+    }
+
+    public function setTitle($title) {
+        $this->data['title'] = $title;
+        MongoAssist::GetCollection('posts')->save($this->data);
     }
 
 }

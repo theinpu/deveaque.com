@@ -14,34 +14,42 @@
             });
         });
     </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-30332384-2']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script');
+            ga.type = 'text/javascript';
+            ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    {% if showAdminFeatures %}
+        {% include "adminScripts.twig" %}
+    {% endif %}
 </head>
 <body>
 <div id="page">
     <div id="siteTitle">
-        {{ siteTitle }}
+        <a href="/">{{ siteTitle }}</a>
     </div>
     <div class="navigation">
-        {% if showUpload %}
+        {% if showAdminFeatures %}
             <a href="/upload">запостить</a>
         {% endif %}
     </div>
     <div id="content">
         {% block content %}
-            {% if pages > 1 %}
-                <div class="pages">
-                    <span>Страницы: </span>
-                    <a href="/">1</a>
-                    {% for i in 2..pages %}
-                        <a href="/page{{ i }}">{{ i }}</a>
-                    {% endfor %}
-                    {% if pages > 10 %}
-                        <a href="/page{{ pages }}">&gt;&gt;</a>
-                    {% endif %}
-                </div>
-            {% endif %}
+            {% include "pages.twig" %}
             {% for item in posts %}
                 <div class="item-container">
-                    <div class="item">
+                    <div class="item" id="{{ item.id }}">
                         <div class="title">{{ item.title }}</div>
                         <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
 
@@ -49,18 +57,7 @@
                     </div>
                 </div>
             {% endfor %}
-            {% if pages > 1 %}
-                <div class="pages">
-                    <span>Страницы: </span>
-                    <a href="/">1</a>
-                    {% for i in 2..pages %}
-                        <a href="/page{{ i }}">{{ i }}</a>
-                    {% endfor %}
-                    {% if pages > 10 %}
-                        <a href="/page{{ pages }}">&gt;&gt;</a>
-                    {% endif %}
-                </div>
-            {% endif %}
+            {% include "pages.twig" %}
         {% endblock %}
     </div>
     <div id="footer">

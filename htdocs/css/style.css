@@ -39,6 +39,14 @@ a:hover {
     top: 35px;
 }
 
+#siteTitle a {
+    text-decoration: none;
+}
+
+#siteTitle a:hover {
+    color: #fff;
+}
+
 .navigation {
     position: absolute;
     top: 110px;

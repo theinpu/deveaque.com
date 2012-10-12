@@ -84,15 +84,15 @@ class Twig_Environment {
         }
 
         $options = array_merge(array(
-                                    'debug'               => false,
-                                    'charset'             => 'UTF-8',
-                                    'base_template_class' => 'Twig_Template',
-                                    'strict_variables'    => false,
-                                    'autoescape'          => true,
-                                    'cache'               => false,
-                                    'auto_reload'         => null,
-                                    'optimizations'       => -1,
-                               ), $options);
+            'debug'               => false,
+            'charset'             => 'UTF-8',
+            'base_template_class' => 'Twig_Template',
+            'strict_variables'    => false,
+            'autoescape'          => true,
+            'cache'               => false,
+            'auto_reload'         => null,
+            'optimizations'       => -1,
+        ), $options);
 
         $this->debug = (bool)$options['debug'];
         $this->charset = $options['charset'];
@@ -292,8 +292,7 @@ class Twig_Environment {
         if(!class_exists($cls, false)) {
             if(false === $cache = $this->getCacheFilename($name)) {
                 eval('?>'.$this->compileSource($this->loader->getSource($name), $name));
-            }
-            else {
+            } else {
                 if(!is_file($cache) || ($this->isAutoReload() && !$this->isTemplateFresh($name, filemtime($cache)))) {
                     $this->writeCacheFile($cache, $this->compileSource($this->loader->getSource($name), $name));
                 }
@@ -496,7 +495,7 @@ class Twig_Environment {
         }
         catch(Exception $e) {
             throw new Twig_Error_Runtime(sprintf('An exception has been thrown during the compilation of a template ("%s").',
-                                                 $e->getMessage()), -1, $name, $e);
+                $e->getMessage()), -1, $name, $e);
         }
     }
 
@@ -653,11 +652,9 @@ class Twig_Environment {
                 foreach($parsers as $parser) {
                     if($parser instanceof Twig_TokenParserInterface) {
                         $this->parsers->addTokenParser($parser);
-                    }
-                    elseif($parser instanceof Twig_TokenParserBrokerInterface) {
+                    } elseif($parser instanceof Twig_TokenParserBrokerInterface) {
                         $this->parsers->addTokenParserBroker($parser);
-                    }
-                    else {
+                    } else {
                         throw new Twig_Error_Runtime('getTokenParsers() must return an array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances');
                     }
                 }
@@ -968,7 +965,7 @@ class Twig_Environment {
 
             if(2 !== count($operators)) {
                 throw new InvalidArgumentException(sprintf('"%s::getOperators()" does not return a valid operators array.',
-                                                           get_class($extension)));
+                    get_class($extension)));
             }
 
             $this->unaryOperators = array_merge($this->unaryOperators, $operators[0]);
@@ -982,8 +979,7 @@ class Twig_Environment {
             if(false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
                 throw new RuntimeException(sprintf("Unable to create the cache directory (%s).", $dir));
             }
-        }
-        elseif(!is_writable($dir)) {
+        } elseif(!is_writable($dir)) {
             throw new RuntimeException(sprintf("Unable to write in the cache directory (%s).", $dir));
         }
 
@@ -992,7 +988,6 @@ class Twig_Environment {
             // rename does not work on Win32 before 5.2.6
             if(@rename($tmpFile, $file) || (@copy($tmpFile, $file) && unlink($tmpFile))) {
                 chmod($file, 0644);
-                apc_compile_file($file);
 
                 return;
             }
