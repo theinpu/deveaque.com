@@ -70,8 +70,7 @@ class Application {
         return in_array($_SERVER['REMOTE_ADDR'],
                         array('92.62.59.95',
                               '79.142.82.62',
-                              '89.110.48.143',
-                              '109.124.94.122'));
+                              '89.110.48.143'));
     }
 
     private function getSlim() {
