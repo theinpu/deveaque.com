@@ -16,9 +16,9 @@ class MainPage extends Page {
         $this->getSlim()->view()->display('main.twig');
     }
 
-    private function loadPosts($offset, $limit) {
+    private function loadPosts($offset) {
         $posts = array();
-        $postsList = Post::getPosts($offset, $limit);
+        $postsList = Post::getPosts($offset, self::PostPerPage);
         foreach($postsList as $item) {
             $post = array(
                 'id'    => $item->getId(),
@@ -72,4 +72,34 @@ class MainPage extends Page {
         $this->getSlim()->response()->header('Content-Type', 'image/jpeg');
         echo file_get_contents($destPath);
     }
+
+    public function showByTitle($title, $page = 1) {
+        $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
+        $pages = ceil(Post::getCount(array('title' => $title)) / self::PostPerPage);
+        $this->getSlim()->view()->appendData(array(
+                                                  'posts'     => $posts,
+                                                  'page'      => $page,
+                                                  'pages'     => $pages,
+                                                  'baseLink'  => '/post/'.$title
+                                             ));
+        $this->getSlim()->view()->display('main.twig');
+    }
+
+    private function loadPostsByTitle($title, $offset) {
+        $posts = array();
+        $postsList = Post::getPostsByTitle($title, $offset, self::PostPerPage);
+        foreach($postsList as $item) {
+            $post = array(
+                'id'    => $item->getId(),
+                'title' => $item->getTitle(),
+                'tmb'   => $item->getSmallImage(),
+                'image' => $item->getFullImage(),
+                'date'  => date('Y-m-d H:i:s', $item->getDate())
+            );
+            $posts[] = $post;
+        }
+
+        return $posts;
+    }
+
 }

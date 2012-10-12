@@ -61,10 +61,10 @@ class Post {
         return '/image/small/'.$this->data['file'];
     }
 
-    public static function getCount() {
+    public static function getCount($query = array()) {
         self::setCollection();
 
-        return self::$collection->count();
+        return self::$collection->count($query);
     }
 
     public static function deletePost($id) {
@@ -99,6 +99,20 @@ class Post {
         self::setCollection();
         $this->data['title'] = $title;
         self::$collection->save($this->data);
+    }
+
+    public static function getPostsByTitle($title, $offset, $limit) {
+        self::setCollection();
+        $cursor = self::$collection->find(array('title' => $title))
+            ->sort(array('date' => -1))
+            ->skip($offset)->limit($limit);
+
+        $result = array();
+        while($cursor->hasNext()) {
+            $result[] = new Post($cursor->getNext());
+        }
+
+        return $result;
     }
 
 }

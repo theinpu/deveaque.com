@@ -6,9 +6,9 @@
                 <span>{{ i }}</span>
             {% else %}
                 {% if i == 1 %}
-                    <a href="/">{{ i }}</a>
+                    <a href="{{ baseLink }}/">{{ i }}</a>
                 {% else %}
-                    <a href="/page{{ i }}">{{ i }}</a>
+                    <a href="{{ baseLink }}/page{{ i }}">{{ i }}</a>
                 {% endif %}
             {% endif %}
         {% endfor %}

@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
     <script>
         $(document).ready(function () {
-            $.each($('div.item a'), function (id, item) {
+            $.each($('div.item a.lightbox'), function (id, item) {
                 $(item).lightBox();
             });
         });
@@ -50,8 +50,14 @@
             {% for item in posts %}
                 <div class="item-container">
                     <div class="item" id="{{ item.id }}">
-                        <div class="title">{{ item.title }}</div>
-                        <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
+                        <div class="title">
+                            {% if item.title is empty %}
+                                {{ item.title }}
+                            {% else %}
+                                <a href="/post/{{ item.title }}/">{{ item.title }}</a>
+                            {% endif %}
+                        </div>
+                        <a href="{{ item.image }}" class="lightbox"><img src="{{ item.tmb }}"/></a>
 
                         <div class="date">{{ item.date }}</div>
                     </div>

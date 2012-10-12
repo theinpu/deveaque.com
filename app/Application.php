@@ -29,6 +29,7 @@ class Application {
         $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
         $this->addGetCommand('/image/small/:year/:month/:day/:image', 'MainPage', 'showSmallImage');
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
+        $this->addGetCommand('/post/:title/(page:pageId)', 'MainPage', 'showByTitle');
 
         $this->addGetCommand('/upload', 'UploadPage', 'index');
         $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
