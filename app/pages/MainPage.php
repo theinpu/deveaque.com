@@ -6,9 +6,7 @@ class MainPage extends Page {
 
     const PostPerPage = 20;
 
-    public function index() {
-        $page = func_get_arg(0);
-        $page = empty($page) ? 1 : $page[0];
+    public function index($page = 1) {
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
         $pages = ceil(Post::getCount() / self::PostPerPage);
         $this->getSlim()->view()->appendData(array(

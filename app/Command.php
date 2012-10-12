@@ -21,8 +21,8 @@ class Command {
         $className = $this->command[0];
         $class = new $className($this->slim);
         switch(func_num_args()) {
-            default:
-                call_user_func(array($class, $this->command[1]), func_get_args());
+            case 0:
+                call_user_func(array($class, $this->command[1]));
                 break;
             case 1:
                 call_user_func(array($class, $this->command[1]), func_get_arg(0));
@@ -32,6 +32,9 @@ class Command {
                 break;
             case 3:
                 call_user_func(array($class, $this->command[1]), func_get_arg(0), func_get_arg(1), func_get_arg(2));
+                break;
+            default:
+                call_user_func(array($class, $this->command[1]), func_get_args());
                 break;
         }
     }
