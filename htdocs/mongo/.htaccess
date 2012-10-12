@@ -1,4 +1,4 @@
 AuthType Basic   
 AuthName mongo
-AuthUserFile  /var/www/deveaque/data/www/deveaque.com/mongo/.htpasswd
+AuthUserFile  /var/www/deveaque/data/www/htdocs/mongo/.htpasswd
 require valid-user
