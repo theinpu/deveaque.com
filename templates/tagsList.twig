@@ -1,15 +1,15 @@
 <span>Tags: </span>
-<ul>
+<ul id="tagList">
     {% for tag in item.tags %}
-        <li><a href="/tag/{{ tag.id }}">{{ tag.title }}</a>{% if isAdmin %}(<a href="#" class="delete-tag">x</a>){% endif %}</li>
+        <li><a href="/tag/{{ tag.title }}">{{ tag.title }}</a>{% if isAdmin %}(<a href="#" class="delete-tag">x</a>){% endif %}</li>
     {% endfor %}
 </ul>
 {% if isAdmin %}
-    <a href="#" class="add-tag">add</a>
+    <a href="#" class="add-tag" onclick="return setupAddTagButton();">add</a>
     <script>
         $(document).ready(function(){
             setupDeleteTagButtons();
-            setupAddTagButton();
+            //setupAddTagButton();
         });
 
         function deleteTag(tag) {
@@ -24,9 +24,11 @@
         }
 
         function setupAddTagButton() {
-            $('a.add-tag').click(function () {
-                return false;
+            $.get('/tag/editor/{{ item.id }}', function(data) {
+                var html = '<li id="tagEditorWrapper">' + data + '</li>';
+                $('#tagList').append(html);
             });
+            return false;
         }
     </script>
 {% endif %}

@@ -1,3 +1,38 @@
-<div class="section">
+<span id="tagEditor">
+    <input type="text" id="tagName" placeholder="тег" />
+</span>
+<script>
+    var tagEditor = {
+        saveTag : function() {
+            $.post('/tag/save/', {'title' : tagEditor.value()}, function(data) {
+                tagEditor.attachTag(data);
+            });
+        },
+        close : function() {
+            tagEditor.wrapper.remove();
+        },
+        init : function() {
+            tagEditor.wrapper = $('#tagEditorWrapper');
+        },
+        attachTag : function(tag) {
+            tagItem = '<li><a href="/tag/'+tag+'">'+tag+'</a></li>';
+            $('#tagList').append(tagItem);
+        },
+        value : function() {
+            return $('#tagName').val();
+        }
+    };
 
-</div>
+    $(document).ready(function(){
+        tagEditor.init();
+        $('#tagName').keypress(function(e){
+            switch (e.which) {
+                case 13:
+                        tagEditor.saveTag();
+                        tagEditor.close();
+                    break;
+            }
+        });
+    });
+
+</script>

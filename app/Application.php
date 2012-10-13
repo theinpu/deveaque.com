@@ -37,7 +37,12 @@ class Application {
         $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
         $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
         $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditor');
-        $this->addGetCommand('/post/edit/tag/:id', 'AdminPage', 'getTagEditor');
+
+
+        $this->addGetCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
+        $this->addPostCommand('/tag/save/', 'TagsPage', 'saveTag');
+        $this->addGetCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
+
     }
 
     private function addGetCommand($path, $class, $method) {
