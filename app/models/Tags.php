@@ -15,7 +15,6 @@ class Tags {
     public static function getItemList($postId) {
         self::checkCollections();
         $tagLinks = self::$linkCollection->find(array('postId' => $postId));
-        var_dump($postId);
         $result = array();
         while($tagLinks->hasNext()) {
             $tagLink = $tagLinks->getNext();
@@ -43,12 +42,29 @@ class Tags {
     public static function attachPost($tagTitle, $postId) {
         self::checkCollections();
 
-        $tagId = self::$tagCollection->findOne(array('title' => $tagTitle));
-        if(is_null($tagId)) throw new InvalidArgumentException();
+        $tagId = self::getTagIdByTitle($tagTitle);
 
         $link = self::$linkCollection->findOne(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
         if(is_null($link)) {
             self::$linkCollection->save(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        } else {
+            throw new InvalidArgumentException();
+        }
+    }
+
+    private static function getTagIdByTitle($tagTitle) {
+        $tagId = self::$tagCollection->findOne(array('title' => $tagTitle));
+        if (is_null($tagId)) throw new InvalidArgumentException();
+        return $tagId;
+    }
+
+    public static function deattachPost($tagTitle, $postId) {
+        self::checkCollections();
+
+        $tagId = self::getTagIdByTitle($tagTitle);
+        $link = self::$linkCollection->findOne(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        if(!is_null($link)) {
+            self::$linkCollection->remove(array('_id' => $link['_id']));
         } else {
             throw new InvalidArgumentException();
         }

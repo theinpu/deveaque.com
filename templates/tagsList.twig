@@ -2,7 +2,7 @@
     <span>Tags: </span>
     <ul class="tagList">
         {% for tag in item.tags %}
-            <li><a href="/tag/{{ tag }}">{{ tag }}</a>{% if isAdmin %}(<a href="#" class="delete-tag">x</a>){% endif %}
+            <li><a href="/tag/{{ tag }}">{{ tag }}</a>{% if isAdmin %}(<a href="#" tag="{{ tag }}" postId="{{ item.id }}" class="delete-tag" onclick="return deattachTag($(this));">x</a>){% endif %}
             </li>
         {% endfor %}
     </ul>
@@ -10,20 +10,18 @@
 {% if isAdmin %}
     <a href="#" class="add-tag" onclick="return setupAddTagButton('{{ item.id }}');">add</a>
     <script>
-        $(document).ready(function () {
-            setupDeleteTagButtons();
-            //setupAddTagButton();
-        });
 
-        function deleteTag(tag) {
-            tag.parent().remove();
-        }
-
-        function setupDeleteTagButtons() {
-            $('a.delete-tag').click(function () {
-                deleteTag($(this));
-                return false;
-            });
+        function deattachTag(tag) {
+            $.get('/tag/' + tag.attr('tag')+'/deattach/'+tag.attr('postId'), function(data) {
+                console.log(data);
+                if(data.success) {
+                    tag.parent().remove();
+                }
+                else {
+                    console.log(data);
+                }
+            }, 'json');
+            return false;
         }
 
         function setupAddTagButton(postId) {

@@ -31,17 +31,18 @@ class Application {
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainPage', 'showByTitle');
 
-        $this->addGetCommand('/upload', 'UploadPage', 'index');
-        $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
+        $this->addGetAdminCommand('/upload', 'UploadPage', 'index');
+        $this->addPostAdminCommand('/upload', 'UploadPage', 'uploadImages');
 
-        $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
-        $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
-        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditor');
+        $this->addGetAdminCommand('/post/delete/:id', 'AdminPage', 'deletePost');
+        $this->addPostAdminCommand('/post/edit/:id', 'AdminPage', 'editPost');
+        $this->addGetAdminCommand('/post/edit/form/:id', 'AdminPage', 'getEditor');
 
 
-        $this->addGetCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
-        $this->addPostCommand('/tag/save/', 'TagsPage', 'saveTag');
-        $this->addGetCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
+        $this->addGetAdminCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
+        $this->addPostAdminCommand('/tag/save/', 'TagsPage', 'saveTag');
+        $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
+        $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagsPage', 'deattachTag');
 
     }
 
@@ -51,6 +52,18 @@ class Application {
     }
 
     private function addPostCommand($path, $class, $method) {
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->post($path, $command->getCallback());
+    }
+
+    private function addGetAdminCommand($path, $class, $method) {
+        if(!self::isAdmin()) return;
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->get($path, $command->getCallback());
+    }
+
+    private function addPostAdminCommand($path, $class, $method) {
+        if(!self::isAdmin()) return;
         $command = new Command($this->getSlim(), array($class, $method));
         $this->slim->post($path, $command->getCallback());
     }
@@ -82,4 +95,5 @@ class Application {
     private function getSlim() {
         return $this->slim;
     }
+
 }
