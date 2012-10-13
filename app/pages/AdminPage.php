@@ -17,6 +17,7 @@ class AdminPage extends Page {
     }
 
     public function getTagEditor($id) {
+        $this->appendDataToTemplate(array('postId' => $id));
         $this->displayTemplate('forms/tagEditor.twig');
     }
 

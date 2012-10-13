@@ -41,7 +41,7 @@ class Application {
 
         $this->addGetCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
         $this->addPostCommand('/tag/save/', 'TagsPage', 'saveTag');
-        $this->addGetCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
+        $this->addGetCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
 
     }
 

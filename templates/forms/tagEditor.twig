@@ -5,8 +5,9 @@
     var tagEditor = {
         saveTag : function() {
             $.post('/tag/save/', {'title' : tagEditor.value()}, function(data) {
-                tagEditor.attachTag(data);
-            });
+                console.log(data);
+                tagEditor.attachTag(data['tag']);
+            }, 'json');
         },
         close : function() {
             tagEditor.wrapper.remove();
@@ -15,8 +16,14 @@
             tagEditor.wrapper = $('#tagEditorWrapper');
         },
         attachTag : function(tag) {
-            tagItem = '<li><a href="/tag/'+tag+'">'+tag+'</a></li>';
-            $('#tagList').append(tagItem);
+            $.get('/tag/' + tag + '/attach/{{ postId }}', function(data) {
+                if(data.success) {
+                    tagItem = '<li><a href="/tag/'+tag+'">'+tag+'</a></li>';
+                    $('#tagList').append(tagItem);
+                } else {
+                    console.log(data);
+                }
+            });
         },
         value : function() {
             return $('#tagName').val();
