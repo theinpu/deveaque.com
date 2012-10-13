@@ -18,8 +18,7 @@ class PostFactory {
 
     private static function setCollection() {
         if(is_null(self::$collection)) {
-            $collectionName = strpos($_SERVER['HTTP_HOST'], 'dev.') !== false ? 'posts_dev' : 'posts';
-            self::$collection = MongoAssist::GetCollection($collectionName);
+            self::$collection = MongoAssist::GetCollection('posts');
         }
     }
 

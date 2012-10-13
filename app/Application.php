@@ -71,7 +71,6 @@ class Application {
     public static function isAdmin() {
         return in_array($_SERVER['REMOTE_ADDR'],
                         array('92.62.59.95',
-                              '79.142.82.62',
                               '89.110.48.143'));
     }
 
