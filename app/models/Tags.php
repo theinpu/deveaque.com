@@ -15,21 +15,13 @@ class Tags {
     public static function getItemList($postId) {
         self::checkCollections();
         $tagLinks = self::$linkCollection->find(array('postId' => $postId));
+        var_dump($postId);
         $result = array();
         while($tagLinks->hasNext()) {
             $tagLink = $tagLinks->getNext();
             $tag = self::$tagCollection->findOne(array('_id' => new MongoId($tagLink['tagId'])));
-            $result[] = array(
-                'title' => $tag['title'],
-                'id'    => $tagLink['tagId']
-            );
+            $result[] = $tag['title'];
         }
-
-        $result[] = array(
-            'title' => 'test',
-            'id'    => '123'
-        );
-
         return $result;
     }
 
@@ -46,5 +38,19 @@ class Tags {
             self::$tagCollection->save(array('title' => $tagTitle));
         }
 
+    }
+
+    public static function attachPost($tagTitle, $postId) {
+        self::checkCollections();
+
+        $tagId = self::$tagCollection->findOne(array('title' => $tagTitle));
+        if(is_null($tagId)) throw new InvalidArgumentException();
+
+        $link = self::$linkCollection->findOne(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        if(is_null($link)) {
+            self::$linkCollection->save(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        } else {
+            throw new InvalidArgumentException();
+        }
     }
 }

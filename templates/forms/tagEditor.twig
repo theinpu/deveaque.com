@@ -19,11 +19,11 @@
             $.get('/tag/' + tag + '/attach/{{ postId }}', function(data) {
                 if(data.success) {
                     tagItem = '<li><a href="/tag/'+tag+'">'+tag+'</a></li>';
-                    $('#tagList').append(tagItem);
+                    $('#{{ postId }} .tagList').append(tagItem);
                 } else {
                     console.log(data);
                 }
-            });
+            }, 'json');
         },
         value : function() {
             return $('#tagName').val();

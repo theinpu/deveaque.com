@@ -1,13 +1,16 @@
-<span>Tags: </span>
-<ul id="tagList">
-    {% for tag in item.tags %}
-        <li><a href="/tag/{{ tag.title }}">{{ tag.title }}</a>{% if isAdmin %}(<a href="#" class="delete-tag">x</a>){% endif %}</li>
-    {% endfor %}
-</ul>
+{% if item.tags|length > 0 or isAdmin %}
+    <span>Tags: </span>
+    <ul class="tagList">
+        {% for tag in item.tags %}
+            <li><a href="/tag/{{ tag }}">{{ tag }}</a>{% if isAdmin %}(<a href="#" class="delete-tag">x</a>){% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
 {% if isAdmin %}
-    <a href="#" class="add-tag" onclick="return setupAddTagButton();">add</a>
+    <a href="#" class="add-tag" onclick="return setupAddTagButton('{{ item.id }}');">add</a>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             setupDeleteTagButtons();
             //setupAddTagButton();
         });
@@ -23,10 +26,11 @@
             });
         }
 
-        function setupAddTagButton() {
-            $.get('/tag/editor/{{ item.id }}', function(data) {
+        function setupAddTagButton(postId) {
+            $('#tagEditorWrapper').remove();
+            $.get('/tag/editor/'+postId, function (data) {
                 var html = '<li id="tagEditorWrapper">' + data + '</li>';
-                $('#tagList').append(html);
+                $('#'+postId+' .tagList').append(html);
             });
             return false;
         }
