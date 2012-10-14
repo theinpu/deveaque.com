@@ -30,6 +30,8 @@ class Application {
         $this->addGetCommand('/image/small/:year/:month/:day/:image', 'MainPage', 'showSmallImage');
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainPage', 'showByTitle');
+        $this->addGetCommand('/tag/:tag', 'MainPage', 'showByTag');
+        $this->addGetCommand('/tag/cloud', 'TagsPage', 'showTagCloud');
 
         $this->addGetAdminCommand('/upload', 'UploadPage', 'index');
         $this->addPostAdminCommand('/upload', 'UploadPage', 'uploadImages');
@@ -78,6 +80,7 @@ class Application {
                                     'templates.path' => '../templates'
                                ));
         $this->slim->view()->appendData(array('siteTitle' => self::Title));
+        $this->slim->view()->appendData(array('logoTitle' => self::Title));
         $this->showAdminFeatures();
     }
 

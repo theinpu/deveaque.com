@@ -39,7 +39,7 @@ class TagsPage extends Page {
         echo json_encode($result);
     }
 
-    public function getTagsList() {
+    public function showTagCloud() {
 
     }
 

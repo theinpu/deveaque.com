@@ -44,9 +44,9 @@ class Tags {
 
         $tagId = self::getTagIdByTitle($tagTitle);
 
-        $link = self::$linkCollection->findOne(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        $link = self::$linkCollection->findOne(array('tagId' => $tagId, 'postId' => $postId));
         if(is_null($link)) {
-            self::$linkCollection->save(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+            self::$linkCollection->save(array('tagId' => $tagId, 'postId' => $postId));
         } else {
             throw new InvalidArgumentException();
         }
@@ -55,18 +55,30 @@ class Tags {
     private static function getTagIdByTitle($tagTitle) {
         $tagId = self::$tagCollection->findOne(array('title' => $tagTitle));
         if (is_null($tagId)) throw new InvalidArgumentException();
-        return $tagId;
+        return $tagId['_id']->{'$id'};
     }
 
     public static function deattachPost($tagTitle, $postId) {
         self::checkCollections();
 
         $tagId = self::getTagIdByTitle($tagTitle);
-        $link = self::$linkCollection->findOne(array('tagId' => $tagId['_id']->{'$id'}, 'postId' => $postId));
+        $link = self::$linkCollection->findOne(array('tagId' => $tagId, 'postId' => $postId));
         if(!is_null($link)) {
             self::$linkCollection->remove(array('_id' => $link['_id']));
         } else {
             throw new InvalidArgumentException();
         }
+    }
+
+    public static function getAttachedPosts($tagTitle) {
+        self::checkCollections();
+        $tagId = self::getTagIdByTitle($tagTitle);
+        $cursor = self::$linkCollection->find(array('tagId' => $tagId));
+        $posts = array();
+        while($cursor->hasNext()) {
+            $post = $cursor->getNext();
+            $posts[] = new MongoId($post['postId']);
+        }
+        return $posts;
     }
 }

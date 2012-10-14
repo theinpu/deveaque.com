@@ -10,37 +10,24 @@ class MainPage extends Page {
     public function index($page = 1) {
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
-        $this->getSlim()->view()->appendData(array(
-                                                  'posts'     => $posts,
-                                                  'page'      => $page,
-                                                  'pages'     => $pages));
-        $this->getSlim()->view()->display('main.twig');
+        $this->appendDataToTemplate(array(
+            'posts' => $posts,
+            'page' => $page,
+            'pages' => $pages));
+        $this->displayTemplate('main.twig');
     }
 
     private function loadPosts($offset) {
-        $posts = array();
         $postsList = PostFactory::getPosts($offset, self::PostPerPage);
-        foreach($postsList as $item) {
-            $post = array(
-                'id'    => $item->getId(),
-                'title' => $item->getTitle(),
-                'tmb'   => $item->getSmallImage(),
-                'image' => $item->getFullImage(),
-                'date'  => date(' H:i:s Y.m.d', $item->getDate()),
-                'tags'  => Tags::getItemList($item->getId()),
-            );
-            $posts[] = $post;
-        }
-
-        return $posts;
+        return $this->buildPosts($postsList);
     }
 
     public function showFullImage() {
         $args = func_get_arg(0);
-        $basePath = $args[0].'/'.$args[1].'/'.$args[2].'/'.$args[3];
-        $sourcePath = '../upload/'.$basePath;
-        $destPath = 'image/full/'.$basePath;
-        if(!file_exists($destPath)) {
+        $basePath = $args[0] . '/' . $args[1] . '/' . $args[2] . '/' . $args[3];
+        $sourcePath = '../upload/' . $basePath;
+        $destPath = 'image/full/' . $basePath;
+        if (!file_exists($destPath)) {
             @mkdir(dirname($destPath), 0777, true);
             @copy($sourcePath, $destPath);
         }
@@ -50,18 +37,17 @@ class MainPage extends Page {
 
     public function showSmallImage() {
         $args = func_get_arg(0);
-        $basePath = $args[0].'/'.$args[1].'/'.$args[2].'/'.$args[3];
-        $sourcePath = '../upload/'.$basePath;
-        $destPath = 'image/small/'.$basePath;
-        if(!file_exists($destPath)) {
+        $basePath = $args[0] . '/' . $args[1] . '/' . $args[2] . '/' . $args[3];
+        $sourcePath = '../upload/' . $basePath;
+        $destPath = 'image/small/' . $basePath;
+        if (!file_exists($destPath)) {
             @mkdir(dirname($destPath), 0777, true);
             $sourceImage = imagecreatefromjpeg($sourcePath);
             $sizes = getimagesize($sourcePath);
-            if($sizes[1] > 650) {
+            if ($sizes[1] > 650) {
                 $height = 650;
                 $width = ($height / $sizes[1]) * $sizes[0];
-            }
-            else {
+            } else {
                 $width = $sizes[0];
                 $height = $sizes[1];
             }
@@ -76,32 +62,55 @@ class MainPage extends Page {
     }
 
     public function showByTitle($title, $page = 1) {
+
+        $this->getSlim()->view()->setData('siteTitle', $title.' - '.Application::Title);
+
         $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
         $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
-        $this->getSlim()->view()->appendData(array(
-                                                  'posts'     => $posts,
-                                                  'page'      => $page,
-                                                  'pages'     => $pages,
-                                                  'baseLink'  => '/post/'.$title
-                                             ));
-        $this->getSlim()->view()->display('main.twig');
+        $this->appendDataToTemplate(array(
+            'posts' => $posts,
+            'page' => $page,
+            'pages' => $pages,
+            'baseLink' => '/post/' . $title
+        ));
+        $this->displayTemplate('main.twig');
     }
 
     private function loadPostsByTitle($title, $offset) {
-        $posts = array();
         $postsList = PostFactory::getPostsByTitle($title, $offset, self::PostPerPage);
-        foreach($postsList as $item) {
+        return $this->buildPosts($postsList);
+    }
+
+    private function buildPosts($postsList) {
+        $posts = array();
+        foreach ($postsList as $item) {
             $post = array(
-                'id'    => $item->getId(),
+                'id' => $item->getId(),
                 'title' => $item->getTitle(),
-                'tmb'   => $item->getSmallImage(),
+                'tmb' => $item->getSmallImage(),
                 'image' => $item->getFullImage(),
-                'date'  => date('Y-m-d H:i:s', $item->getDate())
+                'date' => date('Y-m-d H:i:s', $item->getDate()),
+                'tags' => Tags::getItemList($item->getId())
             );
             $posts[] = $post;
         }
-
         return $posts;
+    }
+
+    public function showByTag($tag, $page = 1) {
+        $this->getSlim()->view()->setData('siteTitle', $tag.' - '.Application::Title);
+
+        $postIds = Tags::getAttachedPosts($tag);
+        $postsList = PostFactory::getPostsByIds($postIds, ($page - 1) * self::PostPerPage, self::PostPerPage);
+        $posts = $this->buildPosts($postsList);
+        $pages = ceil(count($postIds) / self::PostPerPage);
+        $this->appendDataToTemplate(array(
+            'posts' => $posts,
+            'page' => $page,
+            'pages' => $pages,
+            'baseLink' => '/tag/' . $tag
+        ));
+        $this->displayTemplate('main.twig');
     }
 
 }

@@ -85,4 +85,18 @@ class PostFactory {
         self::$collection->save($post->getData());
     }
 
+    public static function getPostsByIds($postIds, $offset, $limit) {
+        self::setCollection();
+        $cursor = self::$collection->find(array('_id' => array('$in' => $postIds)))
+            ->sort(array('date' => -1))
+            ->skip($offset)->limit($limit);
+
+        $result = array();
+        while($cursor->hasNext()) {
+            $result[] = new Post($cursor->getNext());
+        }
+
+        return $result;
+    }
+
 }
