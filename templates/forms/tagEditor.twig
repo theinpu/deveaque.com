@@ -11,7 +11,7 @@
 <script>
     var tagEditor = {
         saveTag : function() {
-            $.post('/tag/save/', {'title' : tagEditor.value()}, function(data) {
+            $.post('/tag/save', {'title' : tagEditor.value()}, function(data) {
                 console.log(data);
                 tagEditor.attachTag(data['tag']);
             }, 'json');

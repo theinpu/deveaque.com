@@ -42,9 +42,38 @@ class Application {
 
 
         $this->addGetAdminCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
-        $this->addPostAdminCommand('/tag/save/', 'TagsPage', 'saveTag');
+        $this->addPostAdminCommand('/tag/save', 'TagsPage', 'saveTag');
         $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagsPage', 'deattachTag');
+
+        /*
+         * base view
+         * /(page) - default view
+         * /post/title/(page) - show by title
+         * /tag/title/(page) - show by tag
+         *
+         * content
+         * /image/full/year/month/day/image
+         * /image/small/year/month/day/image
+         * /style/cssFile
+         * /script/jsFile
+         *
+         * admin
+         * /upload
+         *
+         * admin actions
+         * /post/add
+         * /post/edit/id
+         * /post/delete/id
+         * /tag/save
+         * /tag/tagTitle/attach/postId
+         * /tag/tagTitle/deattach/postId
+         *
+         * editors
+         * /post/edit/form/id   => /editors/post/id
+         * /tag/editor/id       => /editors/tag/id
+         *
+         */
 
     }
 
