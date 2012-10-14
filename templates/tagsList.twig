@@ -2,7 +2,7 @@
     <span>Tags: </span>
     <ul class="tagList">
         {% for tag in item.tags %}
-            <li><a href="/tag/{{ tag }}">{{ tag }}</a>{% if isAdmin %}(<a href="#" tag="{{ tag }}" postId="{{ item.id }}" class="delete-tag" onclick="return deattachTag($(this));">x</a>){% endif %}
+            <li><a href="/tag/{{ tag }}">{{ tag }}</a>{% if isAdmin %}[<a href="#" tag="{{ tag }}" postId="{{ item.id }}" class="delete-tag" onclick="return deattachTag($(this));">x</a>]{% endif %}
             </li>
         {% endfor %}
     </ul>
@@ -29,6 +29,7 @@
             $.get('/tag/editor/'+postId, function (data) {
                 var html = '<li id="tagEditorWrapper">' + data + '</li>';
                 $('#'+postId+' .tagList').append(html);
+                $('#tagName').focus();
             });
             return false;
         }
