@@ -26,12 +26,6 @@ class Application {
     }
 
     private function createRoutes() {
-        $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
-        $this->addGetCommand('/image/small/:year/:month/:day/:image', 'MainPage', 'showSmallImage');
-        $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
-        $this->addGetCommand('/post/:title/(page:pageId)', 'MainPage', 'showByTitle');
-        $this->addGetCommand('/tag/:tag', 'MainPage', 'showByTag');
-        $this->addGetCommand('/tag/cloud', 'TagsPage', 'showTagCloud');
 
         $this->addGetAdminCommand('/upload', 'UploadPage', 'index');
         $this->addPostAdminCommand('/upload', 'UploadPage', 'uploadImages');
@@ -46,11 +40,22 @@ class Application {
         $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagsPage', 'deattachTag');
 
+        //new
+
+        $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
+        $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
+        $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
+
+        $this->addGetCommand('/image/full/:year/:month/:day/:image', 'ContentHandler', 'showFullPostImage');
+        $this->addGetCommand('/image/small/:year/:month/:day/:image', 'ContentHandler', 'showSmallPostImage');
+
+        //admin
+
         /*
          * base view
          * /(page) - default view
          * /post/title/(page) - show by title
-         * /tag/title/(page) - show by tag
+         * /tag/tagName/(page) - show by tag
          *
          * content
          * /image/full/year/month/day/image

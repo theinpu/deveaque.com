@@ -25,7 +25,7 @@
         attachTag : function(tag) {
             $.get('/tag/' + tag + '/attach/{{ postId }}', function(data) {
                 if(data.success) {
-                    tagItem = '<li><a href="/tag/'+tag+'">'+tag+'</a></li>';
+                    tagItem = '<li><a href="/tag/'+tag+'/">'+tag+'</a></li>';
                     $('#{{ postId }} .tagList').append(tagItem);
                 } else {
                     console.log(data);
