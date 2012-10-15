@@ -2,7 +2,9 @@
     <span>Tags: </span>
     <ul class="tagList">
         {% for tag in item.tags %}
-            <li><a href="/tag/{{ tag }}/">{{ tag }}</a>{% if isAdmin %}[<a href="#" tag="{{ tag }}" postId="{{ item.id }}" class="delete-tag" onclick="return deattachTag($(this));">x</a>]{% endif %}
+            <li><a href="/tag/{{ tag }}/">{{ tag }}</a>{% if isAdmin %}[<a href="#" tag="{{ tag }}" postId="{{ item.id }}"
+                                                                           class="delete-tag"
+                                                                           onclick="return deattachTag($(this));">x</a>]{% endif %}
             </li>
         {% endfor %}
     </ul>
@@ -12,9 +14,9 @@
     <script>
 
         function deattachTag(tag) {
-            $.get('/tag/' + tag.attr('tag')+'/deattach/'+tag.attr('postId'), function(data) {
+            $.get('/tag/' + tag.attr('tag') + '/deattach/' + tag.attr('postId'), function (data) {
                 console.log(data);
-                if(data.success) {
+                if (data.success) {
                     tag.parent().remove();
                 }
                 else {
@@ -26,9 +28,9 @@
 
         function setupAddTagButton(postId) {
             $('#tagEditorWrapper').remove();
-            $.get('/tag/editor/'+postId, function (data) {
+            $.get('/editors/tag/' + postId, function (data) {
                 var html = '<li id="tagEditorWrapper">' + data + '</li>';
-                $('#'+postId+' .tagList').append(html);
+                $('#' + postId + ' .tagList').append(html);
                 $('#tagName').focus();
             });
             return false;

@@ -89,7 +89,7 @@
                 controlPanel.append(editorWrapperTemplate);
                 var editorWrapper = $('#editorWrapper');
                 editorWrapper.css('top', 50);
-                $.get('/post/edit/form/' + id, function (data) {
+                $.get('/editors/post/' + id, function (data) {
                     editorWrapper.empty();
                     editorWrapper.append(data);
                     controlPanel.lock = true;

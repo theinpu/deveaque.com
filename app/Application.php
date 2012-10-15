@@ -46,8 +46,8 @@ class Application {
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
 
         //editors
-        $this->addGetAdminCommand('/editors/post/:id', 'EditorHandler', 'getPostEditor');
-        $this->addGetAdminCommand('/editors/tag/:id', 'EditorHandler', 'getTagEditor');
+        $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
+        $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
     }
 
     private function addGetCommand($path, $class, $method) {

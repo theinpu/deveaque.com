@@ -1,6 +1,6 @@
 <?php
 
-require_once 'Page.php';
+require_once 'app/pages/Page.php';
 require_once 'app/models/Tags.php';
 
 class TagHandler extends Page {

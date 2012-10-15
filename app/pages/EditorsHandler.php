@@ -1,5 +1,8 @@
 <?php
 
+require_once 'app/pages/Page.php';
+require_once 'app/models/PostFactory.php';
+
 class EditorsHandler extends Page {
 
     public function getPostEditor($id) {

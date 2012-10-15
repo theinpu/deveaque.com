@@ -1,5 +1,8 @@
 <?php
 
+require_once 'app/pages/Page.php';
+require_once 'app/models/PostFactory.php';
+
 class PostHandler extends Page {
 
     private $uploadPath;
@@ -11,7 +14,6 @@ class PostHandler extends Page {
     }
 
     public function addPost() {
-        $this->checkAjaxPermissions();
         $files = $_FILES;
         $titles = $this->getSlim()->request()->post('title');
         foreach($files['image']['tmp_name'] as $id => $file) {
