@@ -32,15 +32,15 @@ a:hover {
     color: #fff;
     position: absolute;
     left: 50%;
-    font-family: Arial;
-    font-size: 22px;
-    font-weight: bold;
     margin-left: -450px;
     top: 35px;
 }
 
 #siteTitle a {
+    position: absolute;
+    text-indent: -9999px;
     text-decoration: none;
+    width: 600px;
 }
 
 #siteTitle a:hover {
