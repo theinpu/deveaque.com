@@ -1,21 +1,17 @@
 <?php
 
-require_once 'app/models/PostFactory.php';
-
-class UploadPage extends Page {
+class PostHandler extends Page {
 
     private $uploadPath;
 
     public function __construct($slim) {
         parent::__construct($slim);
+
         $this->uploadPath = $_SERVER['DOCUMENT_ROOT'].'/../upload/';
     }
 
-    public function index() {
-        $this->getSlim()->view()->display('upload.twig');
-    }
-
-    public function uploadImages() {
+    public function addPost() {
+        $this->checkAjaxPermissions();
         $files = $_FILES;
         $titles = $this->getSlim()->request()->post('title');
         foreach($files['image']['tmp_name'] as $id => $file) {
@@ -24,6 +20,29 @@ class UploadPage extends Page {
             PostFactory::createPost($title, $fileName);
         }
         $this->getSlim()->redirect('/');
+    }
+
+    public function editPost($id) {
+        $this->checkAjaxPermissions();
+        try {
+            $post = PostFactory::getPost($id);
+            $post->setTitle($this->getSlim()->request()->post('title'));
+            PostFactory::savePost($post);
+            echo json_encode(array('saved' => true, 'title' => $post->getTitle()));
+        }
+        catch(Exception $ex) {
+            echo json_encode(array('saved' => false, 'error' => $ex->getMessage()));
+        }
+    }
+
+    public function deletePost($id) {
+        $this->checkAjaxPermissions();
+        try {
+            PostFactory::deletePost($id);
+        }
+        catch(Exception $e) {
+            echo json_encode(array('error' => $e->getMessage()));
+        }
     }
 
     private function uploadFile($file) {

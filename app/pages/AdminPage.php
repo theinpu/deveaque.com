@@ -5,43 +5,8 @@ require_once 'app/models/PostFactory.php';
 
 class AdminPage extends Page {
 
-    public function getEditor($id) {
-        $post = PostFactory::getPost($id);
-        $postData = array(
-            'id'    => $post->getId(),
-            'title' => $post->getTitle()
-        );
-
-        $this->appendDataToTemplate(array('post' => $postData));
-        $this->displayTemplate('forms/editor.twig');
+    public function showUpload() {
+        $this->getSlim()->view()->display('upload.twig');
     }
 
-    public function getTagEditor($id) {
-        $this->appendDataToTemplate(array('postId' => $id));
-        $this->displayTemplate('forms/tagEditor.twig');
-    }
-
-    public function editPost($id) {
-        try {
-            $post = PostFactory::getPost($id);
-            $post->setTitle($this->getSlim()->request()->post('title'));
-            PostFactory::savePost($post);
-            echo json_encode(array('saved' => true, 'title' => $post->getTitle()));
-        }
-        catch(Exception $ex) {
-            echo json_encode(array('saved' => false, 'error' => $ex->getMessage()));
-        }
-    }
-
-    public function deletePost($id) {
-        if(!$this->getSlim()->request()->isAjax() || !Application::isAdmin()) {
-            $this->getSlim()->error('404');
-        }
-        try {
-            PostFactory::deletePost($id);
-        }
-        catch(Exception $e) {
-            echo json_encode(array('error' => $e->getMessage()));
-        }
-    }
 }

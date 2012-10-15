@@ -26,22 +26,7 @@ class Application {
     }
 
     private function createRoutes() {
-
-        $this->addGetAdminCommand('/upload', 'UploadPage', 'index');
-        $this->addPostAdminCommand('/upload', 'UploadPage', 'uploadImages');
-
-        $this->addGetAdminCommand('/post/delete/:id', 'AdminPage', 'deletePost');
-        $this->addPostAdminCommand('/post/edit/:id', 'AdminPage', 'editPost');
-        $this->addGetAdminCommand('/post/edit/form/:id', 'AdminPage', 'getEditor');
-
-
-        $this->addGetAdminCommand('/tag/editor/:id', 'AdminPage', 'getTagEditor');
-        $this->addPostAdminCommand('/tag/save', 'TagsPage', 'saveTag');
-        $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagsPage', 'attachTagToPost');
-        $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagsPage', 'deattachTag');
-
         //new
-
         $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
@@ -50,36 +35,19 @@ class Application {
         $this->addGetCommand('/image/small/:year/:month/:day/:image', 'ContentHandler', 'showSmallPostImage');
 
         //admin
+        $this->addGetAdminCommand('/upload', 'AdminPage', 'showUpload');
+        //admin actions
+        $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
+        $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
+        $this->addGetCommand('/post/delete/:id', 'PostHandler', 'deletePost');
 
-        /*
-         * base view
-         * /(page) - default view
-         * /post/title/(page) - show by title
-         * /tag/tagName/(page) - show by tag
-         *
-         * content
-         * /image/full/year/month/day/image
-         * /image/small/year/month/day/image
-         * /style/cssFile
-         * /script/jsFile
-         *
-         * admin
-         * /upload
-         *
-         * admin actions
-         * /post/add
-         * /post/edit/id
-         * /post/delete/id
-         * /tag/save
-         * /tag/tagTitle/attach/postId
-         * /tag/tagTitle/deattach/postId
-         *
-         * editors
-         * /post/edit/form/id   => /editors/post/id
-         * /tag/editor/id       => /editors/tag/id
-         *
-         */
+        $this->addPostAdminCommand('/tag/save', 'TagHandler', 'saveTag');
+        $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagHandler', 'attachTagToPost');
+        $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
 
+        //editors
+        $this->addGetAdminCommand('/editors/post/:id', 'EditorHandler', 'getPostEditor');
+        $this->addGetAdminCommand('/editors/tag/:id', 'EditorHandler', 'getTagEditor');
     }
 
     private function addGetCommand($path, $class, $method) {
