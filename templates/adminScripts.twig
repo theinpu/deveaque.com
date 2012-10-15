@@ -85,6 +85,7 @@
             controlPanel.lock = false;
 
             $('a.edit', controlPanel).click(function () {
+                if (controlPanel.lock) return false;
                 controlPanel.append(editorWrapperTemplate);
                 var editorWrapper = $('#editorWrapper');
                 editorWrapper.css('top', 50);
@@ -92,8 +93,8 @@
                     editorWrapper.empty();
                     editorWrapper.append(data);
                     controlPanel.lock = true;
+                    $('#title', editorWrapper).focus();
                     $('a.save').click(function () {
-
                         $.post('/post/edit/' + id, $('#editorForm').serialize(), function (data) {
                             if (data.saved) {
                                 if (data.title.length > 0) {

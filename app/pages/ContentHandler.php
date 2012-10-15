@@ -2,6 +2,8 @@
 
 class ContentHandler extends Page {
 
+    const PreviewRecangle = 750;
+
     public function showFullPostImage() {
         $args = func_get_arg(0);
         $basePath = $args[0].'/'.$args[1].'/'.$args[2].'/'.$args[3];
@@ -26,8 +28,8 @@ class ContentHandler extends Page {
             $sizes = getimagesize($sourcePath);
 
             if($sizes[0] > $sizes[1]) {
-                if($sizes[0] > 650) {
-                    $width = 650;
+                if($sizes[0] > self::PreviewRecangle) {
+                    $width = self::PreviewRecangle;
                     $height = ($width / $sizes[0]) * $sizes[1];
                 }
                 else {
@@ -36,8 +38,8 @@ class ContentHandler extends Page {
                 }
             }
             else {
-                if($sizes[1] > 650) {
-                    $height = 650;
+                if($sizes[1] > self::PreviewRecangle) {
+                    $height = self::PreviewRecangle;
                     $width = ($height / $sizes[1]) * $sizes[0];
                 }
                 else {
