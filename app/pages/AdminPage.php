@@ -33,12 +33,10 @@ class AdminPage extends Page {
         }
     }
 
-    public function deletePost() {
+    public function deletePost($id) {
         if(!$this->getSlim()->request()->isAjax() || !Application::isAdmin()) {
             $this->getSlim()->error('404');
         }
-        $id = func_get_arg(0);
-        $id = $id[0];
         try {
             PostFactory::deletePost($id);
         }
