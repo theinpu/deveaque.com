@@ -124,9 +124,9 @@ class Application {
     }
 
     public static function isAdmin() {
-        return in_array($_SERVER['REMOTE_ADDR'],
-                        array('92.62.59.95',
-                              '89.110.48.143'));
+        return $_SERVER['DEVELOP'] || in_array($_SERVER['REMOTE_ADDR'],
+                                               array('92.62.59.95',
+                                                     '89.110.48.143'));
     }
 
     private function getSlim() {
