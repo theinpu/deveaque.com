@@ -21,9 +21,16 @@ class MongoAssist {
      */
     public static function GetCollection($collection) {
         self::checkMongoConnection();
+        $collection = self::detectDevelopCollection($collection);
         self::loadCollection($collection);
 
         return self::$collections[$collection];
+    }
+
+    private static function detectDevelopCollection($collection)
+    {
+        $collection = ($_SERVER['DEVELOP'] ? $collection . '_dev' : $collection);
+        return $collection;
     }
 
     private static function loadCollection($collection) {

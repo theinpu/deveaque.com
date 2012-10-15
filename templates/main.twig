@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
     <script>
         $(document).ready(function () {
-            $.each($('div.item a'), function (id, item) {
+            $.each($('div.item a.lightbox'), function (id, item) {
                 $(item).lightBox();
             });
         });
@@ -30,17 +30,17 @@
         })();
 
     </script>
-    {% if showAdminFeatures %}
+    {% if isAdmin %}
         {% include "adminScripts.twig" %}
     {% endif %}
 </head>
 <body>
 <div id="page">
-    <div id="siteTitle">
-        <a href="/">{{ siteTitle }}</a>
-    </div>
+    <h1 id="siteTitle">
+        <a href="/">{{ logoTitle }}</a>
+    </h1>
     <div class="navigation">
-        {% if showAdminFeatures %}
+        {% if isAdmin %}
             <a href="/upload">запостить</a>
         {% endif %}
     </div>
@@ -48,14 +48,7 @@
         {% block content %}
             {% include "pages.twig" %}
             {% for item in posts %}
-                <div class="item-container">
-                    <div class="item" id="{{ item.id }}">
-                        <div class="title">{{ item.title }}</div>
-                        <a href="{{ item.image }}"><img src="{{ item.tmb }}"/></a>
-
-                        <div class="date">{{ item.date }}</div>
-                    </div>
-                </div>
+                {% include "item.twig" %}
             {% endfor %}
             {% include "pages.twig" %}
         {% endblock %}

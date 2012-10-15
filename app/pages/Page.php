@@ -24,6 +24,7 @@ abstract class Page {
         if($this->slim->request()->isAjax()) {
             return $this->ajaxTemplate($template);
         }
+
         return $template;
     }
 
@@ -37,4 +38,11 @@ abstract class Page {
     protected final function appendDataToTemplate($data) {
         $this->slim->view()->appendData($data);
     }
+
+    protected final function checkAjaxPermissions() {
+        if(!$this->getSlim()->request()->isAjax() || !Application::isAdmin()) {
+            $this->getSlim()->halt(404);
+        }
+    }
+
 }

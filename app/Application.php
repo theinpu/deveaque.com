@@ -26,16 +26,28 @@ class Application {
     }
 
     private function createRoutes() {
-        $this->addGetCommand('/(page:pageId)', 'MainPage', 'index');
-        $this->addGetCommand('/image/small/:year/:month/:day/:image', 'MainPage', 'showSmallImage');
-        $this->addGetCommand('/image/full/:year/:month/:day/:image', 'MainPage', 'showFullImage');
+        //new
+        $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
+        $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
+        $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
 
-        $this->addGetCommand('/upload', 'UploadPage', 'index');
-        $this->addPostCommand('/upload', 'UploadPage', 'uploadImages');
+        $this->addGetCommand('/image/full/:year/:month/:day/:image', 'ContentHandler', 'showFullPostImage');
+        $this->addGetCommand('/image/small/:year/:month/:day/:image', 'ContentHandler', 'showSmallPostImage');
 
-        $this->addGetCommand('/post/delete/:id', 'AdminPage', 'deletePost');
-        $this->addPostCommand('/post/edit/:id', 'AdminPage', 'editPost');
-        $this->addGetCommand('/post/edit/form/:id', 'AdminPage', 'getEditorCode');
+        //admin
+        $this->addGetAdminCommand('/upload', 'AdminPage', 'showUpload');
+        //admin actions
+        $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
+        $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
+        $this->addGetCommand('/post/delete/:id', 'PostHandler', 'deletePost');
+
+        $this->addPostAdminCommand('/tag/save', 'TagHandler', 'saveTag');
+        $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagHandler', 'attachTagToPost');
+        $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
+
+        //editors
+        $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
+        $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -44,6 +56,18 @@ class Application {
     }
 
     private function addPostCommand($path, $class, $method) {
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->post($path, $command->getCallback());
+    }
+
+    private function addGetAdminCommand($path, $class, $method) {
+        if(!self::isAdmin()) return;
+        $command = new Command($this->getSlim(), array($class, $method));
+        $this->slim->get($path, $command->getCallback());
+    }
+
+    private function addPostAdminCommand($path, $class, $method) {
+        if(!self::isAdmin()) return;
         $command = new Command($this->getSlim(), array($class, $method));
         $this->slim->post($path, $command->getCallback());
     }
@@ -58,22 +82,23 @@ class Application {
                                     'templates.path' => '../templates'
                                ));
         $this->slim->view()->appendData(array('siteTitle' => self::Title));
+        $this->slim->view()->appendData(array('logoTitle' => self::Title));
         $this->showAdminFeatures();
     }
 
     private function showAdminFeatures() {
         $showAdminFeatures = self::isAdmin();
-        $this->getSlim()->view()->appendData(array('showAdminFeatures' => $showAdminFeatures));
+        $this->getSlim()->view()->appendData(array('isAdmin' => $showAdminFeatures));
     }
 
     public static function isAdmin() {
-        return in_array($_SERVER['REMOTE_ADDR'],
-                        array('92.62.59.95',
-                              '79.142.82.62',
-                              '89.110.48.143'));
+        return $_SERVER['DEVELOP'] || in_array($_SERVER['REMOTE_ADDR'],
+                                               array('92.62.59.95',
+                                                     '89.110.48.143'));
     }
 
     private function getSlim() {
         return $this->slim;
     }
+
 }

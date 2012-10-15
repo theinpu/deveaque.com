@@ -46,14 +46,17 @@
                 + '<a href="#" class="edit">изменить</a>'
                 + '<a href="#" class="delete">удалить</a>'
                 + '</div>';
+        var editorWrapperTemplate = '<div id="editorWrapper">'
+                + '<img src="/images/lightbox-ico-loading.gif" />'
+                + '</div>';
 
         var controlPanel = null;
         var items = $('div.item-container');
 
         items.mouseenter(function () {
             var item = $('div.item', $(this));
-            if(controlPanel != null) {
-                if(controlPanel.item.attr('id') == item.attr('id')) {
+            if (controlPanel != null) {
+                if (controlPanel.item.attr('id') == item.attr('id')) {
                     return;
                 }
                 controlPanel.remove();
@@ -69,7 +72,7 @@
 
         items.mouseleave(function () {
             if (controlPanel != null) {
-                if(!controlPanel.lock) {
+                if (!controlPanel.lock) {
                     controlPanel.remove();
                     controlPanel = null;
                 }
@@ -82,21 +85,23 @@
             controlPanel.lock = false;
 
             $('a.edit', controlPanel).click(function () {
-                var editorWrapperTemplate = '<div id="editorWrapper">'
-                        + '<img src="/images/lightbox-ico-loading.gif" />'
-                        + '</div>';
+                if (controlPanel.lock) return false;
                 controlPanel.append(editorWrapperTemplate);
                 var editorWrapper = $('#editorWrapper');
                 editorWrapper.css('top', 50);
-                $.get('/post/edit/form/' + id, function (data) {
+                $.get('/editors/post/' + id, function (data) {
                     editorWrapper.empty();
                     editorWrapper.append(data);
                     controlPanel.lock = true;
-                    $('a.save').click(function(){
-
-                        $.post('/post/edit/'+id, $('#editorForm').serialize(), function(data) {
-                            if(data.saved) {
-                                $('div.title', controlPanel.item).text(data.title);
+                    $('#title', editorWrapper).focus();
+                    $('a.save').click(function () {
+                        $.post('/post/edit/' + id, $('#editorForm').serialize(), function (data) {
+                            if (data.saved) {
+                                if (data.title.length > 0) {
+                                    $('h2', controlPanel.item).html('<a href="/post/' + data.title + '/">' + data.title + '</a>');
+                                } else {
+                                    $('h2', controlPanel.item).text('');
+                                }
                             }
                             controlPanel.lock = false;
                             editorWrapper.remove();
@@ -114,9 +119,10 @@
                     success:function (data) {
                         location.reload();
                     }
-                });
+                }, 'json');
                 return false;
             });
         }
+
     });
 </script>

@@ -47,6 +47,8 @@ a:hover {
     color: #fff;
 }
 
+
+
 .navigation {
     position: absolute;
     top: 110px;
@@ -69,16 +71,41 @@ a:hover {
 
 div.item-container {
     margin: 20px 0;
+    position: relative;
 }
 
 div.item {
     display: inline-block;
     padding: 10px;
     border: 1px solid;
+    text-align: left;
+    font-size: 13px;
 }
 
-div.item div {
-    text-align: left;
+h2 {
+    font-size: 16px;
+}
+
+div.item-container div.date {
+    float: right;
+    display: inline-block;
+}
+
+div.tags {
+    display: inline-block;
+}
+
+div.tags a {
+    text-decoration: none;
+}
+
+div.tags ul {
+    display: inline;
+}
+
+div.tags ul li {
+    display: inline;
+    padding: 0 2px;
 }
 
 .form-container {

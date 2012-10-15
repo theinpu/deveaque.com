@@ -1,5 +1,11 @@
-<form action="/post/edit/{{ post.id }}" method="post" id="editorForm">
+<form action="/post/edit/{{ post.id }}" method="post" id="editorForm" onsubmit="return save();">
     <label for="title">название женщины</label>
-    <input type="text" id="title" name="title" value="{{ post.title }}" />
+    <input type="text" id="title" name="title" value="{{ post.title }}"/>
 </form>
 <a href="#" class="save">сохранить</a>
+<script>
+    function save() {
+        $('a.save').click();
+        return false;
+    }
+</script>
