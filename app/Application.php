@@ -39,7 +39,7 @@ class Application {
         //admin actions
         $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
         $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
-        $this->addGetCommand('/post/delete/:id', 'PostHandler', 'deletePost');
+        $this->addGetAdminCommand('/post/delete/:id', 'PostHandler', 'deletePost');
 
         $this->addPostAdminCommand('/tag/save', 'TagHandler', 'saveTag');
         $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagHandler', 'attachTagToPost');
