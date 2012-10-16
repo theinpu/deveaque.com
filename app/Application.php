@@ -26,26 +26,31 @@ class Application {
     }
 
     private function createRoutes() {
-        //new
+        $this->createBaseSiteCommands();
+        $this->createContentCommands();
+        $this->createAdminCommands();
+    }
+
+    private function createBaseSiteCommands() {
         $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
+        $this->addGetCommand('/login', 'AuthHandler', 'login');
+    }
 
+    private function createContentCommands() {
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'ContentHandler', 'showFullPostImage');
         $this->addGetCommand('/image/small/:year/:month/:day/:image', 'ContentHandler', 'showSmallPostImage');
+    }
 
-        //admin
+    private function createAdminCommands() {
         $this->addGetAdminCommand('/upload', 'AdminPage', 'showUpload');
-        //admin actions
         $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
         $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
         $this->addGetAdminCommand('/post/delete/:id', 'PostHandler', 'deletePost');
-
         $this->addPostAdminCommand('/tag/save', 'TagHandler', 'saveTag');
         $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagHandler', 'attachTagToPost');
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
-
-        //editors
         $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
         $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
     }
