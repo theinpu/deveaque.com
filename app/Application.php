@@ -81,14 +81,14 @@ class Application {
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
-        $this->slim->view()->appendData(array('siteTitle' => self::Title));
-        $this->slim->view()->appendData(array('logoTitle' => self::Title));
-        $this->showAdminFeatures();
+        $this->setupGlobalTemplateData();
     }
 
-    private function showAdminFeatures() {
-        $showAdminFeatures = self::isAdmin();
-        $this->getSlim()->view()->appendData(array('isAdmin' => $showAdminFeatures));
+    private function setupGlobalTemplateData() {
+        $this->getSlim()->view()->appendData(array('siteTitle' => self::Title));
+        $this->getSlim()->view()->appendData(array('logoTitle' => self::Title));
+        $this->getSlim()->view()->appendData(array('isAdmin' => self::isAdmin()));
+        $this->getSlim()->view()->appendData(array('isDevelop' => $_SERVER['DEVELOP']));
     }
 
     public static function isAdmin() {
