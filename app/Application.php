@@ -75,7 +75,7 @@ class Application {
     private function initializeSlim() {
         $this->slim = new Slim(array(
                                     'view'           => new TwigView(),
-                                    'debug'          => true,
+                                    'debug'          => $_SERVER['DEVELOP'],
                                     'log.enable'     => true,
                                     'log.path'       => '../slim-log',
                                     'log.level'      => 4,
