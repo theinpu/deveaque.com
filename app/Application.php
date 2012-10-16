@@ -12,7 +12,7 @@ require_once 'app/Command.php';
 
 class Application {
 
-    const Title = 'deveaque.com - прекрасное рядом';
+    const Title = 'Deveaque.com - inspiration girls';
 
     /**
      * @var Slim
