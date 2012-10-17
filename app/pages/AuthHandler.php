@@ -34,10 +34,6 @@ class AuthHandler extends Page {
         else {
             ?>
         <fieldset>
-            <legend>vk данные</legend>
-            <b>Привет <?php echo $this->userProfile->displayName; ?></b>
-            <hr/>
-            <b>Hybridauth access tokens for vk:</b>
             <pre><?php print_r($this->adapter->getAccessToken()); ?></pre>
             <pre><?php print_r($this->userProfile); ?></pre>
         </fieldset>

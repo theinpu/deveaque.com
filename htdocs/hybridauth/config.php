@@ -30,8 +30,8 @@ return
             ),
 
             "Twitter"   => array(
-                "enabled" => false,
-                "keys"    => array("key" => "", "secret" => "")
+                "enabled" => true,
+                "keys"    => array("key" => "v3rDAe7Ylbl2frrcnlBSOQ", "secret" => "TcpGPrKm3kGnaxxlubtN4RNwSaGjHb3afhEcDvrCPA")
             ),
             "Vkontakte" => array(
                 "enabled" => true,
