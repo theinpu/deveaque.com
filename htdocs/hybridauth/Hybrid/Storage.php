@@ -27,65 +27,100 @@ class Hybrid_Storage {
     public function config($key, $value = null) {
         $key = strtolower($key);
 
+        $config = $this->getConfig();
+
         if($value) {
-            $_SESSION["HA::CONFIG"][$key] = serialize($value);
+            $config[$key] = $value;
         }
-        elseif(isset($_SESSION["HA::CONFIG"][$key])) {
-            return unserialize($_SESSION["HA::CONFIG"][$key]);
+        elseif(isset($config[$key])) {
+            return $config[$key];
         }
 
+        $this->saveConfig($config);
+
         return null;
+    }
+
+    private function saveConfig($config) {
+        MemcacheAssist::setValue("HA_CONFIG", $config);
+    }
+
+    private function getConfig() {
+        return MemcacheAssist::getValue("HA_CONFIG");
     }
 
     public function get($key) {
         $key = strtolower($key);
 
-        if(isset($_SESSION["HA::STORE"][$key])) {
-            return unserialize($_SESSION["HA::STORE"][$key]);
+        $store = $this->getStore();
+
+        if(isset($store[$key])) {
+            return $store[$key];
         }
 
         return null;
     }
 
+    private function saveStore($store) {
+        MemcacheAssist::setValue('HA_STORE', $store);
+    }
+
+    private function getStore() {
+        return MemcacheAssist::getValue("HA_STORE");
+    }
+
     public function set($key, $value) {
         $key = strtolower($key);
 
-        $_SESSION["HA::STORE"][$key] = serialize($value);
+        $store = $this->getStore();
+
+        $store[$key] = $value;
+
+        $this->saveStore($store);
     }
 
     function clear() {
-        $_SESSION["HA::STORE"] = ARRAY();
+        $this->saveStore(array());
     }
 
     function delete($key) {
         $key = strtolower($key);
 
-        if(isset($_SESSION["HA::STORE"][$key])) {
-            unset($_SESSION["HA::STORE"][$key]);
+        $store = $this->getStore();
+
+        if(isset($store[$key])) {
+            unset($store[$key]);
         }
+
+        $this->saveStore($store);
     }
 
     function deleteMatch($key) {
         $key = strtolower($key);
 
-        if(isset($_SESSION["HA::STORE"]) && count($_SESSION["HA::STORE"])) {
-            foreach($_SESSION["HA::STORE"] as $k => $v) {
+        $store = $this->getStore();
+
+        if(!empty($store)) {
+            foreach($store as $k => $v) {
                 if(strstr($k, $key)) {
-                    unset($_SESSION["HA::STORE"][$k]);
+                    unset($store[$k]);
                 }
             }
         }
+
+        $this->saveStore($store);
     }
 
     function getSessionData() {
-        if(isset($_SESSION["HA::STORE"])) {
-            return serialize($_SESSION["HA::STORE"]);
+        $store = $this->getStore();
+        if(isset($store)) {
+            return serialize($store);
         }
 
         return null;
     }
 
     function restoreSessionData($sessiondata = null) {
-        $_SESSION["HA::STORE"] = unserialize($sessiondata);
+        $this->saveStore(unserialize($sessiondata));
     }
 }
