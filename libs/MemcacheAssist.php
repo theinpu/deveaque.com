@@ -23,6 +23,10 @@ class MemcacheAssist {
         self::$mmc->delete($key);
     }
 
+    public static function isExists($key) {
+        return self::$mmc->get($key) !== false;
+    }
+
     private static function connectToMemcache() {
         if(is_null(self::$mmc)) {
             self::$mmc = new Memcache();

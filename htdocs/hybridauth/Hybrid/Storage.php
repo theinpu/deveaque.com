@@ -8,6 +8,9 @@
 /**
  * HybridAuth storage manager
  */
+
+require_once 'libs/MemcacheAssist.php';
+
 class Hybrid_Storage {
 
     function __construct() {
