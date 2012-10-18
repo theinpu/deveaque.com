@@ -13,6 +13,8 @@ require_once 'libs/MemcacheAssist.php';
 
 class Hybrid_Storage {
 
+    private $sessionId = '';
+
     function __construct() {
         if(!session_id()) {
             if(!session_start()) {
@@ -20,7 +22,9 @@ class Hybrid_Storage {
             }
         }
 
-        $this->config("php_session_id", session_id());
+        $this->sessionId = session_id();
+
+        $this->config("php_session_id", $this->sessionId);
         $this->config("version", Hybrid_Auth::$version);
     }
 
@@ -42,11 +46,11 @@ class Hybrid_Storage {
     }
 
     private function saveConfig($config) {
-        MemcacheAssist::setValue("HA_CONFIG", $config);
+        MemcacheAssist::setValue("HA_CONFIG".$this->sessionId, $config);
     }
 
     private function getConfig() {
-        return MemcacheAssist::getValue("HA_CONFIG");
+        return MemcacheAssist::getValue("HA_CONFIG".$this->sessionId);
     }
 
     public function get($key) {
@@ -62,11 +66,11 @@ class Hybrid_Storage {
     }
 
     private function saveStore($store) {
-        MemcacheAssist::setValue('HA_STORE', $store);
+        MemcacheAssist::setValue('HA_STORE'.$this->sessionId, $store);
     }
 
     private function getStore() {
-        return MemcacheAssist::getValue("HA_STORE");
+        return MemcacheAssist::getValue("HA_STORE".$this->sessionId);
     }
 
     public function set($key, $value) {
