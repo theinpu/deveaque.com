@@ -129,3 +129,7 @@ div.tags ul li {
     clear: both;
     float: none;
 }
+
+.pages {
+    display: inline-block;
+}
