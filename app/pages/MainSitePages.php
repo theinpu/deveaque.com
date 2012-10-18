@@ -7,9 +7,13 @@ class MainSitePages extends Page {
 
     const PostPerPage = 20;
 
-    public function showDefault($page = 1) {
-        $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
+    public function showDefault($page = -1) {
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
+        if($page == -1) {
+            $page = $pages;
+        }
+        $page = $pages - $page + 1;
+        $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
         $this->appendDataToTemplate(array(
             'posts' => $posts,
             'page' => $page,
