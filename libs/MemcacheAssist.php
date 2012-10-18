@@ -30,7 +30,7 @@ class MemcacheAssist {
     private static function connectToMemcache() {
         if(is_null(self::$mmc)) {
             self::$mmc = new Memcache();
-            self::$mmc->connect('unix:///var/run/memcached.sock', 0);
+            self::$mmc->connect('unix:///tmp/memcached.sock', 0);
         }
     }
 
