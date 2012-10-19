@@ -6,45 +6,52 @@
     }
 </style>
 <span id="tagEditor">
-    <input type="text" id="tagName" placeholder="тег" size="5" />
+    <input type="text" id="tagName" placeholder="тег" size="5"/>
 </span>
 <script>
     var tagEditor = {
-        saveTag : function() {
-            $.post('/tag/save', {'title' : tagEditor.value()}, function(data) {
+        saveTag:function () {
+            $.post('/tag/save', {'title':tagEditor.value()}, function (data) {
                 console.log(data);
                 tagEditor.attachTag(data['tag']);
             }, 'json');
         },
-        close : function() {
+        close:function () {
             tagEditor.wrapper.remove();
         },
-        init : function() {
+        init:function () {
             tagEditor.wrapper = $('#tagEditorWrapper');
         },
-        attachTag : function(tag) {
-            $.get('/tag/' + tag + '/attach/{{ postId }}', function(data) {
-                if(data.success) {
-                    tagItem = '<li><a href="/tag/'+tag+'/">'+tag+'</a></li>';
+        attachTag:function (tag) {
+            $.get('/tag/' + tag + '/attach/{{ postId }}', function (data) {
+                if (data.success) {
+                    tagItem = '<li><a href="/tag/' + tag + '/">' + tag + '</a></li>';
                     $('#{{ postId }} .tagList').append(tagItem);
                 } else {
                     console.log(data);
                 }
             }, 'json');
         },
-        value : function() {
+        value:function () {
             return $('#tagName').val();
         }
     };
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         tagEditor.init();
-        $('#tagName').keypress(function(e){
+        $('#tagName').keypress(function (e) {
             switch (e.which) {
                 case 13:
-                        tagEditor.saveTag();
-                        tagEditor.close();
+                    tagEditor.saveTag();
+                    tagEditor.close();
                     break;
+            }
+        });
+        $('#tagName').autocomplete({
+            source:'/tag/search',
+            minLength:1,
+            select:function (e, ui) {
+
             }
         });
     });

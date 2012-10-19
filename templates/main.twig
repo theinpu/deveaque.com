@@ -7,6 +7,10 @@
     <script type="text/javascript" src="/js/jquery.lightbox-0.5.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/jquery.lightbox-0.5.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
+    {% if isAdmin %}
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css"/>
+        <script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
+    {% endif %}
     <script>
         $(document).ready(function () {
             $.each($('div.item a.lightbox'), function (id, item) {

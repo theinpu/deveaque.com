@@ -88,4 +88,10 @@ class MainSitePages extends Page {
                                     ));
         $this->displayTemplate('singlePost.twig');
     }
+
+    public function searchTag() {
+        $term = $this->getSlim()->request()->get('term');
+        $tags = Tags::searchTags($term);
+        echo json_encode($tags);
+    }
 }
