@@ -88,7 +88,29 @@ class Application {
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
+        $this->setErrorPage();
+        $this->setNotFoundPage();
         $this->setupGlobalTemplateData();
+    }
+
+    private function setNotFoundPage() {
+        $slim = $this->getSlim();
+        $this->getSlim()->notFound(function () use ($slim) {
+            $slim->view()->appendData(array('errorNumber' => 404, 'errorMessage' => 'Страница не найдена'));
+            $slim->view()->display('error.twig');
+        });
+    }
+
+    private function setErrorPage() {
+        $slim = $this->getSlim();
+        $this->getSlim()->error(function (Exception $e) use ($slim) {
+            $slim->view()->appendData(array(
+                                           'errorNumber'  => $e->getCode(),
+                                           'errorMessage' => $e->getMessage(),
+                                           'errorTrace'   => print_r($e->getTrace(), true)
+                                      ));
+            $slim->view()->display('error.twig');
+        });
     }
 
     private function setupGlobalTemplateData() {

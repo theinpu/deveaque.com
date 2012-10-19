@@ -1,0 +1,10 @@
+{% extends "main.twig" %}
+{% block content %}
+    <h2>Ошибка {{ errorNumber }}</h2>
+    <div>{{ errorMessage }}</div>
+    {% if errorTrace %}
+        <pre>
+            {{ errorTrace }}
+        </pre>
+    {% endif %}
+{% endblock %}
