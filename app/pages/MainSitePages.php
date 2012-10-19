@@ -15,14 +15,15 @@ class MainSitePages extends Page {
         $page = $pages - $page + 1;
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
         $this->appendDataToTemplate(array(
-            'posts' => $posts,
-            'page' => $page,
-            'pages' => $pages));
+                                         'posts' => $posts,
+                                         'page'  => $page,
+                                         'pages' => $pages));
         $this->displayTemplate('main.twig');
     }
 
     private function loadPosts($offset) {
         $postsList = PostFactory::getPosts($offset, self::PostPerPage);
+
         return $this->buildPosts($postsList);
     }
 
@@ -32,16 +33,17 @@ class MainSitePages extends Page {
         $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
         $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
         $this->appendDataToTemplate(array(
-            'posts' => $posts,
-            'page' => $page,
-            'pages' => $pages,
-            'baseLink' => '/post/' . $title
-        ));
+                                         'posts'    => $posts,
+                                         'page'     => $page,
+                                         'pages'    => $pages,
+                                         'baseLink' => '/post/'.$title
+                                    ));
         $this->displayTemplate('main.twig');
     }
 
     private function loadPostsByTitle($title, $offset) {
         $postsList = PostFactory::getPostsByTitle($title, $offset, self::PostPerPage);
+
         return $this->buildPosts($postsList);
     }
 
@@ -53,27 +55,37 @@ class MainSitePages extends Page {
         $posts = $this->buildPosts($postsList);
         $pages = ceil(count($postIds) / self::PostPerPage);
         $this->appendDataToTemplate(array(
-            'posts' => $posts,
-            'page' => $page,
-            'pages' => $pages,
-            'baseLink' => '/tag/' . $tag
-        ));
+                                         'posts'    => $posts,
+                                         'page'     => $page,
+                                         'pages'    => $pages,
+                                         'baseLink' => '/tag/'.$tag
+                                    ));
         $this->displayTemplate('main.twig');
     }
 
     private function buildPosts($postsList) {
         $posts = array();
-        foreach ($postsList as $item) {
+        foreach($postsList as $item) {
             $post = array(
-                'id' => $item->getId(),
+                'id'    => $item->getId(),
                 'title' => $item->getTitle(),
-                'tmb' => $item->getSmallImage(),
+                'tmb'   => $item->getSmallImage(),
                 'image' => $item->getFullImage(),
-                'date' => date('Y-m-d H:i:s', $item->getDate()),
-                'tags' => Tags::getItemList($item->getId())
+                'date'  => date('Y-m-d H:i:s', $item->getDate()),
+                'tags'  => Tags::getItemList($item->getId())
             );
             $posts[] = $post;
         }
+
         return $posts;
+    }
+
+    public function showPost($postId) {
+        $post = PostFactory::getPost($postId);
+        $post = $this->buildPosts(array($post));
+        $this->appendDataToTemplate(array(
+                                         'item' => $post[0],
+                                    ));
+        $this->displayTemplate('singlePost.twig');
     }
 }

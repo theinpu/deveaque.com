@@ -34,6 +34,7 @@ class Application {
     private function createBaseSiteCommands() {
         $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
+        $this->addGetCommand('/post/:id', 'MainSitePages', 'showPost');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
         $this->addGetCommand('/login', 'AuthHandler', 'login');
     }
