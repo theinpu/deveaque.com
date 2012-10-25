@@ -15,7 +15,7 @@ class MemcacheAssist {
 
     public static function setValue($key, $value) {
         self::connectToMemcache();
-        self::$mmc->set($key, $value);
+        self::$mmc->set($key, $value, 80399);
     }
 
     public static function deleteValue($key) {
