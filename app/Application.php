@@ -37,7 +37,6 @@ class Application {
         $this->addGetCommand('/post/:id', 'MainSitePages', 'showPost');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
         $this->addGetCommand('/tag/search', 'MainSitePages', 'searchTag');
-        $this->addGetCommand('/login', 'AuthHandler', 'login');
     }
 
     private function createContentCommands() {
