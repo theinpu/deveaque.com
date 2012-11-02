@@ -60,6 +60,10 @@ class PostFactory {
         @unlink($smallFile);
     }
 
+    /**
+     * @param $id
+     * @return Post
+     */
     public static function getPost($id) {
         self::setCollection();
 

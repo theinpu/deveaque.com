@@ -82,6 +82,12 @@ class MainSitePages extends Page {
 
     public function showPost($postId) {
         $post = PostFactory::getPost($postId);
+        $formattedDateLine = date('d F Y', $post->getDate());
+        $postTitle = $post->getTitle();
+        $title = (!empty($postTitle)) ?
+            $postTitle.' - posted @ '.$formattedDateLine:
+            'Post from '.$formattedDateLine;
+        $this->getSlim()->view()->setData('siteTitle', $title.' - '.Application::Title);
         $post = $this->buildPosts(array($post));
         $this->appendDataToTemplate(array(
                                          'item' => $post[0],

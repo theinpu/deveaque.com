@@ -1,6 +1,9 @@
 {% if pages > 1 %}
     <div class="paginator">
-        <span>Страницы:  </span>
+        <span class="pages-navigation-helper">
+            <span class="hint">ctrl ←</span>
+            <span class="hint">ctrl →</span>
+        </span>
         <div class="pages">
             {% for i in pages..1 %}
                 {% if (pages - page + 1) == i %}
