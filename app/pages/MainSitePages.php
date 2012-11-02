@@ -72,7 +72,8 @@ class MainSitePages extends Page {
                 'tmb'   => $item->getSmallImage(),
                 'image' => $item->getFullImage(),
                 'date'  => date('Y-m-d H:i:s', $item->getDate()),
-                'tags'  => Tags::getItemList($item->getId())
+                'tags'  => Tags::getItemList($item->getId()),
+                'photographer' => $item->getPhotographer(),
             );
             $posts[] = $post;
         }

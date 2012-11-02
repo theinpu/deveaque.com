@@ -9,7 +9,8 @@ class EditorsHandler extends Page {
         $post = PostFactory::getPost($id);
         $postData = array(
             'id'    => $post->getId(),
-            'title' => $post->getTitle()
+            'title' => $post->getTitle(),
+            'photographer' => $post->getPhotographer()
         );
 
         $this->appendDataToTemplate(array('post' => $postData));

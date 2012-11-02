@@ -83,6 +83,11 @@ div.item {
 
 h2 {
     font-size: 16px;
+    display: inline-block;
+}
+
+h3 {
+    float: right;
 }
 
 div.item-container div.date {

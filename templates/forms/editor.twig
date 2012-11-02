@@ -1,6 +1,8 @@
 <form action="/post/edit/{{ post.id }}" method="post" id="editorForm" onsubmit="return save();">
     <label for="title">название женщины</label>
     <input type="text" id="title" name="title" value="{{ post.title }}"/>
+    <label for="photographer">фотограф</label>
+    <input type="text" id="photographer" name="photographer" value="{{ post.photographer }}"/>
 </form>
 <a href="#" class="save">сохранить</a>
 <script>
