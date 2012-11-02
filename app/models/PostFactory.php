@@ -9,11 +9,10 @@ class PostFactory {
      */
     private static $collection = null;
 
-    public static function createPost($title, $file) {
-        $date = date('U');
+    public static function createPost(Post $post) {
         self::setCollection();
         self::$collection
-            ->insert(array('date' => $date, 'file' => $file, 'title' => $title));
+            ->insert($post->getData());
     }
 
     private static function setCollection() {
@@ -60,6 +59,10 @@ class PostFactory {
         @unlink($smallFile);
     }
 
+    /**
+     * @param $id
+     * @return Post
+     */
     public static function getPost($id) {
         self::setCollection();
 

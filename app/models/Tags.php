@@ -21,6 +21,7 @@ class Tags {
             $tag = self::$tagCollection->findOne(array('_id' => new MongoId($tagLink['tagId'])));
             $result[] = $tag['title'];
         }
+
         return $result;
     }
 
@@ -47,14 +48,16 @@ class Tags {
         $link = self::$linkCollection->findOne(array('tagId' => $tagId, 'postId' => $postId));
         if(is_null($link)) {
             self::$linkCollection->save(array('tagId' => $tagId, 'postId' => $postId));
-        } else {
+        }
+        else {
             throw new InvalidArgumentException();
         }
     }
 
     private static function getTagIdByTitle($tagTitle) {
         $tagId = self::$tagCollection->findOne(array('title' => $tagTitle));
-        if (is_null($tagId)) throw new InvalidArgumentException();
+        if(is_null($tagId)) throw new InvalidArgumentException();
+
         return $tagId['_id']->{'$id'};
     }
 
@@ -65,7 +68,8 @@ class Tags {
         $link = self::$linkCollection->findOne(array('tagId' => $tagId, 'postId' => $postId));
         if(!is_null($link)) {
             self::$linkCollection->remove(array('_id' => $link['_id']));
-        } else {
+        }
+        else {
             throw new InvalidArgumentException();
         }
     }
@@ -79,6 +83,19 @@ class Tags {
             $post = $cursor->getNext();
             $posts[] = new MongoId($post['postId']);
         }
+
         return $posts;
+    }
+
+    public static function searchTags($term) {
+        self::checkCollections();
+        $tags = array();
+        $cursor = self::$tagCollection->find(array('title' => new MongoRegex('/'.$term.'/')));
+        while($cursor->hasNext()) {
+            $tag = $cursor->getNext();
+            $tags[] = $tag['title'];
+        }
+
+        return $tags;
     }
 }

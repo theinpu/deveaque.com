@@ -36,7 +36,19 @@ class Post {
         $this->data['title'] = $title;
     }
 
+    public function getPhotographer() {
+        if(!isset($this->data['photographer'])) {
+            return '';
+        }
+        return $this->data['photographer'];
+    }
+
+    public function setPhotographer($photographer) {
+        $this->data['photographer'] = $photographer;
+    }
+
     public function getData() {
         return $this->data;
     }
+
 }

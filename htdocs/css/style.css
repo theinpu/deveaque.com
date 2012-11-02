@@ -32,22 +32,20 @@ a:hover {
     color: #fff;
     position: absolute;
     left: 50%;
-    font-family: Arial;
-    font-size: 22px;
-    font-weight: bold;
     margin-left: -450px;
     top: 35px;
 }
 
 #siteTitle a {
+    position: absolute;
+    text-indent: -9999px;
     text-decoration: none;
+    width: 600px;
 }
 
 #siteTitle a:hover {
     color: #fff;
 }
-
-
 
 .navigation {
     position: absolute;
@@ -75,6 +73,7 @@ div.item-container {
 }
 
 div.item {
+    position: relative;
     display: inline-block;
     padding: 10px;
     border: 1px solid;
@@ -84,6 +83,11 @@ div.item {
 
 h2 {
     font-size: 16px;
+    display: inline-block;
+}
+
+h3 {
+    float: right;
 }
 
 div.item-container div.date {
@@ -128,4 +132,37 @@ div.tags ul li {
 .clear {
     clear: both;
     float: none;
+}
+
+.pages {
+    display: inline-block;
+}
+
+.permalink {
+    display: inline-block;
+    position: absolute;
+    text-indent: -9999px;
+    right: 2px;
+    bottom: 2px;
+}
+
+.permalink a {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-image: url("../images/link.gif");
+}
+
+.pages-navigation-helper {
+    font-size: 14px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    margin-top: -20px;
+    font-variant: small-caps;
+}
+
+.pages-navigation-helper .hint {
+    padding: 0 5px;
+    color: #c85840;
 }

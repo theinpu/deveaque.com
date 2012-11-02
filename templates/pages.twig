@@ -1,16 +1,21 @@
 {% if pages > 1 %}
-    <div class="pages">
-        <span>Страницы:  </span>
-        {% for i in 1..pages %}
-            {% if page == i %}
-                <span>{{ i }}</span>
-            {% else %}
-                {% if i == 1 %}
-                    <a href="{{ baseLink }}/">{{ i }}</a>
+    <div class="paginator">
+        <span class="pages-navigation-helper">
+            <span class="hint">ctrl ←</span>
+            <span class="hint">ctrl →</span>
+        </span>
+        <div class="pages">
+            {% for i in pages..1 %}
+                {% if (pages - page + 1) == i %}
+                    <span>{{ i }}</span>
                 {% else %}
-                    <a href="{{ baseLink }}/page{{ i }}">{{ i }}</a>
+                    {% if i == pages %}
+                        <a href="{{ baseLink }}/">{{ i }}</a>
+                    {% else %}
+                        <a href="{{ baseLink }}/page{{ i }}">{{ i }}</a>
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 {% endif %}

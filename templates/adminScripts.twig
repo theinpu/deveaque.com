@@ -102,6 +102,11 @@
                                 } else {
                                     $('h2', controlPanel.item).text('');
                                 }
+                                if (data.photographer.length > 0) {
+                                    $('h3', controlPanel.item).html(data.photographer);
+                                } else {
+                                    $('h3', controlPanel.item).text('');
+                                }
                             }
                             controlPanel.lock = false;
                             editorWrapper.remove();

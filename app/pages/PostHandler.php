@@ -16,10 +16,18 @@ class PostHandler extends Page {
     public function addPost() {
         $files = $_FILES;
         $titles = $this->getSlim()->request()->post('title');
+        $photographers = $this->getSlim()->request()->post('photographer');
         foreach($files['image']['tmp_name'] as $id => $file) {
             $title = $titles[$id];
+            $photographer = $photographers[$id];
             $fileName = $this->uploadFile($file);
-            PostFactory::createPost($title, $fileName);
+            $post = new Post(array(
+                'title' => $title,
+                'file' => $fileName,
+                'date' => date('U'),
+                'photographer' => $photographer,
+            ));
+            PostFactory::createPost($post);
         }
         $this->getSlim()->redirect('/');
     }
@@ -29,8 +37,13 @@ class PostHandler extends Page {
         try {
             $post = PostFactory::getPost($id);
             $post->setTitle($this->getSlim()->request()->post('title'));
+            $post->setPhotographer($this->getSlim()->request()->post('photographer'));
             PostFactory::savePost($post);
-            echo json_encode(array('saved' => true, 'title' => $post->getTitle()));
+            echo json_encode(array(
+                'saved' => true,
+                'title' => $post->getTitle(),
+                'photographer' => $post->getPhotographer())
+            );
         }
         catch(Exception $ex) {
             echo json_encode(array('saved' => false, 'error' => $ex->getMessage()));

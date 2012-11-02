@@ -12,7 +12,7 @@ require_once 'app/Command.php';
 
 class Application {
 
-    const Title = 'deveaque.com - прекрасное рядом';
+    const Title = 'Deveaque.com - inspiration girls';
 
     /**
      * @var Slim
@@ -26,26 +26,32 @@ class Application {
     }
 
     private function createRoutes() {
-        //new
+        $this->createBaseSiteCommands();
+        $this->createContentCommands();
+        $this->createAdminCommands();
+    }
+
+    private function createBaseSiteCommands() {
         $this->addGetCommand('/(page:pageId)', 'MainSitePages', 'showDefault');
         $this->addGetCommand('/post/:title/(page:pageId)', 'MainSitePages', 'showByTitle');
+        $this->addGetCommand('/post/:id', 'MainSitePages', 'showPost');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
+        $this->addGetCommand('/tag/search', 'MainSitePages', 'searchTag');
+    }
 
+    private function createContentCommands() {
         $this->addGetCommand('/image/full/:year/:month/:day/:image', 'ContentHandler', 'showFullPostImage');
         $this->addGetCommand('/image/small/:year/:month/:day/:image', 'ContentHandler', 'showSmallPostImage');
+    }
 
-        //admin
+    private function createAdminCommands() {
         $this->addGetAdminCommand('/upload', 'AdminPage', 'showUpload');
-        //admin actions
         $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
         $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
-        $this->addGetCommand('/post/delete/:id', 'PostHandler', 'deletePost');
-
+        $this->addGetAdminCommand('/post/delete/:id', 'PostHandler', 'deletePost');
         $this->addPostAdminCommand('/tag/save', 'TagHandler', 'saveTag');
         $this->addGetAdminCommand('/tag/:tag/attach/:post', 'TagHandler', 'attachTagToPost');
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
-
-        //editors
         $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
         $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
     }
@@ -75,20 +81,42 @@ class Application {
     private function initializeSlim() {
         $this->slim = new Slim(array(
                                     'view'           => new TwigView(),
-                                    'debug'          => true,
+                                    'debug'          => $_SERVER['DEVELOP'],
                                     'log.enable'     => true,
                                     'log.path'       => '../slim-log',
                                     'log.level'      => 4,
                                     'templates.path' => '../templates'
                                ));
-        $this->slim->view()->appendData(array('siteTitle' => self::Title));
-        $this->slim->view()->appendData(array('logoTitle' => self::Title));
-        $this->showAdminFeatures();
+        $this->setErrorPage();
+        $this->setNotFoundPage();
+        $this->setupGlobalTemplateData();
     }
 
-    private function showAdminFeatures() {
-        $showAdminFeatures = self::isAdmin();
-        $this->getSlim()->view()->appendData(array('isAdmin' => $showAdminFeatures));
+    private function setNotFoundPage() {
+        $slim = $this->getSlim();
+        $this->getSlim()->notFound(function () use ($slim) {
+            $slim->view()->appendData(array('errorNumber' => 404, 'errorMessage' => 'Страница не найдена'));
+            $slim->view()->display('error.twig');
+        });
+    }
+
+    private function setErrorPage() {
+        $slim = $this->getSlim();
+        $this->getSlim()->error(function (Exception $e) use ($slim) {
+            $slim->view()->appendData(array(
+                                           'errorNumber'  => $e->getCode(),
+                                           'errorMessage' => $e->getMessage(),
+                                           'errorTrace'   => print_r($e->getTrace(), true)
+                                      ));
+            $slim->view()->display('error.twig');
+        });
+    }
+
+    private function setupGlobalTemplateData() {
+        $this->getSlim()->view()->appendData(array('siteTitle' => self::Title));
+        $this->getSlim()->view()->appendData(array('logoTitle' => self::Title));
+        $this->getSlim()->view()->appendData(array('isAdmin' => self::isAdmin()));
+        $this->getSlim()->view()->appendData(array('isDevelop' => $_SERVER['DEVELOP']));
     }
 
     public static function isAdmin() {

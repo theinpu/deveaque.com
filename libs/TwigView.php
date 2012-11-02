@@ -51,7 +51,7 @@ class TwigView extends Slim_View {
      */
     public static $twigOptions = array(
         'cache'       => "../cache/twig",
-        'debug'       => true
+        'debug'       => false
     );
 
     /**
