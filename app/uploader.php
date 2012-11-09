@@ -4,7 +4,7 @@ $incPath = get_include_path();
 $rootPath = realpath(dirname(__FILE__).'/../');
 set_include_path($rootPath.':'.$incPath);
 
-error_reporting(E_ALL & ~E_NOTICE);
+$_SERVER['DEVELOP'] = strpos($rootPath, 'develop') !== false;
 
 require_once 'libs/MongoAssist.php';
 require_once 'models/PostFactory.php';
@@ -18,13 +18,23 @@ for($i = 1; $i < $argc; $i++) {
 
 if(isset($args['file'])) {
     $file = file_get_contents(realpath($args['file']));
-    $data = json_decode($file);
+    $data = (array)json_decode($file);
     if(!isset($data['file'])) {
         die("need image path");
     }
     if(!isset($data['date'])) {
         $data['date'] = date('U');
     }
+    if(isset($data['tags'])) {
+        $tags = $data['tags'];
+        unset($data['tags']);
+    }
     $post = new Post($data);
     PostFactory::createPost($post);
+    if(isset($tags)) {
+        foreach($tags as $tag) {
+            Tags::saveTag($tag);
+            Tags::attachPost($tag, $post->getId());
+        }
+    }
 }
