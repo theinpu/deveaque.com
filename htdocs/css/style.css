@@ -95,8 +95,13 @@ div.item-container div.date {
     display: inline-block;
 }
 
+.image-holder {
+    text-align: center;
+}
+
 div.tags {
     display: inline-block;
+    width: 70%;
 }
 
 div.tags a {
