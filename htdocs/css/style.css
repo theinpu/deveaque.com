@@ -95,8 +95,13 @@ div.item-container div.date {
     display: inline-block;
 }
 
+.image-holder {
+    text-align: center;
+}
+
 div.tags {
     display: inline-block;
+    width: 70%;
 }
 
 div.tags a {
@@ -163,6 +168,27 @@ div.tags ul li {
 }
 
 .pages-navigation-helper .hint {
-    padding: 0 5px;
+    padding: 0 2px;
     color: #c85840;
+}
+
+#back-to-page-top {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    background-color: #111;
+    opacity: .05;
+    text-align: center;
+}
+
+#back-to-page-top a {
+    position: relative;
+    display: block;
+    top: 90%;
+}
+
+#back-to-page-top.page-top-link-hover {
+    opacity: .8;
 }
