@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <title>{{ siteTitle }}{% if page > 1 %} - page {{ pages - page + 1 }}{% endif %}</title>
@@ -46,6 +46,7 @@
     {% endif %}
 </head>
 <body>
+<a name="page_top"></a>
 <div id="page">
     <h1 id="siteTitle">
         <a href="/">{{ logoTitle }}</a>
@@ -68,5 +69,6 @@
     <div id="footer">
     </div>
 </div>
+{% include "widgets.twig" %}
 </body>
 </html>
