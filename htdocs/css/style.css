@@ -178,9 +178,10 @@ div.tags ul li {
     top: 0;
     width: 80px;
     height: 100%;
-    background-color: #111;
+    background-color: #0a0a0a;
     opacity: .05;
     text-align: center;
+    cursor: pointer;
 }
 
 #back-to-page-top a {
