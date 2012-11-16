@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <title>{{ siteTitle }}{% if page > 1 %} - страница {{ page }}{% endif %}</title>
+    <title>{{ siteTitle }}{% if page > 1 %} - page {{ pages - page + 1 }}{% endif %}</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.lightbox-0.5.js"></script>
     <script type="text/javascript" src="/js/utils.js"></script>
@@ -23,7 +23,7 @@
             });
         });
     </script>
-    {% if not isAdmin or not isDevelop %}
+    {% if not isAdmin and not isDevelop %}
         <script type="text/javascript">
 
             var _gaq = _gaq || [];
@@ -46,6 +46,7 @@
     {% endif %}
 </head>
 <body>
+<a name="page_top"></a>
 <div id="page">
     <h1 id="siteTitle">
         <a href="/">{{ logoTitle }}</a>
@@ -68,5 +69,6 @@
     <div id="footer">
     </div>
 </div>
+{% include "widgets.twig" %}
 </body>
 </html>
