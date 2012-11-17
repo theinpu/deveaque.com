@@ -179,7 +179,7 @@ div.tags ul li {
     width: 80px;
     height: 100%;
     background-color: #0a0a0a;
-    opacity: .05;
+    opacity: .2;
     text-align: center;
     cursor: pointer;
 }
@@ -188,6 +188,8 @@ div.tags ul li {
     position: relative;
     display: block;
     top: 90%;
+    color: #f40;
+    text-decoration: none;
 }
 
 #back-to-page-top.page-top-link-hover {
