@@ -19,6 +19,7 @@ class MainSitePages extends Page {
                                          'page'  => $page,
                                          'pages' => $pages));
         $this->displayTemplate('main.twig');
+        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function loadPosts($offset) {
@@ -39,6 +40,7 @@ class MainSitePages extends Page {
                                          'baseLink' => '/post/'.$title
                                     ));
         $this->displayTemplate('main.twig');
+        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function loadPostsByTitle($title, $offset) {
@@ -61,6 +63,7 @@ class MainSitePages extends Page {
                                          'baseLink' => '/tag/'.$tag
                                     ));
         $this->displayTemplate('main.twig');
+        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function buildPosts($postsList) {
@@ -74,6 +77,7 @@ class MainSitePages extends Page {
                 'date'  => date('Y-m-d H:i:s', $item->getDate()),
                 'tags'  => Tags::getItemList($item->getId()),
                 'photographer' => $item->getPhotographer(),
+                'object' => $item
             );
             $posts[] = $post;
         }
@@ -94,6 +98,7 @@ class MainSitePages extends Page {
                                          'item' => $post[0],
                                     ));
         $this->displayTemplate('singlePost.twig');
+        $this->getSlim()->lastModified((int)$post[0]['object']->getDate());
     }
 
     public function searchTag() {
