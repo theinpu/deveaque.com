@@ -83,7 +83,7 @@ class MainSitePages extends Page {
 
     public function showPost($postId) {
         $post = PostFactory::getPost($postId);
-        $formattedDateLine = date('d F Y', $post->getDate());
+        $formattedDateLine = date('d F Y H:i', $post->getDate());
         $postTitle = $post->getTitle();
         $title = (!empty($postTitle)) ?
             $postTitle.' - posted @ '.$formattedDateLine:
