@@ -12,11 +12,17 @@
         </h3>
 
         <div class="image-holder">
-            <a href="{{ item.image }}" class="lightbox">
+            {% if item.zoomable %}
+            <a href="{{ item.image }}" class="lightbox" rel="nofollow">
                 <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
             </a>
+            {% else %}
+            <a href="/post/{{ item.id }}" rel="nofollow">
+                <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
+            </a>
+            {% endif %}
         </div>
-        <div class="permalink"><a href="/post/{{ item.id }}">permalink</a></div>
+        <div class="permalink"><a href="/post/{{ item.id }}" rel="nofollow">permalink</a></div>
         <div class="tags">{% include "tagsList.twig" %}</div>
         <div class="date">{{ item.date }}</div>
         <div class="clear"></div>

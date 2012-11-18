@@ -2,6 +2,7 @@
 
 require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
+require_once 'app/pages/ContentHandler.php';
 
 class MainSitePages extends Page {
 
@@ -69,6 +70,8 @@ class MainSitePages extends Page {
     private function buildPosts($postsList) {
         $posts = array();
         foreach($postsList as $item) {
+            $size = $item->getSize();
+            $zoomable = ($size[0] > ContentHandler::PreviewRecangle || $size[1] > ContentHandler::PreviewRecangle);
             $post = array(
                 'id'    => $item->getId(),
                 'title' => $item->getTitle(),
@@ -77,7 +80,8 @@ class MainSitePages extends Page {
                 'date'  => date('Y-m-d H:i:s', $item->getDate()),
                 'tags'  => Tags::getItemList($item->getId()),
                 'photographer' => $item->getPhotographer(),
-                'object' => $item
+                'object' => $item,
+                'zoomable' => $zoomable
             );
             $posts[] = $post;
         }
