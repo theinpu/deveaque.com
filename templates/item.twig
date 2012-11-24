@@ -4,19 +4,18 @@
             {% if item.title is empty %}
                 {{ item.title }}
             {% else %}
-                <a href="/post/{{ item.title }}/">{{ item.title }}</a>
+                <a href="/post/{{ item.title }}/" rel="nofollow">{{ item.title }}</a>
             {% endif %}
         </h2>
-        <h3>
-            {{ item.photographer }}
-        </h3>
 
-        <div class="image-holder">
+        <div>
             <a href="{{ item.image }}" class="lightbox">
                 <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
             </a>
         </div>
-        <div class="permalink"><a href="/post/{{ item.id }}">permalink</a></div>
+        <noindex>
+            <div class="permalink"><a href="/post/{{ item.id }}" rel="nofollow">permalink</a></div>
+        </noindex>
         <div class="tags">{% include "tagsList.twig" %}</div>
         <div class="date">{{ item.date }}</div>
         <div class="clear"></div>

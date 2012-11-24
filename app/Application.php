@@ -1,7 +1,9 @@
 <?php
+use \Slim\Slim;
 
 require_once 'libs/MongoAssist.php';
 require_once 'libs/Slim/Slim.php';
+Slim::registerAutoloader();
 require_once 'libs/TwigAutoloader.php';
 
 Twig_Extensions_Autoloader::register();
@@ -9,6 +11,7 @@ Twig_Extensions_Autoloader::register();
 require_once 'libs/TwigView.php';
 
 require_once 'app/Command.php';
+
 
 class Application {
 
@@ -22,6 +25,10 @@ class Application {
     public function __construct() {
         $this->initializeSlim();
         $this->createRoutes();
+        if(isset($_SERVER['DEVELOP'])) {
+            $this->slim->lastModified(time() - 2);
+            $this->slim->expires(time() - 1);
+        }
         $this->slim->run();
     }
 

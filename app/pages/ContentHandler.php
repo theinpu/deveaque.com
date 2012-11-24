@@ -9,12 +9,7 @@ class ContentHandler extends Page {
         $basePath = $args[0].'/'.$args[1].'/'.$args[2].'/'.$args[3];
         $sourcePath = '../upload/'.$basePath;
         $destPath = 'image/full/'.$basePath;
-        if(!file_exists($destPath)) {
-            @mkdir(dirname($destPath), 0777, true);
-            @copy($sourcePath, $destPath);
-        }
-        $this->getSlim()->response()->header('Content-Type', 'image/jpeg');
-        echo file_get_contents($sourcePath);
+        $this->showPostImage($destPath, $sourcePath, 1280);
     }
 
     public function showSmallPostImage() {
@@ -22,14 +17,18 @@ class ContentHandler extends Page {
         $basePath = $args[0].'/'.$args[1].'/'.$args[2].'/'.$args[3];
         $sourcePath = '../upload/'.$basePath;
         $destPath = 'image/small/'.$basePath;
+        $this->showPostImage($destPath, $sourcePath, self::PreviewRecangle);
+    }
+
+    private function showPostImage($destPath, $sourcePath, $maxSize) {
         if(!file_exists($destPath)) {
             @mkdir(dirname($destPath), 0777, true);
             $sourceImage = imagecreatefromjpeg($sourcePath);
             $sizes = getimagesize($sourcePath);
 
             if($sizes[0] > $sizes[1]) {
-                if($sizes[0] > self::PreviewRecangle) {
-                    $width = self::PreviewRecangle;
+                if($sizes[0] > $maxSize) {
+                    $width = $maxSize;
                     $height = ($width / $sizes[0]) * $sizes[1];
                 }
                 else {
@@ -38,8 +37,8 @@ class ContentHandler extends Page {
                 }
             }
             else {
-                if($sizes[1] > self::PreviewRecangle) {
-                    $height = self::PreviewRecangle;
+                if($sizes[1] > $maxSize) {
+                    $height = $maxSize;
                     $width = ($height / $sizes[1]) * $sizes[0];
                 }
                 else {

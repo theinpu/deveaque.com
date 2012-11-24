@@ -51,4 +51,27 @@ class Post {
         return $this->data;
     }
 
+    public function getInfo() {
+        if(!isset($this->data['info'])) {
+            $file = dirname(__FILE__).'/../../upload/'.$this->getFile();
+            $info = getimagesize($file);
+            $this->data['info'] = $info;
+            PostFactory::savePost($this);
+            return $info;
+        }
+        return $this->data['info'];
+    }
+
+    public function getSize() {
+        $info = $this->getInfo();
+        if(!isset($this->data['size'])) {
+            $size = array($info[0], $info[1]);
+            $this->data['size'] = $size;
+            PostFactory::savePost($this);
+            return $size;
+        }
+
+        return $this->data['size'];
+    }
+
 }
