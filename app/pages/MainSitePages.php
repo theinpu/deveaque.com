@@ -6,7 +6,7 @@ require_once 'app/pages/ContentHandler.php';
 
 class MainSitePages extends Page {
 
-    const PostPerPage = 2;
+    const PostPerPage = 20;
 
     public function showDefault($page = -1) {
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
