@@ -2,9 +2,12 @@
 /**
  * Slim - a micro PHP 5 framework
  *
- * @author      Josh Lockhart
- * @link        http://www.slimframework.com
+ * @author      Josh Lockhart <info@slimframework.com>
  * @copyright   2011 Josh Lockhart
+ * @link        http://www.slimframework.com
+ * @license     http://www.slimframework.com/license
+ * @version     2.0.0
+ * @package     Slim
  *
  * MIT LICENSE
  *
@@ -27,45 +30,48 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+namespace Slim;
 
 /**
- * Session Cookie Handler
+ * Log Writer
  *
- * This class is used as an adapter for PHP's $_SESSION handling.
- * Session data will be written to and read from signed, encrypted
- * cookies. If the current PHP installation does not have the `mcrypt`
- * extension, session data will be written to signed but unencrypted
- * cookies; however, the session cookies will still be secure and will
- * become invalid if manually edited after set by PHP.
+ * This class is used by Slim_Log to write log messages to a valid, writable
+ * resource handle (e.g. a file or STDERR).
  *
  * @package Slim
- * @author Josh Lockhart
- * @since Version 1.3
+ * @author  Josh Lockhart
+ * @since   1.6.0
  */
-class Slim_Session_Handler_Cookies extends Slim_Session_Handler {
+class LogWriter {
 
-    public function open($savePath, $sessionName) {
-        return true;
+    /**
+     * @var resource
+     */
+    protected $resource;
+
+    /**
+     * Constructor
+     *
+     * @param  resource                  $resource
+     *
+     * @throws \InvalidArgumentException If invalid resource
+     */
+    public function __construct($resource) {
+        if(!is_resource($resource)) {
+            throw new \InvalidArgumentException('Cannot create LogWriter. Invalid resource handle.');
+        }
+        $this->resource = $resource;
     }
 
-    public function close() {
-        return true; //Not used
+    /**
+     * Write message
+     *
+     * @param  mixed     $message
+     * @param  int       $level
+     *
+     * @return int|false
+     */
+    public function write($message, $level = null) {
+        return fwrite($this->resource, (string)$message.PHP_EOL);
     }
-
-    public function read($id) {
-        return $this->app->getEncryptedCookie($id);
-    }
-
-    public function write($id, $sessionData) {
-        $this->app->setEncryptedCookie($id, $sessionData, 0);
-    }
-
-    public function destroy($id) {
-        $this->app->deleteCookie($id);
-    }
-
-    public function gc($maxLifetime) {
-        return true; //Not used
-    }
-
 }

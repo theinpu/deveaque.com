@@ -28,6 +28,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+
+require_once 'libs/Slim/View.php';
+
 /**
  * TwigView
  *
@@ -38,7 +41,7 @@
  * - twigDirectory
  * - twigOptions
  */
-class TwigView extends Slim_View {
+class TwigView extends \Slim\View {
 
     /**
      * @var string The path to the Twig code directory WITHOUT the trailing slash
@@ -50,8 +53,8 @@ class TwigView extends Slim_View {
      * http://www.twig-project.org/book/03-Twig-for-Developers
      */
     public static $twigOptions = array(
-        'cache'       => "../cache/twig",
-        'debug'       => false
+        'cache' => "../cache/twig",
+        'debug' => false
     );
 
     /**
