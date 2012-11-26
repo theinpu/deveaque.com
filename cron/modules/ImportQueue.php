@@ -25,13 +25,13 @@ class ImportQueue implements CronModule {
         while($cursor->hasNext()) {
             $item = $cursor->getNext();
             $this->parseItem($item['path']);
+            $this->queueCollection->remove(array('_id' => $item['_id']));
         }
     }
 
     private function parseItem($path) {
         $baseName = explode('.', basename($path));
         preg_match_all('/\[([\w|\s|,|-]*)\]/is', $baseName[0], $matches, PREG_SET_ORDER);
-        //var_dump($matches);
         $title = $matches[0][1];
         $photographer = $matches[1][1];
         $tags = explode(',', $matches[2][1]);
