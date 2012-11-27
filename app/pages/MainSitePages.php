@@ -3,6 +3,7 @@
 require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
+require_once 'app/models/Votes.php';
 
 class MainSitePages extends Page {
 

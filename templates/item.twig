@@ -7,6 +7,7 @@
                 <a href="/post/{{ item.title }}/" rel="nofollow">{{ item.title }}</a>
             {% endif %}
             {% if isRegisterUser %}
+                {% include "widgets/postVote.twig" %}
             {% endif %}
         </h2>
 
