@@ -11,6 +11,7 @@ Twig_Extensions_Autoloader::register();
 require_once 'libs/TwigView.php';
 
 require_once 'app/Command.php';
+require_once 'app/models/Users.php';
 
 
 class Application {
