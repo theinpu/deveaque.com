@@ -68,4 +68,9 @@ class Users {
         self::$user = new User($userInfo);
         $_SESSION['email'] = $userInfo['email'];
     }
+
+    public static function logout() {
+        self::$user = new Guest();
+        unset($_SESSION['email']);
+    }
 }
