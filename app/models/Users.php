@@ -56,15 +56,16 @@ class Users {
         self::loginByPass($email, $pass);
     }
 
-    public function loginByPass($email, $pass) {
+    public static function loginByPass($email, $pass) {
         self::setCollection();
         $userInfo = self::$collection->findOne(array('email' => $email, 'pass' => md5($pass.'very secret solt')));
-        if(!empty($userInfo)) {
+        if(empty($userInfo)) {
             self::$user = new Guest();
 
             return;
         }
 
         self::$user = new User($userInfo);
+        $_SESSION['email'] = $userInfo['email'];
     }
 }

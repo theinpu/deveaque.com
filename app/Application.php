@@ -24,6 +24,7 @@ class Application {
     private $slim;
 
     public function __construct() {
+        session_start();
         $this->initializeSlim();
         $this->createRoutes();
         if(isset($_SERVER['DEVELOP'])) {
