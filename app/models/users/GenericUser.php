@@ -6,4 +6,6 @@ interface GenericUser {
 
     public function getData();
 
+    public function getId();
+
 }

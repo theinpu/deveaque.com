@@ -11,4 +11,8 @@ class Guest implements GenericUser {
     public function getData() {
         return array();
     }
+
+    public function getId() {
+        return null;
+    }
 }

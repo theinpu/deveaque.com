@@ -17,4 +17,12 @@ class User implements GenericUser {
     public function getData() {
         return $this->userInfo;
     }
+
+    public function getId() {
+        if(isset($this->userInfo['_id'])) {
+            return $this->userInfo['_id']->{'$id'};
+        }
+
+        return null;
+    }
 }

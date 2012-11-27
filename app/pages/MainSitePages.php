@@ -89,7 +89,9 @@ class MainSitePages extends Page {
                 'tags'         => Tags::getItemList($item->getId()),
                 'photographer' => $item->getPhotographer(),
                 'object'       => $item,
-                'zoomable'     => $zoomable
+                'zoomable'     => $zoomable,
+                'rating'       => Votes::getRating($item->getId()),
+                'canVote'      => !Votes::isVoted($item->getId(), Users::getCurrentUser()->getId()),
             );
             $posts[] = $post;
         }
