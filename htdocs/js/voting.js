@@ -8,6 +8,7 @@ $(document).ready(function () {
         $.getJSON(url, function (data) {
             if (!data.error) {
                 $('span.count', item).text(' ' + data.rating + ' ');
+                $('a', item).remove();
             } else {
                 console.log(data.msg);
             }
