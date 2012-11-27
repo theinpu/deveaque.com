@@ -28,8 +28,8 @@ class Application {
         $this->initializeSlim();
         $this->createRoutes();
         if(isset($_SERVER['DEVELOP'])) {
-            $this->slim->lastModified(time() - 2);
-            $this->slim->expires(time() - 1);
+            $this->slim->lastModified(time());
+            $this->slim->expires(time() - 100);
         }
         $this->slim->run();
     }
