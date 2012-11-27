@@ -28,23 +28,31 @@ class Application {
         $this->initializeSlim();
         $this->createRoutes();
         if(isset($_SERVER['DEVELOP'])) {
-            $this->slim->lastModified(time() - 2);
-            $this->slim->expires(time() - 1);
+            $this->slim->lastModified(time());
+            $this->slim->expires(time() - 100);
         }
         $this->slim->run();
     }
 
     private function createRoutes() {
         $this->createBaseSiteCommands();
+        $this->createUserHandlerCommands();
+        $this->createVotingCommands();
+        $this->createContentCommands();
+        $this->createAdminCommands();
+    }
 
+    private function createVotingCommands() {
+        $this->addGetCommand('/post/vote/up/:postId', 'VotingHandler', 'rateUp');
+        $this->addGetCommand('/post/vote/down/:postId', 'VotingHandler', 'rateDown');
+    }
+
+    private function createUserHandlerCommands() {
         $this->addGetCommand('/register', 'RegisterHandler', 'showRegister');
         $this->addGetCommand('/user', 'RegisterHandler', 'showUserSettings');
         $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
         $this->addPostCommand('/login', 'RegisterHandler', 'login');
         $this->addPostCommand('/register', 'RegisterHandler', 'register');
-
-        $this->createContentCommands();
-        $this->createAdminCommands();
     }
 
     private function createBaseSiteCommands() {
@@ -136,6 +144,8 @@ class Application {
 
         $user = Users::getCurrentUser();
         $this->getSlim()->view()->appendData(array('user' => $user->isGuest() ? null : $user->getData()));
+        $this->getSlim()->view()->appendData(array('isRegisterUser' => !$user->isGuest()));
+        $this->getSlim()->view()->appendData(array('isGuest' => $user->isGuest()));
     }
 
     public static function isAdmin() {
