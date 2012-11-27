@@ -34,6 +34,13 @@ class Application {
 
     private function createRoutes() {
         $this->createBaseSiteCommands();
+
+        $this->addGetCommand('/register', 'RegisterHandler', 'showRegister');
+        $this->addGetCommand('/user', 'RegisterHandler', 'showUserSettings');
+        $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
+        $this->addPostCommand('/login', 'RegisterHandler', 'login');
+        $this->addPostCommand('/register', 'RegisterHandler', 'register');
+
         $this->createContentCommands();
         $this->createAdminCommands();
     }

@@ -1,0 +1,24 @@
+{% extends "main.twig" %}
+{% block content %}
+    <div class="register-form">
+        <h2>Register</h2>
+
+        <form action="/register">
+            <div class="field">
+                <label for="email">email: </label>
+                <input type="text" name="email" id="email" placeholder="email@example.com"/>
+            </div>
+            <div class="group">
+                <div class="field">
+                    <label for="pass">password: </label>
+                    <input type="password" name="pass" id="pass"/>
+                </div>
+                <div class="field">
+                    <label for="pass_second">retype password: </label>
+                    <input type="password" name="pass_second" id="pass_second"/>
+                </div>
+            </div>
+            <input type="submit" value="register"/>
+        </form>
+    </div>
+{% endblock %}
