@@ -13,8 +13,8 @@
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
     {% endif %}
     {% if page < pages %}
-        <link rel="prefetch" href="/page{{ pages - page }}" />
-        <link rel="prerender" href="/page{{ pages - page }}" />
+        <link rel="prefetch" href="/page{{ pages - page }}"/>
+        <link rel="prerender" href="/page{{ pages - page }}"/>
     {% endif %}
     <script>
         $(document).ready(function () {
@@ -47,15 +47,14 @@
 </head>
 <body>
 <a name="page_top"></a>
+
 <div id="page">
     <h1 id="siteTitle">
         <a href="/">{{ logoTitle }}</a>
     </h1>
 
     <div class="navigation">
-        {% if isAdmin %}
-            <a href="/upload">запостить</a>
-        {% endif %}
+        {% include "userPanel.twig" %}
     </div>
     <div id="content">
         {% block content %}

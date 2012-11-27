@@ -51,7 +51,16 @@ a:hover {
     position: absolute;
     top: 110px;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -470px;
+}
+
+.navigation form {
+    display: inline;
+}
+
+.navigation input {
+    border: 1px solid #f40;
+    width: 80px;
 }
 
 #content {
