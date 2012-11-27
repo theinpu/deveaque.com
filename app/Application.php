@@ -132,6 +132,9 @@ class Application {
         $this->getSlim()->view()->appendData(array('logoTitle' => self::Title));
         $this->getSlim()->view()->appendData(array('isAdmin' => self::isAdmin()));
         $this->getSlim()->view()->appendData(array('isDevelop' => $_SERVER['DEVELOP']));
+
+        $user = Users::getCurrentUser();
+        $this->getSlim()->view()->appendData(array('user' => $user->isGuest() ? null : $user));
     }
 
     public static function isAdmin() {

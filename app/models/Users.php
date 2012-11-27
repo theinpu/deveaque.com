@@ -16,6 +16,14 @@ class Users {
     }
 
     public static function getCurrentUser() {
-        self::$user = new Guest();
+        self::autoLogin();
+
+        return self::$user;
+    }
+
+    private static function autoLogin() {
+        if(is_null(self::$user)) {
+            self::$user = new Guest();
+        }
     }
 }
