@@ -4,12 +4,10 @@ require_once 'GenericUser.php';
 
 class User implements GenericUser {
 
-    private $email;
-    private $pass;
+    private $userInfo;
 
-    public function __costructor($email, $pass) {
-        $this->email = $email;
-        $this->pass = md5($pass.'very secret solt');
+    public function __construct($userInfo) {
+        $this->userInfo = $userInfo;
     }
 
     public function isGuest() {
@@ -17,6 +15,6 @@ class User implements GenericUser {
     }
 
     public function getData() {
-        return array('email' => $this->email);
+        return $this->userInfo;
     }
 }
