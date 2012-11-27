@@ -228,3 +228,12 @@ div.tags ul li {
     margin-top: 20px;
     width: 100px;
 }
+
+span.rating {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+span.rating a {
+    text-decoration: none;
+}

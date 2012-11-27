@@ -17,7 +17,7 @@ class Votes {
     }
 
     public static function isVoted($postId, $userId) {
-        return true;
+        return false;
     }
 
 }
