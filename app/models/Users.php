@@ -27,7 +27,15 @@ class Users {
 
     private static function autoLogin() {
         if(is_null(self::$user)) {
-            self::$user = new Guest();
+            $sesid = session_id();
+            if(empty($sesid) || !isset($_SESSION['email'])) {
+                self::$user = new Guest();
+            }
+            else {
+                $email = $_SESSION['email'];
+                $userInfo = self::$collection->findOne(array('email' => $email));
+                self::$user = new User($userInfo);
+            }
         }
     }
 
@@ -45,10 +53,10 @@ class Users {
             )
         );
         self::$collection->save($user->getData());
-        self::login($email, $pass);
+        self::loginByPass($email, $pass);
     }
 
-    public function login($email, $pass) {
+    public function loginByPass($email, $pass) {
         self::setCollection();
         $userInfo = self::$collection->findOne(array('email' => $email, 'pass' => md5($pass.'very secret solt')));
         if(!empty($userInfo)) {
