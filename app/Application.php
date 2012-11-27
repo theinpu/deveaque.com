@@ -36,15 +36,23 @@ class Application {
 
     private function createRoutes() {
         $this->createBaseSiteCommands();
+        $this->createUserHandlerCommands();
+        $this->createVotingCommands();
+        $this->createContentCommands();
+        $this->createAdminCommands();
+    }
 
+    private function createVotingCommands() {
+        $this->addGetCommand('/post/vote/up/:postId', 'VotingHandler', 'rateUp');
+        $this->addGetCommand('/post/vote/down/:postId', 'VotingHandler', 'rateDown');
+    }
+
+    private function createUserHandlerCommands() {
         $this->addGetCommand('/register', 'RegisterHandler', 'showRegister');
         $this->addGetCommand('/user', 'RegisterHandler', 'showUserSettings');
         $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
         $this->addPostCommand('/login', 'RegisterHandler', 'login');
         $this->addPostCommand('/register', 'RegisterHandler', 'register');
-
-        $this->createContentCommands();
-        $this->createAdminCommands();
     }
 
     private function createBaseSiteCommands() {
