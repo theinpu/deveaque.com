@@ -136,6 +136,8 @@ class Application {
 
         $user = Users::getCurrentUser();
         $this->getSlim()->view()->appendData(array('user' => $user->isGuest() ? null : $user->getData()));
+        $this->getSlim()->view()->appendData(array('isRegisterUser' => !$user->isGuest()));
+        $this->getSlim()->view()->appendData(array('isGuest' => $user->isGuest()));
     }
 
     public static function isAdmin() {
