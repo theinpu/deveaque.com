@@ -19,6 +19,7 @@ class Users {
     }
 
     public static function getCurrentUser() {
+        self::setCollection();
         self::autoLogin();
 
         return self::$user;
@@ -31,13 +32,31 @@ class Users {
     }
 
     public static function registerUser($email, $pass) {
+        self::setCollection();
         $userInfo = self::$collection->findOne(array('email' => $email));
-        if(!($userInfo)) {
+        if($userInfo) {
             throw new InvalidArgumentException('user exists');
         }
 
-        $user = new User($email, $pass);
+        $user = new User(
+            array(
+                 'email' => $email,
+                 'pass'  => md5($pass.'very secret solt')
+            )
+        );
         self::$collection->save($user->getData());
-        self::$user = $user;
+        self::login($email, $pass);
+    }
+
+    public function login($email, $pass) {
+        self::setCollection();
+        $userInfo = self::$collection->findOne(array('email' => $email, 'pass' => md5($pass.'very secret solt')));
+        if(!empty($userInfo)) {
+            self::$user = new Guest();
+
+            return;
+        }
+
+        self::$user = new User($userInfo);
     }
 }

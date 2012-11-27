@@ -24,8 +24,12 @@ class RegisterHandler extends Page {
 
             return;
         }
-
-        Users::registerUser($email, $pass);
+        try {
+            Users::registerUser($email, $pass);
+        }
+        catch(Exception $e) {
+            var_dump($e->getMessage());
+        }
         $this->getSlim()->redirect('/');
     }
 
