@@ -41,4 +41,13 @@ class RegisterHandler extends Page {
         Users::loginByPass($email, $pass);
         $this->getSlim()->redirect($back);
     }
+
+    public function logout() {
+
+        Users::logout();
+
+        $back = $_SERVER['HTTP_REFERER'];
+        $this->getSlim()->redirect($back);
+
+    }
 }
