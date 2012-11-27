@@ -50,4 +50,9 @@ class RegisterHandler extends Page {
         $this->getSlim()->redirect($back);
 
     }
+
+    public function showUserSettings() {
+        $back = $_SERVER['HTTP_REFERER'];
+        $this->getSlim()->redirect($back);
+    }
 }
