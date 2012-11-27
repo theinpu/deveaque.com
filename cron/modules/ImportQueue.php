@@ -16,7 +16,6 @@ class ImportQueue implements CronModule {
     public function exec($params = array()) {
         $this->uploadPath = dirname(__FILE__).'/../../uploads/';
         $this->queueCollection = MongoAssist::GetCollection('import_queue');
-        $this->parseItem('/ftp/[Women Name][Photographer Name][tag1,tag2,tag3].jpg');
         $this->parseQueue();
     }
 
