@@ -3,7 +3,7 @@
 abstract class Page {
 
     /**
-     * @var Slim
+     * @var Slim\Slim
      */
     private $slim;
 
@@ -11,6 +11,9 @@ abstract class Page {
         $this->slim = $slim;
     }
 
+    /**
+     * @return Slim\Slim
+     */
     protected final function getSlim() {
         return $this->slim;
     }

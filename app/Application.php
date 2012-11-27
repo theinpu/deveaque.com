@@ -11,6 +11,7 @@ Twig_Extensions_Autoloader::register();
 require_once 'libs/TwigView.php';
 
 require_once 'app/Command.php';
+require_once 'app/models/Users.php';
 
 
 class Application {
@@ -23,6 +24,7 @@ class Application {
     private $slim;
 
     public function __construct() {
+        session_start();
         $this->initializeSlim();
         $this->createRoutes();
         if(isset($_SERVER['DEVELOP'])) {
@@ -34,6 +36,13 @@ class Application {
 
     private function createRoutes() {
         $this->createBaseSiteCommands();
+
+        $this->addGetCommand('/register', 'RegisterHandler', 'showRegister');
+        $this->addGetCommand('/user', 'RegisterHandler', 'showUserSettings');
+        $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
+        $this->addPostCommand('/login', 'RegisterHandler', 'login');
+        $this->addPostCommand('/register', 'RegisterHandler', 'register');
+
         $this->createContentCommands();
         $this->createAdminCommands();
     }
@@ -124,6 +133,9 @@ class Application {
         $this->getSlim()->view()->appendData(array('logoTitle' => self::Title));
         $this->getSlim()->view()->appendData(array('isAdmin' => self::isAdmin()));
         $this->getSlim()->view()->appendData(array('isDevelop' => $_SERVER['DEVELOP']));
+
+        $user = Users::getCurrentUser();
+        $this->getSlim()->view()->appendData(array('user' => $user->isGuest() ? null : $user->getData()));
     }
 
     public static function isAdmin() {

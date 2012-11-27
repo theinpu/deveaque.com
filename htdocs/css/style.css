@@ -51,7 +51,16 @@ a:hover {
     position: absolute;
     top: 110px;
     left: 50%;
-    margin-left: -400px;
+    margin-left: -470px;
+}
+
+.navigation form {
+    display: inline;
+}
+
+.navigation input {
+    border: 1px solid #f40;
+    width: 80px;
 }
 
 #content {
@@ -194,4 +203,28 @@ div.tags ul li {
 
 #back-to-page-top.page-top-link-hover {
     opacity: .8;
+}
+
+.register-form {
+    margin-left: 50px;
+    text-align: left;
+}
+
+.register-form form {
+    margin-top: 20px;
+}
+
+.register-form input {
+    padding: 2px;
+    margin: 4px 2px;
+}
+
+.register-form label {
+    display: inline-block;
+    width: 125px;
+}
+
+.register-form input[type=submit] {
+    margin-top: 20px;
+    width: 100px;
 }
