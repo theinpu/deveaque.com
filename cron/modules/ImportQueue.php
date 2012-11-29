@@ -14,7 +14,7 @@ class ImportQueue implements CronModule {
     private $uploadPath = '';
 
     public function exec($params = array()) {
-        $this->uploadPath = dirname(__FILE__).'/../../uploads/';
+        $this->uploadPath = dirname(__FILE__).'/../../upload/';
         $this->queueCollection = MongoAssist::GetCollection('import_queue');
         $this->parseQueue();
     }
