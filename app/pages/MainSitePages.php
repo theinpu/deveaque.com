@@ -3,6 +3,7 @@
 require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
+require_once 'app/models/Votes.php';
 
 class MainSitePages extends Page {
 
@@ -12,12 +13,18 @@ class MainSitePages extends Page {
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
+
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/page'.($pages - $page);
+        }
         $this->appendDataToTemplate(array(
-                                         'posts' => $posts,
-                                         'page'  => $page,
-                                         'pages' => $pages));
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                    ));
         $this->displayTemplate('main.twig');
-        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function setupPage($page, $pages) {
@@ -40,15 +47,20 @@ class MainSitePages extends Page {
         $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/post/'.$title.'/page'.($pages - $page);
+        }
+
         $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
         $this->appendDataToTemplate(array(
-                                         'posts'    => $posts,
-                                         'page'     => $page,
-                                         'pages'    => $pages,
-                                         'baseLink' => '/post/'.$title
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/post/'.$title
                                     ));
         $this->displayTemplate('main.twig');
-        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function loadPostsByTitle($title, $offset) {
@@ -63,16 +75,21 @@ class MainSitePages extends Page {
         $pages = ceil(count($postIds) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/tag/'.$tag.'/page'.($pages - $page);
+        }
+
         $postsList = PostFactory::getPostsByIds($postIds, ($page - 1) * self::PostPerPage, self::PostPerPage);
         $posts = $this->buildPosts($postsList);
         $this->appendDataToTemplate(array(
-                                         'posts'    => $posts,
-                                         'page'     => $page,
-                                         'pages'    => $pages,
-                                         'baseLink' => '/tag/'.$tag
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/tag/'.$tag
                                     ));
         $this->displayTemplate('main.twig');
-        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
 
     private function buildPosts($postsList) {
@@ -80,6 +97,10 @@ class MainSitePages extends Page {
         foreach($postsList as $item) {
             $size = $item->getSize();
             $zoomable = ($size[0] > ContentHandler::PreviewRecangle || $size[1] > ContentHandler::PreviewRecangle);
+            if(is_null($item->getRating())) {
+                $item->setRating(Votes::getRating($item->getId()));
+                PostFactory::savePost($item);
+            }
             $post = array(
                 'id'           => $item->getId(),
                 'title'        => $item->getTitle(),
@@ -89,7 +110,9 @@ class MainSitePages extends Page {
                 'tags'         => Tags::getItemList($item->getId()),
                 'photographer' => $item->getPhotographer(),
                 'object'       => $item,
-                'zoomable'     => $zoomable
+                'zoomable'     => $zoomable,
+                'rating'       => $item->getRating(),
+                'canVote'      => !Votes::isVoted($item->getId(), Users::getCurrentUser()->getId()),
             );
             $posts[] = $post;
         }
@@ -106,16 +129,44 @@ class MainSitePages extends Page {
             'Post from '.$formattedDateLine;
         $this->getSlim()->view()->setData('siteTitle', $title.' - '.Application::Title);
         $post = $this->buildPosts(array($post));
+
+        $preload = '/';
+
         $this->appendDataToTemplate(array(
-                                         'item' => $post[0],
+                                         'item'        => $post[0],
+                                         'preloadPage' => $preload,
                                     ));
         $this->displayTemplate('singlePost.twig');
-        $this->getSlim()->lastModified((int)$post[0]['object']->getDate());
     }
 
     public function searchTag() {
         $term = $this->getSlim()->request()->get('term');
         $tags = Tags::searchTags($term);
         echo json_encode($tags);
+    }
+
+    public function showBest($page = -1) {
+        $pages = ceil(PostFactory::getCount() / self::PostPerPage);
+        $page = $this->setupPage($page, $pages);
+        $posts = $this->loadPostsByRating(($page - 1) * self::PostPerPage, self::PostPerPage);
+
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/best/page'.($pages - $page);
+        }
+        $this->appendDataToTemplate(array(
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/best',
+                                    ));
+        $this->displayTemplate('main.twig');
+    }
+
+    private function loadPostsByRating($offset) {
+        $postsList = PostFactory::getPostsByRating($offset, self::PostPerPage);
+
+        return $this->buildPosts($postsList);
     }
 }

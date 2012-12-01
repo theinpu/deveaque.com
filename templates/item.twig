@@ -6,16 +6,25 @@
             {% else %}
                 <a href="/post/{{ item.title }}/" rel="nofollow">{{ item.title }}</a>
             {% endif %}
+            {% if isRegisterUser %}
+                {% include "widgets/postVote.twig" %}
+            {% endif %}
         </h2>
 
         <h3>
             {{ item.photographer }}
         </h3>
 
-        <div>
-            <a href="{{ item.image }}" class="lightbox">
-                <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
-            </a>
+        <div class="image-holder">
+            {% if item.zoomable %}
+                <a href="{{ item.image }}" class="lightbox" rel="nofollow">
+                    <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
+                </a>
+            {% else %}
+                <a href="/post/{{ item.id }}" rel="nofollow">
+                    <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
+                </a>
+            {% endif %}
         </div>
         <noindex>
             <div class="permalink"><a href="/post/{{ item.id }}" rel="nofollow">permalink</a></div>

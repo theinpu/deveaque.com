@@ -11,6 +11,7 @@ Twig_Extensions_Autoloader::register();
 require_once 'libs/TwigView.php';
 
 require_once 'app/Command.php';
+require_once 'app/models/Users.php';
 
 
 class Application {
@@ -23,19 +24,37 @@ class Application {
     private $slim;
 
     public function __construct() {
+        $this->initializeSession();
         $this->initializeSlim();
         $this->createRoutes();
-        if(isset($_SERVER['DEVELOP'])) {
-            $this->slim->lastModified(time() - 2);
-            $this->slim->expires(time() - 1);
-        }
         $this->slim->run();
+    }
+
+    private function initializeSession() {
+        $twoWeeksInSeconds = 1209600;
+        session_set_cookie_params($twoWeeksInSeconds);
+        session_start();
     }
 
     private function createRoutes() {
         $this->createBaseSiteCommands();
+        $this->createUserHandlerCommands();
+        $this->createVotingCommands();
         $this->createContentCommands();
         $this->createAdminCommands();
+    }
+
+    private function createVotingCommands() {
+        $this->addGetCommand('/post/vote/up/:postId', 'VotingHandler', 'rateUp');
+        $this->addGetCommand('/post/vote/down/:postId', 'VotingHandler', 'rateDown');
+    }
+
+    private function createUserHandlerCommands() {
+        $this->addGetCommand('/register', 'RegisterHandler', 'showRegister');
+        $this->addGetCommand('/user', 'RegisterHandler', 'showUserSettings');
+        $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
+        $this->addPostCommand('/login', 'RegisterHandler', 'login');
+        $this->addPostCommand('/register', 'RegisterHandler', 'register');
     }
 
     private function createBaseSiteCommands() {
@@ -44,6 +63,7 @@ class Application {
         $this->addGetCommand('/post/:id', 'MainSitePages', 'showPost');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
         $this->addGetCommand('/tag/search', 'MainSitePages', 'searchTag');
+        $this->addGetCommand('/best/(page:pageId)', 'MainSitePages', 'showBest');
     }
 
     private function createContentCommands() {
@@ -124,6 +144,11 @@ class Application {
         $this->getSlim()->view()->appendData(array('logoTitle' => self::Title));
         $this->getSlim()->view()->appendData(array('isAdmin' => self::isAdmin()));
         $this->getSlim()->view()->appendData(array('isDevelop' => $_SERVER['DEVELOP']));
+
+        $user = Users::getCurrentUser();
+        $this->getSlim()->view()->appendData(array('user' => $user->isGuest() ? null : $user->getData()));
+        $this->getSlim()->view()->appendData(array('isRegisterUser' => !$user->isGuest()));
+        $this->getSlim()->view()->appendData(array('isGuest' => $user->isGuest()));
     }
 
     public static function isAdmin() {

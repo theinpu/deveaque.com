@@ -1,0 +1,13 @@
+{% if user %}
+    <a href="/user">{{ user.email }}</a> | <a href="/logout">logout</a>
+{% else %}
+    <form action="/login" method="post">
+        <span>login</span>
+        <input type="text" name="email" placeholder="email@example.com"/>
+        <input type="password" name="pass"/>
+        <input type="submit" value=" enter "/>
+    </form>
+    | <a href="/register">register</a>
+{% endif %}
+&nbsp;&nbsp;
+<a href="/" rel="nofollow">all</a> | <a href="/best/">best</a>

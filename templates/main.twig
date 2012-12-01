@@ -12,10 +12,8 @@
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css"/>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
     {% endif %}
-    {% if page < pages %}
-        <link rel="prefetch" href="/page{{ pages - page }}" />
-        <link rel="prerender" href="/page{{ pages - page }}" />
-    {% endif %}
+    <link rel="prefetch" href="{{ preloadPage }}"/>
+    <link rel="prerender" href="{{ preloadPage }}"/>
     <script>
         $(document).ready(function () {
             $.each($('div.item a.lightbox'), function (id, item) {
@@ -23,39 +21,23 @@
             });
         });
     </script>
-    {% if not isAdmin and not isDevelop %}
-        <script type="text/javascript">
-
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-30332384-2']);
-            _gaq.push(['_trackPageview']);
-
-            (function () {
-                var ga = document.createElement('script');
-                ga.type = 'text/javascript';
-                ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0];
-                s.parentNode.insertBefore(ga, s);
-            })();
-
-        </script>
-    {% endif %}
     {% if isAdmin %}
         {% include "adminScripts.twig" %}
+    {% endif %}
+    {% if isRegisterUser %}
+        <script src="/js/voting.js"></script>
     {% endif %}
 </head>
 <body>
 <a name="page_top"></a>
+
 <div id="page">
     <h1 id="siteTitle">
         <a href="/">{{ logoTitle }}</a>
     </h1>
 
     <div class="navigation">
-        {% if isAdmin %}
-            <a href="/upload">запостить</a>
-        {% endif %}
+        {% include "userPanel.twig" %}
     </div>
     <div id="content">
         {% block content %}
@@ -70,5 +52,8 @@
     </div>
 </div>
 {% include "widgets.twig" %}
+{% if not isAdmin and not isDevelop %}
+    {% include "counters.twig" %}
+{% endif %}
 </body>
 </html>
