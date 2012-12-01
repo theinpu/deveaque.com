@@ -100,6 +100,10 @@ class MainSitePages extends Page {
         foreach($postsList as $item) {
             $size = $item->getSize();
             $zoomable = ($size[0] > ContentHandler::PreviewRecangle || $size[1] > ContentHandler::PreviewRecangle);
+            if(is_null($item->getRating())) {
+                $item->setRating(Votes::getRating($item->getId()));
+                PostFactory::savePost($item);
+            }
             $post = array(
                 'id'           => $item->getId(),
                 'title'        => $item->getTitle(),
@@ -110,7 +114,7 @@ class MainSitePages extends Page {
                 'photographer' => $item->getPhotographer(),
                 'object'       => $item,
                 'zoomable'     => $zoomable,
-                'rating'       => Votes::getRating($item->getId()),
+                'rating'       => $item->getRating(),
                 'canVote'      => !Votes::isVoted($item->getId(), Users::getCurrentUser()->getId()),
             );
             $posts[] = $post;
@@ -143,5 +147,31 @@ class MainSitePages extends Page {
         $term = $this->getSlim()->request()->get('term');
         $tags = Tags::searchTags($term);
         echo json_encode($tags);
+    }
+
+    public function showBest($page = -1) {
+        $pages = ceil(PostFactory::getCount() / self::PostPerPage);
+        $page = $this->setupPage($page, $pages);
+        $posts = $this->loadPostsByRating(($page - 1) * self::PostPerPage, self::PostPerPage);
+
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/best/page'.($pages - $page);
+        }
+        $this->appendDataToTemplate(array(
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/best',
+                                    ));
+        $this->displayTemplate('main.twig');
+        $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
+    }
+
+    private function loadPostsByRating($offset) {
+        $postsList = PostFactory::getPostsByRating($offset, self::PostPerPage);
+
+        return $this->buildPosts($postsList);
     }
 }

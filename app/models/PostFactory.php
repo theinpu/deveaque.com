@@ -61,6 +61,7 @@ class PostFactory {
 
     /**
      * @param $id
+     *
      * @return Post
      */
     public static function getPost($id) {
@@ -92,6 +93,20 @@ class PostFactory {
         self::setCollection();
         $cursor = self::$collection->find(array('_id' => array('$in' => $postIds)))
             ->sort(array('date' => -1))
+            ->skip($offset)->limit($limit);
+
+        $result = array();
+        while($cursor->hasNext()) {
+            $result[] = new Post($cursor->getNext());
+        }
+
+        return $result;
+    }
+
+    public static function getPostsByRating($offset, $limit) {
+        self::setCollection();
+        $cursor = self::$collection->find()
+            ->sort(array('rating' => -1))
             ->skip($offset)->limit($limit);
 
         $result = array();

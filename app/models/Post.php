@@ -40,6 +40,7 @@ class Post {
         if(!isset($this->data['photographer'])) {
             return '';
         }
+
         return $this->data['photographer'];
     }
 
@@ -57,8 +58,10 @@ class Post {
             $info = getimagesize($file);
             $this->data['info'] = $info;
             PostFactory::savePost($this);
+
             return $info;
         }
+
         return $this->data['info'];
     }
 
@@ -68,10 +71,23 @@ class Post {
             $size = array($info[0], $info[1]);
             $this->data['size'] = $size;
             PostFactory::savePost($this);
+
             return $size;
         }
 
         return $this->data['size'];
+    }
+
+    public function getRating() {
+        if(!isset($this->data['rating'])) {
+            return null;
+        }
+
+        return $this->data['rating'];
+    }
+
+    public function setRating($rating) {
+        $this->data['rating'] = $rating;
     }
 
 }

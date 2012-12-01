@@ -67,6 +67,7 @@ class Application {
         $this->addGetCommand('/post/:id', 'MainSitePages', 'showPost');
         $this->addGetCommand('/tag/:tag/(page:pageId)', 'MainSitePages', 'showByTag');
         $this->addGetCommand('/tag/search', 'MainSitePages', 'searchTag');
+        $this->addGetCommand('/best/(page:pageId)', 'MainSitePages', 'showBest');
     }
 
     private function createContentCommands() {
