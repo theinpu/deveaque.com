@@ -148,10 +148,6 @@ div.tags ul li {
     float: none;
 }
 
-.pages {
-    display: inline-block;
-}
-
 .permalink {
     display: inline-block;
     position: absolute;
@@ -236,4 +232,8 @@ span.rating {
 
 span.rating a {
     text-decoration: none;
+}
+
+.paginator .pages {
+    display: inline-block;
 }
