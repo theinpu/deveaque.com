@@ -1,9 +1,9 @@
 <span class="rating">[
-    {% if item.canVote %}
+    {% if item.canVote and isRegisterUser %}
         <a href="/post/vote/up/{{ item.id }}"> + </a>
     {% endif %}
     <span class="count"> {{ item.rating }} </span>
-    {% if item.canVote %}
+    {% if item.canVote and isRegisterUser %}
     <a href="/post/vote/down/{{ item.id }}"> - </a>
     {% endif %}]
 </span>
