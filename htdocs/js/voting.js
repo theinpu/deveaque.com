@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    var posts = $('span.rating a');
+    var posts = $('span.rating a.vote');
 
     posts.click(function () {
         var url = $(this).attr('href');

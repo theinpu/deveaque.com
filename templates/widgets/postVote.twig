@@ -1,9 +1,17 @@
 <span class="rating">[
-    {% if item.canVote and isRegisterUser %}
-        <a href="/post/vote/up/{{ item.id }}"> + </a>
+    {% if isRegisterUser %}
+        {% if item.canVote %}
+            <a href="/post/vote/up/{{ item.id }}" class="vote"> + </a>
+        {% endif %}
+    {% else %}
+        <a href="/register"> + </a>
     {% endif %}
     <span class="count"> {{ item.rating }} </span>
-    {% if item.canVote and isRegisterUser %}
-    <a href="/post/vote/down/{{ item.id }}"> - </a>
-    {% endif %}]
+    {% if isRegisterUser %}
+    {% if item.canVote %}
+        <a href="/post/vote/down/{{ item.id }}" class="vote"> - </a>
+    {% endif %}
+{% else %}
+    <a href="/register"> - </a>
+{% endif %}]
 </span>
