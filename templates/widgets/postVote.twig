@@ -8,11 +8,10 @@
     {% endif %}
     <span class="count"> {{ item.rating }} </span>
     {% if isRegisterUser %}
-        {% if item.canVote %}
-            <a href="/post/vote/down/{{ item.id }}" class="vote"> - </a>
-        {% endif %}
-    {% else %}
-        <a href="/register"> -</a>
+    {% if item.canVote %}
+        <a href="/post/vote/down/{{ item.id }}" class="vote"> - </a>
     {% endif %}
-    ]
+{% else %}
+    <a href="/register"> - </a>
+{% endif %}]
 </span>
