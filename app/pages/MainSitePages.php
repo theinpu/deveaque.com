@@ -13,10 +13,17 @@ class MainSitePages extends Page {
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
         $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
+
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/page'.($pages - $page);
+        }
         $this->appendDataToTemplate(array(
-                                         'posts' => $posts,
-                                         'page'  => $page,
-                                         'pages' => $pages));
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                    ));
         $this->displayTemplate('main.twig');
         $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
     }
@@ -41,12 +48,18 @@ class MainSitePages extends Page {
         $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/post/'.$title.'/page'.($pages - $page);
+        }
+
         $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
         $this->appendDataToTemplate(array(
-                                         'posts'    => $posts,
-                                         'page'     => $page,
-                                         'pages'    => $pages,
-                                         'baseLink' => '/post/'.$title
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/post/'.$title
                                     ));
         $this->displayTemplate('main.twig');
         $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
@@ -64,13 +77,19 @@ class MainSitePages extends Page {
         $pages = ceil(count($postIds) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
+        $preload = '/';
+        if($page < $pages) {
+            $preload = '/tag/'.$tag.'/page'.($pages - $page);
+        }
+
         $postsList = PostFactory::getPostsByIds($postIds, ($page - 1) * self::PostPerPage, self::PostPerPage);
         $posts = $this->buildPosts($postsList);
         $this->appendDataToTemplate(array(
-                                         'posts'    => $posts,
-                                         'page'     => $page,
-                                         'pages'    => $pages,
-                                         'baseLink' => '/tag/'.$tag
+                                         'posts'       => $posts,
+                                         'page'        => $page,
+                                         'pages'       => $pages,
+                                         'preloadPage' => $preload,
+                                         'baseLink'    => '/tag/'.$tag
                                     ));
         $this->displayTemplate('main.twig');
         $this->getSlim()->lastModified((int)$posts[0]['object']->getDate());
@@ -109,8 +128,12 @@ class MainSitePages extends Page {
             'Post from '.$formattedDateLine;
         $this->getSlim()->view()->setData('siteTitle', $title.' - '.Application::Title);
         $post = $this->buildPosts(array($post));
+
+        $preload = '/';
+
         $this->appendDataToTemplate(array(
-                                         'item' => $post[0],
+                                         'item'        => $post[0],
+                                         'preloadPage' => $preload,
                                     ));
         $this->displayTemplate('singlePost.twig');
         $this->getSlim()->lastModified((int)$post[0]['object']->getDate());

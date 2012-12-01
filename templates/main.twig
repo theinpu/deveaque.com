@@ -12,10 +12,8 @@
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css"/>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
     {% endif %}
-    {% if page < pages %}
-        <link rel="prefetch" href="/page{{ pages - page }}"/>
-        <link rel="prerender" href="/page{{ pages - page }}"/>
-    {% endif %}
+    <link rel="prefetch" href="{{ preloadPage }}"/>
+    <link rel="prerender" href="{{ preloadPage }}"/>
     <script>
         $(document).ready(function () {
             $.each($('div.item a.lightbox'), function (id, item) {
