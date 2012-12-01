@@ -24,7 +24,7 @@ class Application {
     private $slim;
 
     public function __construct() {
-        session_start();
+        $this->initializeSession();
         $this->initializeSlim();
         $this->createRoutes();
         if(isset($_SERVER['DEVELOP'])) {
@@ -32,6 +32,12 @@ class Application {
             $this->slim->expires(time() - 100);
         }
         $this->slim->run();
+    }
+
+    private function initializeSession() {
+        $twoWeeksInSeconds = 1209600;
+        session_set_cookie_params($twoWeeksInSeconds);
+        session_start();
     }
 
     private function createRoutes() {
