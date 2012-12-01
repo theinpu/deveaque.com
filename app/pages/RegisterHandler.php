@@ -3,6 +3,9 @@
 class RegisterHandler extends Page {
 
     public function showRegister() {
+        if(!Users::getCurrentUser()->isGuest()) {
+            $this->getSlim()->redirect($_SERVER['HTTP_REFERER']);
+        }
         $this->displayTemplate('forms/register.twig');
     }
 
