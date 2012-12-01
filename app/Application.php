@@ -27,10 +27,6 @@ class Application {
         $this->initializeSession();
         $this->initializeSlim();
         $this->createRoutes();
-        if(isset($_SERVER['DEVELOP'])) {
-            $this->slim->lastModified(time());
-            $this->slim->expires(time() - 100);
-        }
         $this->slim->run();
     }
 
