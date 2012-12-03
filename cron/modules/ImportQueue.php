@@ -23,12 +23,17 @@ class ImportQueue implements CronModule {
         $cursor = $this->queueCollection->find()->sort(array('time' => -1))->limit(10);
         while($cursor->hasNext()) {
             $item = $cursor->getNext();
-            $this->parseItem($item['path']);
-            $this->queueCollection->remove(array('_id' => $item['_id']));
+            try {
+                $this->parseItem($item['path'], $item['time']);
+                $this->queueCollection->remove(array('_id' => $item['_id']));
+            }
+            catch(Exception $e) {
+                echo $e->getMessage()."\r\n";
+            }
         }
     }
 
-    private function parseItem($path) {
+    private function parseItem($path, $date) {
         $baseName = explode('.', basename($path));
         preg_match_all('/\[([\w|\s|,|-]*)\]/is', $baseName[0], $matches, PREG_SET_ORDER);
         $title = $matches[0][1];
@@ -39,7 +44,8 @@ class ImportQueue implements CronModule {
         $post = new Post(array(
                               'title'        => empty($title) ? null : $title,
                               'photographer' => empty($photographer) ? null : $photographer,
-                              'file'         => $file
+                              'file'         => $file,
+                              'date'         => $date,
                          ));
         PostFactory::createPost($post);
         foreach($tags as $tag) {
