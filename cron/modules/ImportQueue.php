@@ -42,10 +42,10 @@ class ImportQueue implements CronModule {
         $file = $this->importImage($path);
 
         $post = new Post(array(
-                              'title'        => empty($title) ? null : $title,
+                              'date'         => $date,
                               'photographer' => empty($photographer) ? null : $photographer,
                               'file'         => $file,
-                              'date'         => $date,
+                              'title'        => empty($title) ? null : $title,
                          ));
         PostFactory::createPost($post);
         foreach($tags as $tag) {
