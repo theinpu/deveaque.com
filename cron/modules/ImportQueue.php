@@ -53,7 +53,11 @@ class ImportQueue implements CronModule {
 
         $baseName = explode('.', basename($file));
         $fileName = md5($baseName[0]).'.'.$baseName[1];
+        if(!file_exists($file)) {
+            throw new InvalidArgumentException('file '.$file.' not found');
+        }
 
+        @mkdir($destPath, 0777, true);
         copy($file, $destPath.$fileName);
         unlink($file);
 
