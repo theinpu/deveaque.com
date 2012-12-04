@@ -1,6 +1,6 @@
 <?php
 
-abstract class Page {
+abstract class Section {
 
     /**
      * @var Slim\Slim

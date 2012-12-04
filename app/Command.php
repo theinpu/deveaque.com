@@ -1,6 +1,6 @@
 <?php
 
-require_once 'app/pages/Page.php';
+require_once 'app/pages/Section.php';
 
 class Command {
 

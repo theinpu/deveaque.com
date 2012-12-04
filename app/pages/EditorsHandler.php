@@ -1,15 +1,15 @@
 <?php
 
-require_once 'app/pages/Page.php';
+require_once 'app/pages/Section.php';
 require_once 'app/models/PostFactory.php';
 
-class EditorsHandler extends Page {
+class EditorsHandler extends Section {
 
     public function getPostEditor($id) {
         $post = PostFactory::getPost($id);
         $postData = array(
-            'id'    => $post->getId(),
-            'title' => $post->getTitle(),
+            'id'           => $post->getId(),
+            'title'        => $post->getTitle(),
             'photographer' => $post->getPhotographer()
         );
 
