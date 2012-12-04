@@ -4,7 +4,7 @@ require_once 'app/models/PostFactory.php';
 require_once 'app/models/Users.php';
 require_once 'app/models/Votes.php';
 
-class VotingHandler extends Page {
+class VotingHandler extends Section {
 
     public function rateUp($postId) {
         if(!$this->getSlim()->request()->isAjax()) {

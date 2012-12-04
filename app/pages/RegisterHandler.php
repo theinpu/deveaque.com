@@ -1,6 +1,6 @@
 <?php
 
-class RegisterHandler extends Page {
+class RegisterHandler extends Section {
 
     public function showRegister() {
         if(!Users::getCurrentUser()->isGuest()) {

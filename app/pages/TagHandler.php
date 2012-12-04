@@ -1,9 +1,9 @@
 <?php
 
-require_once 'app/pages/Page.php';
+require_once 'app/pages/Section.php';
 require_once 'app/models/Tags.php';
 
-class TagHandler extends Page {
+class TagHandler extends Section {
 
     public function saveTag() {
         $this->checkAjaxPermissions();
