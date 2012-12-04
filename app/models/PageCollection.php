@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Page.php';
+
 class PageCollection {
 
     public static function getLastPage() {
