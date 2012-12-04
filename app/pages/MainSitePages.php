@@ -7,6 +7,7 @@ require_once 'app/models/Votes.php';
 
 class MainSitePages extends Section {
 
+    const PostPerPage = 20;
 
     public function showDefault($page = -1) {
         $pages = ceil(PostFactory::getCount() / self::PostPerPage);
@@ -73,12 +74,7 @@ class MainSitePages extends Section {
 
     public function showByTag($tag, $page = -1) {
         $this->getSlim()->view()->setData('siteTitle', $tag.' - '.Application::Title);
-        try {
-            $postIds = Tags::getAttachedPosts($tag);
-        }
-        catch(Exception $e) {
-            $this->getSlim()->notFound();
-        }
+        $postIds = Tags::getAttachedPosts($tag);
         $pages = ceil(count($postIds) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
