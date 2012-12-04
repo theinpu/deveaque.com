@@ -4,15 +4,15 @@ require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
 require_once 'app/models/Votes.php';
+require_once 'app/models/Page.php';
 
 class MainSitePages extends Section {
 
-    const PostPerPage = 20;
 
     public function showDefault($page = -1) {
-        $pages = ceil(PostFactory::getCount() / self::PostPerPage);
+        $pages = ceil(PostFactory::getCount() / Page::PostPerPage);
         $page = $this->setupPage($page, $pages);
-        $posts = $this->loadPosts(($page - 1) * self::PostPerPage, self::PostPerPage);
+        $posts = $this->loadPosts(($page - 1) * Page::PostPerPage, Page::PostPerPage);
 
         $preload = '/';
         if($page < $pages) {
@@ -37,14 +37,14 @@ class MainSitePages extends Section {
     }
 
     private function loadPosts($offset) {
-        $postsList = PostFactory::getPosts($offset, self::PostPerPage);
+        $postsList = PostFactory::getPosts($offset, Page::PostPerPage);
 
         return $this->buildPosts($postsList);
     }
 
     public function showByTitle($title, $page = -1) {
         $this->getSlim()->view()->setData('siteTitle', $title.' - '.Application::Title);
-        $pages = ceil(PostFactory::getCount(array('title' => $title)) / self::PostPerPage);
+        $pages = ceil(PostFactory::getCount(array('title' => $title)) / Page::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
         $preload = '/';
@@ -52,7 +52,7 @@ class MainSitePages extends Section {
             $preload = '/post/'.$title.'/page'.($pages - $page);
         }
 
-        $posts = $this->loadPostsByTitle($title, ($page - 1) * self::PostPerPage);
+        $posts = $this->loadPostsByTitle($title, ($page - 1) * Page::PostPerPage);
         $this->appendDataToTemplate(array(
                                          'posts'       => $posts,
                                          'page'        => $page,
@@ -64,7 +64,7 @@ class MainSitePages extends Section {
     }
 
     private function loadPostsByTitle($title, $offset) {
-        $postsList = PostFactory::getPostsByTitle($title, $offset, self::PostPerPage);
+        $postsList = PostFactory::getPostsByTitle($title, $offset, Page::PostPerPage);
 
         return $this->buildPosts($postsList);
     }
@@ -72,7 +72,7 @@ class MainSitePages extends Section {
     public function showByTag($tag, $page = -1) {
         $this->getSlim()->view()->setData('siteTitle', $tag.' - '.Application::Title);
         $postIds = Tags::getAttachedPosts($tag);
-        $pages = ceil(count($postIds) / self::PostPerPage);
+        $pages = ceil(count($postIds) / Page::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
         $preload = '/';
@@ -80,7 +80,7 @@ class MainSitePages extends Section {
             $preload = '/tag/'.$tag.'/page'.($pages - $page);
         }
 
-        $postsList = PostFactory::getPostsByIds($postIds, ($page - 1) * self::PostPerPage, self::PostPerPage);
+        $postsList = PostFactory::getPostsByIds($postIds, ($page - 1) * Page::PostPerPage, Page::PostPerPage);
         $posts = $this->buildPosts($postsList);
         $this->appendDataToTemplate(array(
                                          'posts'       => $posts,
@@ -146,9 +146,9 @@ class MainSitePages extends Section {
     }
 
     public function showBest($page = -1) {
-        $pages = ceil(PostFactory::getCount() / self::PostPerPage);
+        $pages = ceil(PostFactory::getCount() / Page::PostPerPage);
         $page = $this->setupPage($page, $pages);
-        $posts = $this->loadPostsByRating(($page - 1) * self::PostPerPage, self::PostPerPage);
+        $posts = $this->loadPostsByRating(($page - 1) * Page::PostPerPage, Page::PostPerPage);
 
         $preload = '/';
         if($page < $pages) {
@@ -165,7 +165,7 @@ class MainSitePages extends Section {
     }
 
     private function loadPostsByRating($offset) {
-        $postsList = PostFactory::getPostsByRating($offset, self::PostPerPage);
+        $postsList = PostFactory::getPostsByRating($offset, Page::PostPerPage);
 
         return $this->buildPosts($postsList);
     }
