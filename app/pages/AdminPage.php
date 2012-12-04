@@ -1,9 +1,9 @@
 <?php
 
-require_once 'Page.php';
+require_once 'Section.php';
 require_once 'app/models/PostFactory.php';
 
-class AdminPage extends Page {
+class AdminSection extends Section {
 
     public function showUpload() {
         $this->getSlim()->view()->display('upload.twig');

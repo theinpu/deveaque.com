@@ -1,9 +1,9 @@
 <?php
 
-require_once 'app/pages/Page.php';
+require_once 'app/pages/Section.php';
 require_once 'app/models/PostFactory.php';
 
-class PostHandler extends Page {
+class PostHandler extends Section {
 
     private $uploadPath;
 
@@ -22,11 +22,11 @@ class PostHandler extends Page {
             $photographer = $photographers[$id];
             $fileName = $this->uploadFile($file);
             $post = new Post(array(
-                'title' => $title,
-                'file' => $fileName,
-                'date' => date('U'),
-                'photographer' => $photographer,
-            ));
+                                  'title'        => $title,
+                                  'file'         => $fileName,
+                                  'date'         => date('U'),
+                                  'photographer' => $photographer,
+                             ));
             PostFactory::createPost($post);
         }
         $this->getSlim()->redirect('/');
@@ -40,9 +40,9 @@ class PostHandler extends Page {
             $post->setPhotographer($this->getSlim()->request()->post('photographer'));
             PostFactory::savePost($post);
             echo json_encode(array(
-                'saved' => true,
-                'title' => $post->getTitle(),
-                'photographer' => $post->getPhotographer())
+                                  'saved'        => true,
+                                  'title'        => $post->getTitle(),
+                                  'photographer' => $post->getPhotographer())
             );
         }
         catch(Exception $ex) {

@@ -5,7 +5,7 @@ require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
 require_once 'app/models/Votes.php';
 
-class MainSitePages extends Page {
+class MainSitePages extends Section {
 
     const PostPerPage = 20;
 

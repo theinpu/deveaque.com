@@ -1,6 +1,6 @@
 <?php
 
-class ContentHandler extends Page {
+class ContentHandler extends Section {
 
     const PreviewRecangle = 750;
 
