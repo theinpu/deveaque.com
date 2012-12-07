@@ -13,6 +13,46 @@ class ImportQueue implements CronModule {
 
     private $uploadPath = '';
 
+    private $shortTags = array(
+        'b'  => 'bw',
+        'c'  => 'colour',
+        'se' => 'sepia',
+
+        'u'  => 'upright',
+        'r'  => 'recumbent',
+
+        'bl' => 'blonde',
+        'br' => 'brunette',
+
+        'dr' => 'dressed',
+        'n'  => 'nude',
+        'td' => 'top-dressed',
+        'bd' => 'bottom-dressed',
+        'un' => 'underwear',
+        'hs' => 'headdress',
+
+        'l'  => 'lanscape',
+        'st' => 'studio',
+        'f'  => 'flat',
+        'i'  => 'industrial',
+        'a'  => 'architecture',
+
+        'p'  => 'portrait',
+        't'  => 'torso',
+        's'  => 'stature',
+
+        'e'  => 'eyes',
+        'h'  => 'hair',
+        'co' => 'cosplay',
+        'cs' => 'chiaroscuro',
+        'w'  => 'water',
+        'ti' => 'tits',
+        'tt' => 'tatto',
+        'tm' => 'tummy',
+        'lg' => 'legs',
+        'mp' => 'makeup',
+    );
+
     public function exec($params = array()) {
         $this->uploadPath = dirname(__FILE__).'/../../upload/';
         $this->queueCollection = MongoAssist::GetCollection('import_queue');
@@ -49,7 +89,12 @@ class ImportQueue implements CronModule {
                          ));
         PostFactory::createPost($post);
         foreach($tags as $tag) {
-            Tags::attachPost($tag, $post->getId());
+            if(isset($this->shortTags[$tag])) {
+                Tags::attachPost($this->shortTags[$tag], $post->getId());
+            }
+            else {
+                Tags::attachPost($tag, $post->getId());
+            }
         }
         sleep(1);
     }
