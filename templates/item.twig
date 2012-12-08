@@ -4,7 +4,7 @@
             {% if item.title is empty %}
                 {{ item.title }}
             {% else %}
-                <a href="/post/{{ item.title }}/" rel="nofollow">{{ item.title }}</a>
+                <a href="/post/{{ item.title }}/">{{ item.title }}</a>
             {% endif %}
             {% include "widgets/postVote.twig" %}
         </h2>
@@ -15,17 +15,15 @@
 
         <div class="image-holder">
             {% if item.zoomable %}
-                <a href="{{ item.image }}" class="lightbox" rel="nofollow">
+                <a href="/post/{{ item.id }}">
                     <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
                 </a>
             {% else %}
-                <a href="/post/{{ item.id }}" rel="nofollow">
-                    <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
-                </a>
+                <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
             {% endif %}
         </div>
         <noindex>
-            <div class="permalink"><a href="/post/{{ item.id }}" rel="nofollow">permalink</a></div>
+            <div class="permalink"><a href="/post/{{ item.id }}">permalink</a></div>
         </noindex>
         <div class="tags">{% include "tagsList.twig" %}</div>
         <div class="date">{{ item.date }}</div>

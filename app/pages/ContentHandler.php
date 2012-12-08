@@ -21,7 +21,7 @@ class ContentHandler extends Page {
     }
 
     private function showPostImage($destPath, $sourcePath, $maxSize) {
-        if(!file_exists($destPath)) {
+        if(file_exists($sourcePath)) {
             @mkdir(dirname($destPath), 0777, true);
             $sourceImage = imagecreatefromjpeg($sourcePath);
             $sizes = getimagesize($sourcePath);
@@ -51,9 +51,14 @@ class ContentHandler extends Page {
             imagedestroy($sourceImage);
             imagejpeg($destImage, $destPath, 90);
             imagedestroy($destImage);
+            $this->getSlim()->response()->header('Content-Type', 'image/jpeg');
+            echo file_get_contents($destPath);
         }
-        $this->getSlim()->response()->header('Content-Type', 'image/jpeg');
-        echo file_get_contents($destPath);
+        else {
+            $this->getSlim()->response()->status(404);
+
+            return;
+        }
     }
 
 }

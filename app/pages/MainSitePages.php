@@ -4,6 +4,7 @@ require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
 require_once 'app/models/Votes.php';
+require_once 'Page.php';
 
 class MainSitePages extends Page {
 
@@ -32,6 +33,9 @@ class MainSitePages extends Page {
             $page = $pages;
         }
         $page = $pages - $page + 1;
+        if($page < 0) {
+            $this->getSlim()->notFound();
+        }
 
         return $page;
     }
@@ -71,7 +75,12 @@ class MainSitePages extends Page {
 
     public function showByTag($tag, $page = -1) {
         $this->getSlim()->view()->setData('siteTitle', $tag.' - '.Application::Title);
-        $postIds = Tags::getAttachedPosts($tag);
+        try {
+            $postIds = Tags::getAttachedPosts($tag);
+        }
+        catch(Exception $e) {
+            $this->getSlim()->notFound();
+        }
         $pages = ceil(count($postIds) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
@@ -121,7 +130,12 @@ class MainSitePages extends Page {
     }
 
     public function showPost($postId) {
-        $post = PostFactory::getPost($postId);
+        try {
+            $post = PostFactory::getPost($postId);
+        }
+        catch(InvalidArgumentException $e) {
+            $this->getSlim()->notFound();
+        }
         $formattedDateLine = date('d F Y H:i', $post->getDate());
         $postTitle = $post->getTitle();
         $title = (!empty($postTitle)) ?
