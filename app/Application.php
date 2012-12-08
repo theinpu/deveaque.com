@@ -152,9 +152,17 @@ class Application {
     }
 
     public static function isAdmin() {
-        return $_SERVER['DEVELOP'] || in_array($_SERVER['REMOTE_ADDR'],
-                                               array('92.62.59.95',
-                                                     '89.110.48.143'));
+        $user = Users::getCurrentUser();
+        if($user->isGuest()) {
+            return false;
+        }
+        $userId = $user->getId();
+        $admins = array(
+            '50b9b6ef15f0bf031c000000',
+            '50b9cb2c15f0bfd71f000001',
+        );
+
+        return in_array($userId, $admins);
     }
 
     private function getSlim() {
