@@ -25,11 +25,13 @@ class PageCollection {
 
     public static function getPage($index) {
         self::checkCollection();
-
+        $pageData = self::$pages->findOne(array('num' => $index));
     }
 
     public static function getPagesCount() {
+        self::checkCollection();
 
+        return self::$pages->count();
     }
 
 }
