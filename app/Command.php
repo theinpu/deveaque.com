@@ -15,7 +15,7 @@ class Command {
     public function execute() {
         $classFile = $_SERVER['DOCUMENT_ROOT'].'/../app/pages/'.$this->command[0].'.php';
         if(!file_exists($classFile)) {
-            throw new InvalidArgumentException('Page not found ('.$classFile.')');
+            throw new InvalidArgumentException('Handler not found ('.$classFile.')');
         }
         require_once $classFile;
         $className = $this->command[0];

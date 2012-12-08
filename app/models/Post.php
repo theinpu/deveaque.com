@@ -4,7 +4,10 @@ class Post {
 
     private $data;
 
-    public function __construct($data) {
+    public function __construct($data = array()) {
+        if(is_null($data)) {
+            throw new InvalidArgumentException('post not found');
+        }
         $this->data = $data;
     }
 
