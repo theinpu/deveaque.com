@@ -72,7 +72,7 @@ class Application {
     }
 
     private function createAdminCommands() {
-        $this->addGetAdminCommand('/upload', 'AdminPage', 'showUpload');
+        $this->addGetAdminCommand('/upload', 'AdminSection', 'showUpload');
         $this->addPostAdminCommand('/post/add', 'PostHandler', 'addPost');
         $this->addPostAdminCommand('/post/edit/:id', 'PostHandler', 'editPost');
         $this->addGetAdminCommand('/post/delete/:id', 'PostHandler', 'deletePost');
