@@ -4,6 +4,7 @@ require_once 'app/models/PostFactory.php';
 require_once 'app/models/Tags.php';
 require_once 'app/pages/ContentHandler.php';
 require_once 'app/models/Votes.php';
+require_once 'Section.php';
 
 class MainSitePages extends Section {
 
@@ -74,7 +75,12 @@ class MainSitePages extends Section {
 
     public function showByTag($tag, $page = -1) {
         $this->getSlim()->view()->setData('siteTitle', $tag.' - '.Application::Title);
-        $postIds = Tags::getAttachedPosts($tag);
+        try {
+            $postIds = Tags::getAttachedPosts($tag);
+        }
+        catch(Exception $e) {
+            $this->getSlim()->notFound();
+        }
         $pages = ceil(count($postIds) / self::PostPerPage);
         $page = $this->setupPage($page, $pages);
 
