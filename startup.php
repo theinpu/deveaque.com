@@ -7,4 +7,3 @@ $rootPath = realpath(dirname(__FILE__));
 set_include_path($rootPath.':'.$incPath);
 
 
-/* test commit*/
