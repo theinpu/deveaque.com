@@ -81,6 +81,7 @@ class Application {
         $this->addGetAdminCommand('/tag/:tag/deattach/:post', 'TagHandler', 'deattachTag');
         $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
         $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
+        $this->addGetAdminCommand('/sandbox/new','SandboxHandler','showNewPics');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -158,8 +159,7 @@ class Application {
         }
         $userId = $user->getId();
         $admins = array(
-            '50b9b6ef15f0bf031c000000',
-            '50b9cb2c15f0bfd71f000001',
+            '52a8b7d98a0934c50c8b4567',
         );
 
         return in_array($userId, $admins);

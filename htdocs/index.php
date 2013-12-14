@@ -5,4 +5,3 @@ require_once 'app/Application.php';
 
 $app = new Application();
 
-echo 'huiem buem'  ;

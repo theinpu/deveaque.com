@@ -53,8 +53,8 @@ class TwigView extends \Slim\View {
      * http://www.twig-project.org/book/03-Twig-for-Developers
      */
     public static $twigOptions = array(
-        'cache' => "../cache/twig",
-        'debug' => false
+        //'cache' => "../cache/twig",
+        'debug' => true
     );
 
     /**
