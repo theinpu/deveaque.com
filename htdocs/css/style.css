@@ -237,3 +237,9 @@ span.rating a {
 .paginator .pages {
     display: inline-block;
 }
+
+.tagsSandbox {
+    margin-left: 50px;
+    text-align: left;
+
+}
