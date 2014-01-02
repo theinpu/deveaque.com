@@ -239,7 +239,14 @@ span.rating a {
 }
 
 .tagsSandbox {
-    margin-left: 50px;
-    text-align: left;
 
+    float:left;
+    width: 20%;
+    text-align: left;
+}
+
+.image-holder-sandbox {
+
+    float:left;
+    width: 80%;
 }

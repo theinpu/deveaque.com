@@ -6,31 +6,32 @@
         {% include "adminScripts.twig" %}
     {% endif %}
 
-<div class="tagsSandbox">
- <b>Color</b><br>
- <span><input type="radio" name="color" value="tagBlackWhite"> Black&White <br></span>
- <span><input type="radio" name="color" value="tagColored"> Colored <br> </span>
- <span><input type="radio" name="color" value="tagSepia"> Sepia <br> </span>
-  <br>
-</div>
 
-<div class="tagsSandbox">
-    <b>Hair color</b><br>
-        <span><input type="radio" name="HairColor" value="tagBlonde"> Blonde <br></span>
-        <span><input type="radio" name="HairColor" value="tagRed"> Red <br> </span>
-        <span><input type="radio" name="HairColor" value="tagBrunette"> Brunette <br> </span>
-    <br>
-</div>
+
+
+        <div class="image-holder-sandbox">
+            <img src="{{ path }}" width="600"/>
+        </div>
+
+
+
 
     <div class="tagsSandbox">
+        <b>Color</b><br>
+        <span><input type="radio" name="color" value="tagBlackWhite"> Black&White <br></span>
+        <span><input type="radio" name="color" value="tagColored"> Colored <br> </span>
+        <span><input type="radio" name="color" value="tagSepia"> Sepia <br> </span>
+        <br>
+        <b>Hair color</b><br>
+            <span><input type="radio" name="HairColor" value="tagBlonde"> Blonde <br></span>
+            <span><input type="radio" name="HairColor" value="tagRed"> Red <br> </span>
+            <span><input type="radio" name="HairColor" value="tagBrunette"> Brunette <br> </span>
+        <br>
         <b>Position</b><br>
         <span><input type="radio" name="Position" value="tagUpright"> Upright <br></span>
         <span><input type="radio" name="Position" value="tagRecumbent"> Recumbent <br> </span>
         <span><input type="radio" name="Position" value="tagHalfRecumbent"> HalfRecumbent <br> </span>
         <br>
-    </div>
-
-    <div class="tagsSandbox">
         <b>Dresscode</b><br>
         <span><input type="radio" name="Dresscode" value="tagDressed"> Dressed <br></span>
         <span><input type="radio" name="Dresscode" value="tagNude"> Nude <br> </span>
@@ -39,9 +40,6 @@
         <span><input type="radio" name="Dresscode" value="tagUnderwear"> Underwear <br> </span>
         <span><input type="checkbox" name="Dresscode" value="tagHeaddress"> Headdress <br> </span>
         <br>
-    </div>
-
-    <div class="tagsSandbox">
         <b>Background</b><br>
         <span><input type="radio" name="Background" value="tagUpright"> Landscape  <br></span>
         <span><input type="radio" name="Background" value="tagStudio"> Studio <br> </span>
@@ -49,27 +47,17 @@
         <span><input type="radio" name="Background" value="tagIndustrial"> Industrial <br> </span>
         <span><input type="radio" name="Background" value="tagArchitecture"> Architecture <br> </span>
         <br>
-    </div>
-
-
-    <div class="tagsSandbox">
         <b>Type</b><br>
         <span><input type="radio" name="Type" value="tagPortrait"> Portrait <br></span>
         <span><input type="radio" name="Type" value="tagTorso"> Torso <br> </span>
         <span><input type="radio" name="Type" value="tagStature"> Stature <br> </span>
         <span><input type="radio" name="Type" value="tagFar"> Far <br> </span>
         <br>
+
     </div>
 
-    <div class="image-holder">
-        {% if item.zoomable %}
-            <a href="/post/{{ item.id }}">
-                <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
-            </a>
-        {% else %}
-            <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
-        {% endif %}
-    </div>
+
+
 
 
 {% endblock %}
