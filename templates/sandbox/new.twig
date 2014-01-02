@@ -1,7 +1,5 @@
 {% extends "main.twig" %}
 {% block content %}
-
-
     {% if isAdmin %}
         {% include "adminScripts.twig" %}
     {% endif %}
@@ -9,14 +7,24 @@
 
 
 
+
+    <form method="GET" action="/sandbox/add">
+
+
+
         <div class="image-holder-sandbox">
-            <img src="{{ path }}" width="600"/>
+            <img src="{{ path }}" width="680"/>
         </div>
 
 
 
 
+
     <div class="tagsSandbox">
+        <span>Women<input type="text" name="WomenName" > <br></span>
+        <span>Photographer <input type="text" name="PhotographerName"> <br></span>
+        <br>
+
         <b>Color</b><br>
         <span><input type="radio" name="color" value="tagBlackWhite"> Black&White <br></span>
         <span><input type="radio" name="color" value="tagColored"> Colored <br> </span>
@@ -53,9 +61,10 @@
         <span><input type="radio" name="Type" value="tagStature"> Stature <br> </span>
         <span><input type="radio" name="Type" value="tagFar"> Far <br> </span>
         <br>
-
+        <button type="submit">[   POST    ]</button>
     </div>
 
+    </form>
 
 
 

@@ -17,5 +17,13 @@ class SandboxHandler extends Page{
         return $fullPath;
     }
 
+     public function PostPic()
+    {
+        $color = $_GET['color'];
+
+
+
+        $this->getSlim()->redirect('/');
+    }
 
 }
