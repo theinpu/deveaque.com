@@ -55,6 +55,7 @@ class Application {
         $this->addGetCommand('/logout', 'RegisterHandler', 'logout');
         $this->addPostCommand('/login', 'RegisterHandler', 'login');
         $this->addPostCommand('/register', 'RegisterHandler', 'register');
+
     }
 
     private function createBaseSiteCommands() {
@@ -82,7 +83,7 @@ class Application {
         $this->addGetAdminCommand('/editors/post/:id', 'EditorsHandler', 'getPostEditor');
         $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
         $this->addGetAdminCommand('/sandbox/new','SandboxHandler','showNewPics');
-        $this->addGetAdminCommand('/sandbox/add','SandboxHandler','postPic');
+        $this->addPostAdminCommand('/sandbox/add','SandboxHandler','postPic');
     }
 
     private function addGetCommand($path, $class, $method) {
@@ -95,6 +96,12 @@ class Application {
         $this->slim->post($path, $command->getCallback());
     }
 
+    /**
+     *
+     * @param $path
+     * @param $class
+     * @param $method
+     */
     private function addGetAdminCommand($path, $class, $method) {
         if(!self::isAdmin()) return;
         $command = new Command($this->getSlim(), array($class, $method));
