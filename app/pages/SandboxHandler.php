@@ -6,8 +6,10 @@ class SandboxHandler extends Page{
 
     public function showNewPics(){
 
-
-        $this->getSlim()->render('sandbox/new.twig', array('path' => self::ShowLastPic()));
+        $TagsArr=array(
+            'color' =>  ""
+        );
+        $this->getSlim()->render('sandbox/new.twig', array('path' => self::ShowLastPic(), 'TagsArr' => $TagsArr));
     }
 
     static public function ShowLastPic()
@@ -19,11 +21,14 @@ class SandboxHandler extends Page{
 
      public function PostPic()
     {
-        $color = $_GET['color'];
+        //$color = $_POST['color'];
+        $TagsArr[] = $_POST['TagsArr[]'];
 
 
+        var_dump($TagsArr);
 
-        $this->getSlim()->redirect('/');
+
+        //$this->getSlim()->redirect('/');
     }
 
 }
