@@ -24,9 +24,13 @@ class SandboxHandler extends Page{
 
      public function PostPic()
     {
-        $TagsArr = $this->getSlim()->request()->post("TagsArr");
 
+
+
+        $TagsArr = $this->getSlim()->request()->post("TagsArr");
         var_dump($TagsArr);
+
+
 
 
        $AdditionTagsArr = explode(',',$TagsArr['AdditionTags'])  ;
