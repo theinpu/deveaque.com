@@ -4,69 +4,66 @@
         {% include "adminScripts.twig" %}
     {% endif %}
 
+<form method="POST" action="/sandbox/add">
 
-
-
-
-    <form method="POST" action="/sandbox/add">
-
-
-
-        <div class="image-holder-sandbox">
-            <img src="{{ path }}" width="680"/>
-        </div>
-
-
-
-
+    <div class="image-holder-sandbox">
+        <img src="{{ path }}" alt=" {{ path }} " title="{{ path }}"  width="680"/>
+    </div>
 
     <div class="tagsSandbox">
-        <span>Women<input type="text" name="TagsArr[TagWomenName]" > <br></span>
-        <span>Photographer <input type="text" name="TagsArr[TagPhotographerName]"> <br></span>
+        <span>Women<input type="text" name="TagsArr[WomenName]" > <br></span>
+        <span>Photographer <input type="text" name="TagsArr[PhotographerName]"> <br></span>
         <br>
 
         <b>Color</b><br>
-        <span><input type="radio" name="TagsArr[TagPicColor]" value="tagBlackWhite"> Black&White <br></span>
-        <span><input type="radio" name="TagsArr[TagPicColor]" value="tagColored"> Colored <br> </span>
-        <span><input type="radio" name="TagsArr[TagPicColor]" value="tagSepia"> Sepia <br> </span>
+        <span><input type="radio" name="TagsArr[TagPicColor]" value="bw"> Black&White <br></span>
+        <span><input type="radio" name="TagsArr[TagPicColor]" value="colour"> Colored <br> </span>
+        <span><input type="radio" name="TagsArr[TagPicColor]" value="sepia"> Sepia <br> </span>
         <br>
+
         <b>Hair color</b><br>
-            <span><input type="radio" name="TagsArr[TagHairColor]" value="tagBlonde"> Blonde <br></span>
-            <span><input type="radio" name="TagsArr[TagHairColor]" value="tagRed"> Red <br> </span>
-            <span><input type="radio" name="TagsArr[TagHairColor]" value="tagBrunette"> Brunette <br> </span>
+        <span><input type="radio" name="TagsArr[TagHairColor]" value="blonde"> Blonde <br></span>
+        <span><input type="radio" name="TagsArr[TagHairColor]" value="red"> Red <br> </span>
+        <span><input type="radio" name="TagsArr[TagHairColor]" value="brunette"> Brunette <br> </span>
         <br>
+
         <b>Position</b><br>
-        <span><input type="radio" name="TagsArr[TagPosition]" value="tagUpright"> Upright <br></span>
-        <span><input type="radio" name="TagsArr[TagPosition]" value="tagRecumbent"> Recumbent <br> </span>
-        <span><input type="radio" name="TagsArr[TagPosition]" value="tagHalfRecumbent"> HalfRecumbent <br> </span>
+        <span><input type="radio" name="TagsArr[TagPosition]" value="upright"> Upright <br></span>
+        <span><input type="radio" name="TagsArr[TagPosition]" value="recumbent"> Recumbent <br> </span>
+        <span><input type="radio" name="TagsArr[TagPosition]" value="half-recumbent"> HalfRecumbent <br> </span>
         <br>
+
         <b>Dresscode</b><br>
-        <span><input type="radio" name="TagsArr[TagDresscode]" value="tagDressed"> Dressed <br></span>
-        <span><input type="radio" name="TagsArr[TagDresscode]" value="tagNude"> Nude <br> </span>
-        <span><input type="radio" name="TagsArr[TagDresscode]" value="tagTop-dressed"> Top-dressed <br> </span>
-        <span><input type="radio" name="TagsArr[TagDresscode]" value="tagBottom-dressed"> Bottom-dressed <br> </span>
-        <span><input type="radio" name="TagsArr[TagDresscode]" value="tagUnderwear"> Underwear <br> </span>
-        <span><input type="checkbox" name="TagsArr[TagHeaddress]" value="tagHeaddress"> Headdress <br> </span>
+        <span><input type="radio" name="TagsArr[TagDresscode]" value="dressed"> Dressed <br></span>
+        <span><input type="radio" name="TagsArr[TagDresscode]" value="nude"> Nude <br> </span>
+        <span><input type="radio" name="TagsArr[TagDresscode]" value="top-dressed"> Top-dressed <br> </span>
+        <span><input type="radio" name="TagsArr[TagDresscode]" value="bottom-dressed"> Bottom-dressed <br> </span>
+        <span><input type="radio" name="TagsArr[TagDresscode]" value="underwear"> Underwear <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagHeaddress]" value="headdress"> Headdress <br> </span>
         <br>
+
         <b>Background</b><br>
-        <span><input type="radio" name="TagsArr[TagBackground]" value="tagUpright"> Landscape  <br></span>
-        <span><input type="radio" name="TagsArr[TagBackground]" value="tagStudio"> Studio <br> </span>
-        <span><input type="radio" name="TagsArr[TagBackground]" value="tagFlat"> Flat <br> </span>
-        <span><input type="radio" name="TagsArr[TagBackground]" value="tagIndustrial"> Industrial <br> </span>
-        <span><input type="radio" name="TagsArr[TagBackground]" value="tagArchitecture"> Architecture <br> </span>
+        <span><input type="radio" name="TagsArr[TagBackground]" value="landscape"> Landscape <br> </span>
+        <span><input type="radio" name="TagsArr[TagBackground]" value="studio"> Studio <br> </span>
+        <span><input type="radio" name="TagsArr[TagBackground]" value="flat"> Flat <br> </span>
+        <span><input type="radio" name="TagsArr[TagBackground]" value="industrial"> Industrial <br> </span>
+        <span><input type="radio" name="TagsArr[TagBackground]" value="architecture"> Architecture <br> </span>
         <br>
+
         <b>Type</b><br>
-        <span><input type="radio" name="TagsArr[TagProximity]" value="tagPortrait"> Portrait <br></span>
-        <span><input type="radio" name="TagsArr[TagProximity]" value="tagTorso"> Torso <br> </span>
-        <span><input type="radio" name="TagsArr[TagProximity]" value="tagStature"> Stature <br> </span>
-        <span><input type="radio" name="TagsArr[TagProximity]" value="tagFar"> Far <br> </span>
+        <span><input type="radio" name="TagsArr[TagProximity]" value="portrait"> Portrait <br></span>
+        <span><input type="radio" name="TagsArr[TagProximity]" value="torso"> Torso <br> </span>
+        <span><input type="radio" name="TagsArr[TagProximity]" value="stature"> Stature <br> </span>
+        <span><input type="radio" name="TagsArr[TagProximity]" value="far"> Far <br> </span>
         <br>
         <span>Other tags (fulllenght, separated by ',')<input type="text" name="TagsArr[AdditionTags]" > <br></span>
+
         <br>
         <button type="submit">[   POST    ]</button>
     </div>
+</form>
 
-    </form>
+
 
 
 

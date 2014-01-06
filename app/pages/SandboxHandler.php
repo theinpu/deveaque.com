@@ -1,5 +1,8 @@
 <?php
 require_once 'Page.php';
+require_once __DIR__.'/../../libs/MongoAssist.php';
+require_once __DIR__.'/../models/PostFactory.php';
+require_once __DIR__.'/../models/Tags.php';
 
 class SandboxHandler extends Page{
 
@@ -22,25 +25,41 @@ class SandboxHandler extends Page{
         return $fullPath;
     }
 
-     public function PostPic()
+    public function PostPic()
     {
-
-
-
-        $TagsArr = $this->getSlim()->request()->post("TagsArr");
-        var_dump($TagsArr);
-
-
-
-
-       $AdditionTagsArr = explode(',',$TagsArr['AdditionTags'])  ;
-        foreach($AdditionTagsArr as $tag)
+        $CurrentDate = date('Y\/m\/d');
+        if(!file_exists(__DIR__.'/../../upload/'.$CurrentDate))
         {
-            echo "<br>AddTag: ".$tag;
+           mkdir(__DIR__.'/../../upload/'.$CurrentDate,0755,true );
+        }
+        $md5name = '/'.md5_file('.'.self::ShowLastPic());
+        $TagsArr = $this->getSlim()->request()->post("TagsArr");
+
+        rename('.'.self::ShowLastPic(),__DIR__.'/../../upload/'.$CurrentDate.$md5name.'.jpg') ;
+
+        $data['file']           = $CurrentDate.$md5name.'.jpg';
+        $data['photographer']   = $TagsArr['PhotographerName'];
+        $data['title']          = $TagsArr['WomenName'];
+        $data['date']           = date('U');
+        $tags                   = $TagsArr;
+
+        if(!isset($data['file'])) {
+            die("need image path");
         }
 
-
-        //$this->getSlim()->redirect('/');
+        $post = new Post($data);
+        PostFactory::createPost($post);
+        if(isset($tags)) {
+            foreach($tags as $tag) {
+               echo "<br>attached tag: ".$tag;
+                  if($tag != '')
+                  {
+                      Tags::saveTag($tag);
+                      Tags::attachPost($tag, $post->getId());
+                  }
+            }
+        }
+        $this->getSlim()->redirect('/sandbox/new');
     }
 
 }
