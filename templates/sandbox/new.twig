@@ -7,10 +7,12 @@
 <form method="POST" action="/sandbox/add">
 
     <div class="image-holder-sandbox">
+        <p>{{ path }}</p>
         <img src="{{ path }}" alt=" {{ path }} " title="{{ path }}"  width="680"/>
     </div>
 
     <div class="tagsSandbox">
+
         <span>Women<input type="text" name="TagsArr[WomenName]" > <br></span>
         <span>Photographer <input type="text" name="TagsArr[PhotographerName]"> <br></span>
         <br>
@@ -56,14 +58,19 @@
         <span><input type="radio" name="TagsArr[TagProximity]" value="stature"> Stature <br> </span>
         <span><input type="radio" name="TagsArr[TagProximity]" value="far"> Far <br> </span>
         <br>
-        <span>Other tags (fulllenght, separated by ',')<input type="text" name="TagsArr[AdditionTags]" > <br></span>
+        <span>Additional tags <br> + fulllenght <br> + separated by ',' <br> +solid string!<input type="text" name="TagsArr[AdditionTags]" > <br></span>
 
         <br>
-        <button type="submit">[   POST    ]</button>
+        <button type="submit">[POST]</button>
     </div>
 </form>
 
 
+<form method="POST" action="/sandbox/trash">
+ <input type="hidden" name="path" value="{{ path }}" >
+    <button type="submit">[TRASH]</button>
+
+</form>
 
 
 

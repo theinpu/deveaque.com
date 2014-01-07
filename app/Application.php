@@ -84,6 +84,7 @@ class Application {
         $this->addGetAdminCommand('/editors/tag/:id', 'EditorsHandler', 'getTagEditor');
         $this->addGetAdminCommand('/sandbox/new','SandboxHandler','showNewPics');
         $this->addPostAdminCommand('/sandbox/add','SandboxHandler','postPic');
+        $this->addPostAdminCommand('/sandbox/trash','SandboxHandler','trashPic');
     }
 
     private function addGetCommand($path, $class, $method) {

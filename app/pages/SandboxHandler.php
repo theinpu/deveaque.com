@@ -25,9 +25,10 @@ class SandboxHandler extends Page{
         return $fullPath;
     }
 
-    public function PostPic()
+    public function postPic()
     {
         $CurrentDate = date('Y\/m\/d');
+
         if(!file_exists(__DIR__.'/../../upload/'.$CurrentDate))
         {
            mkdir(__DIR__.'/../../upload/'.$CurrentDate,0755,true );
@@ -41,11 +42,14 @@ class SandboxHandler extends Page{
         $data['photographer']   = $TagsArr['PhotographerName'];
         $data['title']          = $TagsArr['WomenName'];
         $data['date']           = date('U');
-        $tags                   = $TagsArr;
 
-        if(!isset($data['file'])) {
-            die("need image path");
+        $AdditionTagArr = explode(',',$TagsArr['AdditionTags']);
+        unset($TagsArr['AdditionTags']);
+        foreach($AdditionTagArr as $AdditionTag)
+        {
+            $TagsArr[$AdditionTag] = $AdditionTag;
         }
+        $tags = $TagsArr;
 
         $post = new Post($data);
         PostFactory::createPost($post);
@@ -60,6 +64,13 @@ class SandboxHandler extends Page{
             }
         }
         $this->getSlim()->redirect('/sandbox/new');
+    }
+
+
+    public function trashPic()
+    {
+       rename('.'.self::ShowLastPic(),__DIR__.'/../../htdocs/image/trash/'.basename('.'.self::ShowLastPic())) ;
+       $this->getSlim()->redirect('/sandbox/new');
     }
 
 }
