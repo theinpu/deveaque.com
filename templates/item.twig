@@ -1,17 +1,17 @@
 <div class="item-container">
     <div class="item" id="{{ item.id }}">
-        <h2>
+        <h5>
             {% if item.title is empty %}
                 {{ item.title }}
             {% else %}
                 <a href="/post/{{ item.title }}/">{{ item.title }}</a>
             {% endif %}
             {% include "widgets/postVote.twig" %}
-        </h2>
+        </h5>
 
-        <h3>
+        <h4>
             {{ item.photographer }}
-        </h3>
+        </h4>
 
         <div class="image-holder">
             {% if item.zoomable %}

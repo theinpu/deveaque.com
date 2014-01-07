@@ -4,6 +4,7 @@
         {% include "adminScripts.twig" %}
     {% endif %}
 
+
 <form method="POST" action="/sandbox/add">
 
     <div class="tagsSandboxLeft">
@@ -35,7 +36,7 @@
     </div>
 
     <div class="image-holder-sandbox">
-        {{ path }}  <button type="submit">[POST]</button>
+        {{ path }}  <button class="btn" type="submit">[POST]</button>
         <img src="{{ path }}" alt=" {{ path }} " title="{{ path }}"  width="620"/>
         <p>Waiting to approve {{ count  }}</p>
     </div>
