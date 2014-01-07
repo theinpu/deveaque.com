@@ -242,7 +242,7 @@ span.rating a {
 
     margin: 10px;
     float:left;
-    width: 11%;
+    width: 13%;
     text-align: left;
 }
 
@@ -255,6 +255,6 @@ span.rating a {
 .tagsSandboxRight {
 
     float:left;
-    width: 16%;
+    width: 14%;
     text-align: left;
 }

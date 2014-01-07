@@ -7,62 +7,62 @@
 <form method="POST" action="/sandbox/add">
 
     <div class="tagsSandboxLeft">
-        <span><input type="checkbox" name="TagsArr[TagHeaddress]"    value="headdress"> Headdress <br></span><br>
-        <span><input type="checkbox" name="TagsArr[TagHD]"           value="hd"> HD <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagEyes]"         value="eyes"> Eyes <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagCosplay]"      value="cosplay"> Cosplay <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagTits]"         value="tits"> Tits <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagChiaroscuro]" value="chiaroscuro "> Chiaroscuro  <br> </span> <br>
-        <span><input type="checkbox" name="TagsArr[TagHair]"         value="hair"> Hair <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagWeapon]"       value="weapon"> Weapon <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagWater]"        value="water"> Water <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagTwo]"          value="two"> Two <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagBend]"         value="bend"> Bend <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagTatto]"        value="tatto"> Tatto <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagLatex]"        value="latex"> Latex <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagTummy]"        value="tummy"> Tummy <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagLegs]"         value="legs"> Legs <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagMakeup]"       value="makeup"> Makeup <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagArt]"          value="art"> Art <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagSmile]"        value="smile"> Smile <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagPancu]"       value="pancu"> パンツ <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagNeck]"       value="neck"> Neck <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagFreckles]"       value="freckles">  Freckles <br> </span><br>
-        <span><input type="checkbox" name="TagsArr[TagUnderwear]" value="underwear"> Underwear <br> </span>
+
+        <span><input type="checkbox" name="TagsArr[TagEyes]"         value="eyes">                       </span>
+        <span><input type="checkbox" name="TagsArr[TagTits]"         value="tits">                      <b>02</b>     Tits <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagUnderwear]"    value="underwear">                 <b>03</b>     Underwear <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagTatto]"        value="tatto">                     <b>04</b>     Tatto <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagTummy]"        value="tummy">                     <b>05</b>     Tummy <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagLegs]"         value="legs">                      <b>06</b>     Legs <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagChiaroscuro]"  value="chiaroscuro ">              <b>07</b>     Chiaroscuro  <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagHair]"         value="hair">                      <b>08</b>     Hair <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagWater]"        value="water">                     <b>09</b>     Water <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagNeck]"         value="neck">                      <b>0A</b>     Neck <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagFreckles]"     value="freckles">                  <b>0B</b>     Freckles <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagPancu]"        value="pancu">                     <b>0C</b>     パンツ <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagSmile]"        value="smile">                     <b>0D</b>     Smile <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagDrawn]"        value="drawn">                     <b>0E</b>     Drawn <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagArt]"          value="art">                       <b>0F</b>     Art <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagBend]"         value="bend">                      <b>10</b>     Bend <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagMakeup]"       value="makeup">                    <b>11</b>     Makeup <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagHeaddress]"    value="headdress">                 <b>12</b>     Headdress <br></span>
+        <span><input type="checkbox" name="TagsArr[TagCosplay]"      value="cosplay">                   <b>13</b>     Cosplay <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagWeapon]"       value="weapon">                    <b>14</b>     Weapon <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagHD]"           value="hd">                        <b>15</b>     HD <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagLatex]"        value="latex">                     <b>16</b>     Latex <br> </span>
+        <span><input type="checkbox" name="TagsArr[TagTwo]"          value="two">                       <b>17</b>     Two <br> </span>
 
     </div>
 
     <div class="image-holder-sandbox">
-        <p>{{ path }}</p>
+        {{ path }}  <button type="submit">[POST]</button>
         <img src="{{ path }}" alt=" {{ path }} " title="{{ path }}"  width="620"/>
         <p>Waiting to approve {{ count  }}</p>
     </div>
 
     <div class="tagsSandboxRight">
 
-        <span>Women<input type="text" name="TagsArr[WomenName]" > <br></span>
-        <span>Photographer <input type="text" name="TagsArr[PhotographerName]"> <br></span>
+        <span>Women<input type="text" name="TagsArr[WomenName]" size="15"> <br></span>
+        <span>Photographer <input type="text" name="TagsArr[PhotographerName]" size="15"> <br></span>
         <br>
-
-        <b>Color</b><br>
         <span><input type="radio" name="TagsArr[TagPicColor]" value="bw"> Black&White <br></span>
         <span><input type="radio" name="TagsArr[TagPicColor]" value="colour"> Colored <br> </span>
         <span><input type="radio" name="TagsArr[TagPicColor]" value="sepia"> Sepia <br> </span>
         <br>
 
-        <b>Hair color</b><br>
+
         <span><input type="radio" name="TagsArr[TagHairColor]" value="blonde"> Blonde <br></span>
         <span><input type="radio" name="TagsArr[TagHairColor]" value="red"> Red <br> </span>
         <span><input type="radio" name="TagsArr[TagHairColor]" value="brunette"> Brunette <br> </span>
         <br>
 
-        <b>Position</b><br>
+
         <span><input type="radio" name="TagsArr[TagPosition]" value="upright"> Upright <br></span>
         <span><input type="radio" name="TagsArr[TagPosition]" value="recumbent"> Recumbent <br> </span>
         <span><input type="radio" name="TagsArr[TagPosition]" value="half-recumbent"> HalfRecumbent <br> </span>
         <br>
 
-        <b>Dresscode</b><br>
+
         <span><input type="radio" name="TagsArr[TagDresscode]" value="dressed"> Dressed <br></span>
         <span><input type="radio" name="TagsArr[TagDresscode]" value="nude"> Nude <br> </span>
         <span><input type="radio" name="TagsArr[TagDresscode]" value="top-dressed"> Top-dressed <br> </span>
@@ -71,7 +71,7 @@
 
         <br>
 
-        <b>Background</b><br>
+
         <span><input type="radio" name="TagsArr[TagBackground]" value="landscape"> Landscape <br> </span>
         <span><input type="radio" name="TagsArr[TagBackground]" value="studio"> Studio <br> </span>
         <span><input type="radio" name="TagsArr[TagBackground]" value="flat"> Flat <br> </span>
@@ -79,7 +79,7 @@
         <span><input type="radio" name="TagsArr[TagBackground]" value="architecture"> Architecture <br> </span>
         <br>
 
-        <b>Type</b><br>
+
         <span><input type="radio" name="TagsArr[TagProximity]" value="portrait"> Portrait <br></span>
         <span><input type="radio" name="TagsArr[TagProximity]" value="torso"> Torso <br> </span>
         <span><input type="radio" name="TagsArr[TagProximity]" value="stature"> Stature <br> </span>
@@ -88,17 +88,18 @@
        <span><input type="text" name="TagsArr[AdditionTags]" > <br></span>
 
         <br>
-        <button type="submit">[POST]</button>
+
     </div>
 </form>
 
-
+    <div class="tagsSandboxRight">
 <form method="POST" action="/sandbox/trash">
  <input type="hidden" name="path" value="{{ path }}" >
+
     <button type="submit">[TRASH]</button>
 
 </form>
-
+    </div>
 
 
 {% endblock %}
