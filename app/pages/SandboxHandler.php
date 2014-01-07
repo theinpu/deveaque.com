@@ -13,9 +13,23 @@ class SandboxHandler extends Page{
         //$this->getSlim()->render('sandbox/new.twig', array('path' => self::ShowLastPic(), 'TagsArr' => $TagsArr));
         $this->appendDataToTemplate(array('path' => self::ShowLastPic()));
         $this->appendDataToTemplate(array('post' => $TagsArr));
+        $this->appendDataToTemplate(array('count' => self::countPics()));
         $this->displayTemplate('sandbox/new.twig');
 
 
+    }
+
+    public function countPics()
+    {
+        $dir = opendir('/home/deveaque/Content');
+        $count = 0;
+        while($file = readdir($dir)){
+            if($file == '.' || $file == '..' || is_dir('path/to/dir' . $file)){
+                continue;
+            }
+            $count++;
+        }
+        return $count;
     }
 
     static public function ShowLastPic()
