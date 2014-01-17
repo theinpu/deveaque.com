@@ -1,0 +1,30 @@
+<div class="item-container">
+    <div class="item" id="{{ item.id }}">
+        {% if item.title is empty %}
+            {{ item.title }}
+        {% else %}
+            <h5><a href="/post/{{ item.title }}/">{{ item.title }}</a> </h5>
+        {% endif %}
+        {% include "widgets/postVote.twig" %}
+
+
+        <h5>
+            {{ item.photographer }}
+        </h5>
+        <div class="image-holder">
+            {% if item.zoomable %}
+                <a href="/post/{{ item.id }}">
+                    <img src="{{ item.tmb }}" title="{{ item.title }}" alt="{{ item.title }}"/>
+                </a>
+            {% else %}
+                <img src="{{ item.image }}" title="{{ item.title }}" alt="{{ item.title }}"/>
+            {% endif %}
+        </div>
+        <noindex>
+            <div class="permalink"><a href="/post/{{ item.id }}">permalink</a></div>
+        </noindex>
+        <div class="tags">{% include "tagsList.twig" %}</div>
+        <div class="date">{{ item.date }}</div>
+        <div class="clear"></div>
+    </div>
+</div>

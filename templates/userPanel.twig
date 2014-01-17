@@ -1,17 +1,17 @@
 {% if user %}
-    <a href="/user">{{ user.email }}</a> | <a href="/logout">logout</a>
+    <a class="btn btn-inverse" href="/user">{{ user.email }}</a>  <a class="btn btn-inverse" href="/logout">logout</a>
 {% else %}
-    <form action="/login" method="post">
-        <span>login</span>
+    <form class="form-inline" action="/login" method="post">
+        <span class="btn btn-inverse disabled">login</span>
         <input type="text" name="email" placeholder="login"/>
         <input type="password" name="pass"/>
-        <input type="submit" value=" enter "/>
+        <input class="btn btn-inverse" type="submit" value=" enter "/>
     </form>
-    | <a href="/register">register</a>
+    <a  class="btn btn-inverse" href="/register">register</a>
 {% endif %}
 &nbsp;&nbsp;
-<a href="/" rel="nofollow">all</a> | <a href="/best/">best</a>
+<a class="btn btn-inverse" href="/" rel="nofollow">all</a> <a class="btn btn-inverse" href="/best/">best</a>
 {% if isAdmin %}
-    &nbsp;<a href="/upload">upload</a>
-    &nbsp;<a href="/sandbox/new">sandbox</a>
+    &nbsp;<a class="btn btn-inverse" href="/upload">upload</a>
+    &nbsp;<a class="btn btn-inverse" href="/sandbox/new">sandbox</a>
 {% endif %}

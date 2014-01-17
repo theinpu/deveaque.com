@@ -85,7 +85,7 @@ div.item {
     position: relative;
     display: inline-block;
     padding: 10px;
-    border: 1px solid;
+
     text-align: left;
     font-size: 13px;
 }
@@ -105,6 +105,60 @@ div.item-container div.date {
 }
 
 .image-holder {
+    /*text-align: center;*/
+}
+
+.border {
+    width: 100%;
+    height: 100%;
+}
+
+.top {
+    position: absolute;
+    height: 50px;
+    text-align: center;
+    left: 10px;
+    top: 0;
+    margin-top: 30px;
+    width: auto;
+    right: 10px;
+    background: url(/images/border_top.png) repeat-x;
+}
+
+.left {
+    width: 50px;
+    position: absolute;
+    top: 0;
+    margin-top: 30px;
+    bottom: 10px;
+    height: auto;
+    background: url(/images/border_left.png) repeat-y;
+}
+
+.right {
+    position: absolute;
+    right: 10px;
+    width: 50px;
+    top: 0;
+    margin-top: 30px;
+    bottom: 10px;
+    height: auto;
+    background: url(/images/border_right.png) repeat-y;
+}
+
+.bottom {
+    position: absolute;
+    height: 50px;
+    text-align: center;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    background: url(/images/border_bot.png) repeat-x;
+}
+
+.image {
+    height: auto;
     text-align: center;
 }
 
@@ -238,8 +292,23 @@ span.rating a {
     display: inline-block;
 }
 
-.tagsSandbox {
-    margin-left: 50px;
-    text-align: left;
+.tagsSandboxLeft {
 
+    margin: 10px;
+    float:left;
+    width: 13%;
+    text-align: left;
+}
+
+.image-holder-sandbox {
+
+    float:left;
+    width: 69%;
+}
+
+.tagsSandboxRight {
+
+    float:left;
+    width: 14%;
+    text-align: left;
 }
