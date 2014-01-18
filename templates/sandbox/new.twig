@@ -4,14 +4,25 @@
         {% include "adminScripts.twig" %}
     {% endif %}
 
-
+    <script  type="text/javascript" src="/js/bootstrap.js"></script>
 <form method="POST" action="/sandbox/add">
 
     <div class="tagsSandboxLeft">
 
+
+ <!--
+        <div class="btn-group-vertical" data-toggle="buttons-checkbox">
+            <button type="button" class="btn btn-inverse" name="TagsArr[TagEyes]" value="eyes">Eyes</button>
+            <button type="button" class="btn btn-inverse" name="TagsArr[TagTits]"         value="tits">Tits</button>
+            <button type="button" class="btn btn-inverse" name="TagsArr[TagUnderwear]"    value="underwear">Underwear</button>
+        </div>
+-->
+       <br>
+
         <span><input type="checkbox" name="TagsArr[TagEyes]"         value="eyes">                      <b>01</b>     Eyes  <br></span>
         <span><input type="checkbox" name="TagsArr[TagTits]"         value="tits">                      <b>02</b>     Tits <br> </span>
         <span><input type="checkbox" name="TagsArr[TagUnderwear]"    value="underwear">                 <b>03</b>     Underwear <br> </span>
+
         <span><input type="checkbox" name="TagsArr[TagTatto]"        value="tatto">                     <b>04</b>     Tatto <br> </span>
         <span><input type="checkbox" name="TagsArr[TagTummy]"        value="tummy">                     <b>05</b>     Tummy <br> </span>
         <span><input type="checkbox" name="TagsArr[TagLegs]"         value="legs">                      <b>06</b>     Legs <br> </span>
@@ -48,6 +59,14 @@
         <span>Women<input type="text" name="TagsArr[WomenName]" size="15"> <br></span>
         <span>Photographer <input type="text" name="TagsArr[PhotographerName]" size="15"> <br></span>
         <br>
+<!--
+        <div class="btn-group-vertical" data-toggle="buttons-radio">
+            <button type="button" class="btn btn-inverse">Left</button>
+            <button type="button" class="btn btn-inverse">Middle</button>
+            <button type="button" class="btn btn-inverse">Right</button>
+        </div>
+        -->
+
         <span><input type="radio" name="TagsArr[TagPicColor]" value="bw"> Black&White <br></span>
         <span><input type="radio" name="TagsArr[TagPicColor]" value="colour"> Colored <br> </span>
         <span><input type="radio" name="TagsArr[TagPicColor]" value="sepia"> Sepia <br> </span>

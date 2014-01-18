@@ -3,16 +3,21 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <title>{{ siteTitle }}{% if page > 1 %} - page {{ pages - page + 1 }}{% endif %}</title>
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script type="text/javascript" src="/js/jquery.lightbox-0.5.js"></script>
     <script type="text/javascript" src="/js/utils.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="/css/jquery.lightbox-0.5.css" media="screen"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" media="screen"/>
+
 
     {% if isAdmin %}
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css"/>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+
     {% endif %}
     <link rel="prefetch" href="{{ preloadPage }}"/>
     <link rel="prerender" href="{{ preloadPage }}"/>
